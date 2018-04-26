@@ -1,0 +1,30 @@
+.table > tbody > tr > td {
+	     vertical-align: middle;
+}
+
+ul.share-button{
+	margin-top: 10px;
+}
+li{
+	display: inline;
+	margin-right: 20px;
+
+}
+
+li a { color: inherit; }
+
+p.challenge_name{
+	text-decoration: none;
+	font-size:20px ;
+	font-weight: normal;
+}
+
+.accounterror{
+	color: rgb(219, 141, 13);
+	background-color: rgb(237, 228, 242);
+	border-color:rgb(248, 225, 156);
+	border:2px solid;
+	text-align:center;
+	max-height: 500px;
+	transition: max-height 0.25s ease-in;
+}
