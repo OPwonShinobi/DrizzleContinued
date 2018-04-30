@@ -11,7 +11,7 @@ if (!isset($_SESSION['Userid']))
         </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-home"></i>  <a href="index.html">Dashboard</a>
+                <i class="fa fa-home"></i>  <a href="index.php">Dashboard</a>
             </li>
             <li class="active">
                 <i class="fa fa-wrench"></i> My Action

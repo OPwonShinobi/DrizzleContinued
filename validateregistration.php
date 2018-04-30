@@ -1,13 +1,16 @@
 <?php
 session_start();
-require 'PHPMailer-master/PHPMailerAutoload.php';
 
 require_once('config.php');
 
 if(isset($_GET['success']) && $_GET['success'] == true) {
-    include "welcome.php";
-    header("refresh:5;url=/login.php");
-    die();
+    header("Location: welcome.php");
+    // $fkstr = "Location: /index.php?userid=".$_SESSION['Userid'];
+    // echo "<script>alert(".$fkstr.")</script>";
+    // sleep(5);
+    // header("refresh:5;url=/index.php?userid=".$_SESSION['Userid']);
+    // header("Location: /index.php?userid=".$_SESSION['Userid']);
+    exit;
 }
 
 $redirect = '/register.php?';
@@ -227,6 +230,15 @@ if ($_POST) {
 
             //TODO send email to user telling them they successfully registered
             sendEmail($email);
+            $stmt = $conn->prepare("SELECT ID FROM User WHERE Email=:theEmail");
+            $stmt->bindParam(":theEmail", $email);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+            $_SESSION['Userid'] = $result['ID'];
+            $_SESSION['start'] = time();
+            $_SESSION['expire'] = $_SESSION['start'] + (60 * 60);
+
             header('Location: /validateregistration.php?success=true');
         } else {
             echo $email . " " . $firstname . " " . $lastname . " " . $city . " " . $state . " " . $country;

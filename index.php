@@ -2,13 +2,12 @@
 session_start();
 require_once('config.php');
 if (!isset($_SESSION['Userid'])){
-    header('Location: login.php');
+	header('Location: login.php');	
 }
 $now = time();
 if ($now > $_SESSION['expire']) {
     header('Location: logout.php');
 }
-
 
 $conn = get_db_connection();
 $stmt = $conn->prepare("SELECT PhotoId, Nickname FROM User WHERE ID=:theID");
@@ -197,16 +196,16 @@ if ($_POST) {
                 <?php include 'dashboard-allactions.php' ?>
             </div>
             <!-- row_user_compare_city -->
-            <div id = "row_user_compare_city" class="row tab-pane fade">
-                <?php include 'dashboard-comparecity.php' ?>
+            <!-- <div id = "row_user_compare_city" class="row tab-pane fade">
+                <?php// include 'dashboard-comparecity.php' ?>
+            </div> -->
+            <!-- row_user_compare_within_school-->
+            <div id = "row_user_compare_within_school" class="row tab-pane fade">
+                <?php include 'dashboard-comparewithinschool.php' ?>
             </div>
             <!-- row_user_compare_within_city -->
             <div id = "row_user_compare_within_city" class="row tab-pane fade">
                 <?php include 'dashboard-comparewithincity.php' ?>
-            </div>
-            <!-- row_user_compare_within_school-->
-            <div id = "row_user_compare_within_school" class="row tab-pane fade">
-                <?php include 'dashboard-comparewithinschool.php' ?>
             </div>
             <!-- row_user_compare_within_state-->
             <div id = "row_user_compare_within_state" class="row tab-pane fade">
