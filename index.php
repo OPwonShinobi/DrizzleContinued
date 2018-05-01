@@ -124,7 +124,7 @@ if ($_POST) {
                 </li>
 
                 <li>
-                    <a data-toggle="collapse" data-target="#indevidual_leaderboard"><i class="fa fa-fw fa-empire"></i> Individual leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a class="leaderboard-menu" data-toggle="collapse" data-target="#indevidual_leaderboard"><i class="fa fa-fw fa-empire"></i> Individual leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="indevidual_leaderboard" class="collapse">
                         <li>
                             <a id="link_personal_rank_in_school" data-toggle="tab" href="#row_user_compare_within_school"><i class="fa fa-fw fa-trophy"></i> School </a>
@@ -141,7 +141,7 @@ if ($_POST) {
                     </ul>
                 </li>
 				<li>
-                    <a data-toggle="collapse" data-target="#school_leaderboard"><i class="fa fa-fw fa-empire"></i> School leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a class="leaderboard-menu" data-toggle="collapse" data-target="#school_leaderboard"><i class="fa fa-fw fa-empire"></i> School leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="school_leaderboard" class="collapse">
                         <li>
                             <a id="link_school_rank_in_city" data-toggle="tab" href="#row_user_compare_school_in_city"> <i class="fa fa-fw fa-trophy"></i> City </a>
