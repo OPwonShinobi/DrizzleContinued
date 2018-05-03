@@ -256,6 +256,28 @@ $(document).on('click', '.delete_admin_buttons', function(){
 	}
 });
 
+function filterStudentRecords() {
+	var input, filter, table, tr, td, i;
+	input = document.getElementById("filterInput");
+	filter = input.value.toUpperCase();
+	table = document.getElementById("student_table_content");
+	tr = table.getElementsByTagName("tr");
+
+	var e = document.getElementById("FilterCatagory");
+	var strUser = e.options[e.selectedIndex].value;
+
+	for (i = 0; i < tr.length; i++) {
+	td = tr[i].getElementsByTagName("td")[Number(strUser)];
+		if (td) {
+			if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		}   
+	}
+}
+
 function request_add_school() {
 	$.ajax({
 		type: "POST",
@@ -317,7 +339,6 @@ function request_modify_school() {
 			console.log(data);
 		}
 	});
-
 }
 
 function request_delete_school(deleteId) {
@@ -583,15 +604,68 @@ function update_students_table(students) {
 
 		$("#student_table_content").append('<tr>'
 				+ '<td>' + rank +'</td>'
-				+ '<td>' + student.Country+'</td>'
+				+ '<td>' + student.Country +'</td>'
 				+ '<td>' + student.StateProvince + '</td>'
 				+ '<td>' + student.City +'</td>'
 				+ '<td>' + student.SchoolName +'</td>'
-				+ '<td>' + student.FirstName + ' ' +  student.LastName+' </td>'
-				+ '<td>' + student.NickName + '</td>'
+				+ '<td class="student_table_ln"><div contenteditable>' + student.LastName + '</td>' 
+				+ '<td class="student_table_fn"><div contenteditable>' + student.FirstName +'</td>'
+				+ '<td class="student_table_NickName"><div contenteditable>' + student.NickName + '</td>'
+				+ '<td class="student_table_Email"><div contenteditable>' + student.Email + '</td>'
 				+ '<td>' + student.Score + '</td>'
+				+ '<td class="student_table_UserID" style="display:none;">' + student.UserID + '</td>'
+				+ '<td> <button style="height:30px;width:80px" class="update_students_btn">Update</button> </td>'
 				+ '</tr>');
 	}
+
+	$(".update_students_btn").click(function() {
+    	var $row = $(this).closest("tr");   // Find the row
+		if (confirm('Are you sure you want to save ' + $row.find('.student_table_ln').text() + ' ' + $row.find('.student_table_fn').text() + '\'s record?')) {
+		    update_students_record($row);
+		} else {
+		    // Do nothing!
+		}
+	});
+}
+
+//Roger
+function update_students_record(row){
+	var idt = row.find('.student_table_UserID').text();
+	var id = Number(idt);
+	var fn = row.find('.student_table_fn').text();
+	var ln = row.find('.student_table_ln').text();
+	var nickName = row.find('.student_table_NickName').text();
+	var email = row.find('.student_table_Email').text();
+
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'modifyStudentRecord',
+			UserID: id,
+			FirstName: fn,
+			LastName: ln,
+			NickName: nickName,
+			Email:email
+		},
+		dataType: 'JSON',
+		success: function(data){
+			console.log(data);
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				getAllStudentScore();
+			}
+			// data retrieved from server
+			// Use the data to change the elements here
+		},
+		// error: function(xhr, textStatus, error){
+	 //      console.log(xhr.statusText);
+	 //      console.log(textStatus);
+	 //      console.log(error);
+	 // 		}
+	 		error: function(data){
+			console.log(data);
+		}
+	});
 }
 
 function getCountriesFromStudentRecord(students) {

@@ -79,8 +79,6 @@ if ($_POST) {
             $error = true;
         } else {
             /* IF EMAIL EXIST IN DATABASE DO SOMETHING*/
-
-
             $stmt = $conn->prepare("SELECT Email FROM User WHERE Email=:theEmail");
             $stmt->bindParam(":theEmail", $email);
             $stmt->execute();
