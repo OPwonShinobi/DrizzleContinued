@@ -90,7 +90,7 @@ if ($_POST) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php"> <span class="fontStyle"> Welcome  </span></a>
+            <a class="navbar-brand" data-toggle="tab" href="#row_homepage_dashboard"> <span class="fontStyle">Home</span></a>
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
@@ -182,8 +182,11 @@ if ($_POST) {
 
     <div id="page-wrapper">
         <div class="container-fluid tab-content ">
+            <div id = "row_homepage_dashboard" class="row tab-pane fade in active">
+                <?php include 'home.php'?>
+            </div>
             <!-- Dashboard -->
-            <div id = "row_user_dashboard" class="row tab-pane fade in active">
+            <div id = "row_user_dashboard" class="row tab-pane fade">
                 <?php include 'dashboard.php'?>
             </div>
             <!-- /.row-user-dashboard -->

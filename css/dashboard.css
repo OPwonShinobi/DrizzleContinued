@@ -29,6 +29,25 @@ p.challenge_name{
 	transition: max-height 0.25s ease-in;
 }
 
+.slideimg{
+  margin-left: auto;
+  margin-right: auto;
+  height: 250px;
+}
+
+.panel-newactions{
+  text-align: center;
+  font-weight: bold;
+}
+
+.pointsum{
+  text-align: right;
+}
+
+.descsum{
+  text-align: center;
+}
+
 .page-header, .page-header * {
 	color: white;
 }
