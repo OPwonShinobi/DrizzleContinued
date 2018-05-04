@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer-master/vendor/autoload.php';
 define("DB_HOST", "localhost");
 define("DB_USER", "yecuser");
 define("DB_PASSWORD", "yec123!Q@W#E");

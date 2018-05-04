@@ -28,3 +28,11 @@ p.challenge_name{
 	max-height: 500px;
 	transition: max-height 0.25s ease-in;
 }
+
+.page-header, .page-header * {
+	color: white;
+}
+
+table {
+	color: black;
+}
