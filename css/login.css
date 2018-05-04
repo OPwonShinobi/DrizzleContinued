@@ -6,7 +6,8 @@ body
     margin: 0;
 }
 
-.accounterror{
+.accounterror
+{
     color: rgb(219, 141, 13);
     background-color: rgb(237, 228, 242);
     border-color:rgb(248, 225, 156);
@@ -394,7 +395,7 @@ form.registration input:focus {
     left: 45%;
 }
 
-footer{
+footer {
     opacity: 0.4;
     background-color: #000000;
     position: fixed;
@@ -406,18 +407,31 @@ footer{
     color: #CCC;
 }
 
+@media only screen and (orientation:landscape)
+and (min-aspect-ratio: 47/32) {
+    .wrap {
+        position: relative;;
+    }
+
+    footer {
+        position: relative;
+    }
+}
+
 footer p {
     padding: 10.5px;
     margin: 0px;
 }
 
-ul#share-button{
+ul#share-button {
     margin-top: 10px;
 }
-li{
+
+li {
     display: inline;
     margin-right: 20px;
-
 }
 
-li a { color: inherit; }
+li a {
+    color: inherit;
+}
