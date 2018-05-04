@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Action(
 	ID           INTEGER(8) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Description  TEXT       NOT NULL,
 	Points       Integer(2) NOT NULL,
-  DateEntered  TIMESTAMP  NOT NULL,
+  	DateEntered  TIMESTAMP  NOT NULL,
 	Active       Boolean    DEFAULT TRUE
 );
 
@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS Action(
 CREATE TABLE IF NOT EXISTS UserAction(
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
+	CompleteTime TIMESTAMP DEFAULT NULL,
 	PRIMARY KEY(UserID, ActionID),
 	FOREIGN KEY(UserID) REFERENCES User(ID),
 	FOREIGN KEY(ActionID) REFERENCES Action(ID)
@@ -63,14 +64,14 @@ CREATE TABLE IF NOT EXISTS UserAction(
 CREATE TABLE IF NOT EXISTS Accomplishment(
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
-	CompleteTime DATETIME   NOT NULL,
+	CompleteTime TIMESTAMP   NOT NULL,
 	PRIMARY KEY(UserID, ActionID, CompleteTime),
 	FOREIGN KEY(UserID) REFERENCES User(ID),
 	FOREIGN KEY(ActionID) REFERENCES Action(ID)
 );
 
 -- Create Admin table
-CREATE TABLE IF NOT EXISTS Admin (
+CREATE TABLE IF NOT EXISTS Administrator (
 	ID            INTEGER(8)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Username      VARCHAR(20)  NOT NULL,
 	Password      VARCHAR(256) NOT NULL,
@@ -123,5 +124,5 @@ INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALS
 
 -- Insert the super admin account
 -- This account is recommend to be used to add other admins only
-INSERT INTO Admin VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
+INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
 
