@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['Userid']))
-header('Location: login.php');
+	header('Location: login.php');
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -9,7 +9,7 @@ header('Location: login.php');
 		</h1>
 		<ol class="breadcrumb">
 			<li>
-				<i class="fa fa-home"></i><a href="#">Dashboard</a>
+				<i class="fa fa-home"></i><a href="index.php">Dashboard</a>
 			</li>
 			<li class="active">
 				<i class="fa fa-trophy"></i> Personal ranking in school

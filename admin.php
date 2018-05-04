@@ -64,11 +64,6 @@ if ($_POST) {
 		<script src="/js/bootstrap-confirmation.js"></script>
 		<script src="/js/bootstrap-switch.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-
-
-
 	</head>
 
 	<body>
@@ -195,6 +190,16 @@ if ($_POST) {
 					<div id="row_manage_student" class="row tab-pane fade">
 						<div class="col-xs-12">
 							<label class="h2"> Student records</label>
+							<input type="text" id="filterInput" onkeyup="filterStudentRecords()" placeholder="Search for records.." title="Type in a name">
+							<!--The values here for filter corresponds to the td number, do not change it! Unless you change the table layout-->
+							<select id="FilterCatagory">
+								<option value="4" selected="selected">School</option>
+								<option value="5">LastName</option>
+								<option value="6">FirstName</option>
+								<option value="7">NickName</option>
+								<option value="8">Email</option>
+								<option value="9">Score</option>
+							</select>
 						</div>
 
 
@@ -231,9 +236,13 @@ if ($_POST) {
 										<th>State/Province</th>
 										<th>City</th>
 										<th>School</th>
-										<th>Student</th>
+										<th>Last Name</th>
+										<th>First Name</th> 
 										<th>Nick name</th>
+										<th>Email</th>
 										<th>Score</th>
+										<th style="display:none;">ID</th>
+										<th></th>
 									</tr>
 									<tbody id="student_table_content">
 									</tbody>
@@ -259,6 +268,19 @@ if ($_POST) {
 								<input type="submit" class="btn btn-success btn-block" onclick="get_myNotification_table()" value="Post">
                                 <input type="button" class="btn btn-danger btn-block" onclick="deleteNotification()" value="Delete">
                             </form>
+                            <!--
+                            <form action="upload.php" method="post" enctype="multipart/form-data">
+							    Select image to upload:
+							    <input type="file" name="fileToUpload" id="fileToUpload">
+							    <input type="submit" value="Upload Image" name="submit">
+							</form>
+							-->
+							<form action="upload2.php" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="destination" value="<?php echo $_SERVER["REQUEST_URI"]; ?>"/>
+							    <h3 style="color:white">Select image to upload:</h3>
+							    <input style="color:white" type="file" name="image"/>
+							    <input type="submit" name="submit" value="UPLOAD"/>
+							</form>
 						</div>
 					</div>
 

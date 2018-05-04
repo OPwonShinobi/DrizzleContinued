@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS Accomplishment(
 );
 
 -- Create Admin table
-CREATE TABLE IF NOT EXISTS Admin(
+CREATE TABLE IF NOT EXISTS Admin (
 	ID            INTEGER(8)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Username      VARCHAR(20)  NOT NULL,
 	Password      VARCHAR(256) NOT NULL,

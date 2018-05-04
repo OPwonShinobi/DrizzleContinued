@@ -55,3 +55,11 @@ function get_current_time() {
 		+ (currentSeconds> 9 ? "" + currentSeconds: "0" + currentSeconds);
 	return currentTime; 
 }
+
+$(function() { 
+     var navMain = $(".navbar-collapse");
+
+     navMain.on("click", "a:not(.leaderboard-menu)", null, function () {
+         navMain.collapse('hide');
+     });
+ });

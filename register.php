@@ -22,7 +22,9 @@ require_once('config.php');
 <body>
 <div class="container-fluid">
     <div class="row">
-        <img class="logo" src="images/logo2.png" draggable="false" width="200px">
+        <a href="login.php">
+            <img class="logo" src="images/logo2.png" draggable="false" width="200px">
+        </a>
     </div>
     <div class="row">
         <div class="col-md-12 text-center">
@@ -249,7 +251,7 @@ require_once('config.php');
                     <input type="submit" value="Sign Up" class="btn btn-success btn-sm" />
                     <!--END OF SUBMIT BUTTON-->
                     <script src="js/registervalidation.js"></script>
-                    <input type="button" id="login-page" value="Login" class="btn  btn-default btn-sm reg" />
+                    <!-- <input type="button" id="login-page" value="Login" class="btn  btn-default btn-sm reg" /> -->
                 </form>
             <!--END OF FORM-->
             </div>

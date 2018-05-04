@@ -4,6 +4,21 @@ if (!isset($_SESSION['Userid']))
 ?>
 <script src="js/myaction.js"></script>
 
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            My Actions <small>The movement for a greener future through youth action</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>  <a href="index.php">Dashboard</a>
+            </li>
+            <li class="active">
+                <i class="fa fa-wrench"></i> My Action
+            </li>
+        </ol>
+    </div>
+</div>
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">

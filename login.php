@@ -16,6 +16,7 @@ if ($_POST) {
 
     $result = $stmt->fetch();
 
+    // uses php's built-in hashing function to check pw hash & db-stored hash is same
     if (password_verify($password, $result['Password'])) {
         $_SESSION['Userid'] = $result['ID'];
 		$_SESSION['Username'] = $result['Nickname'];
@@ -49,7 +50,9 @@ if ($_POST) {
 <body>
 <div class="container-fluid">
     <div class="row">
+        <a href="welcomeinfo.php">
         <img class="logo" src="images/logo2.png" draggable="false" width="200px" >
+        </a>
     </div>
     <div class="row">
         <div class="col-xs-12">

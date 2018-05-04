@@ -17,6 +17,15 @@ body {
     }
 }
 
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (min-device-width:320px)
+and (max-device-width:480px) {
+    body {
+        width: fit-content;
+    }
+}
+
 .challenge_box{
   position: relative;
   height:200px;

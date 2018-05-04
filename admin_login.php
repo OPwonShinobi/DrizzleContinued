@@ -8,7 +8,9 @@ if ($_POST) {
 
 	$conn = get_db_connection();
 
-	$stmt = $conn->prepare("SELECT Username, Password FROM Admin WHERE Email=:theEmail");
+	//Roger
+	$stmt = $conn->prepare("SELECT Username, Password FROM Administrator WHERE Email=:theEmail");
+	//$stmt = $conn->prepare("SELECT Username, Password FROM Admin WHERE Email=:theEmail");
 	$stmt->bindParam(":theEmail", $email);
 	$stmt->execute();
 	$stmt->setFetchMode(PDO::FETCH_ASSOC); 

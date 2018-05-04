@@ -47,3 +47,11 @@ p.challenge_name{
 .descsum{
   text-align: center;
 }
+
+.page-header, .page-header * {
+	color: white;
+}
+
+table {
+	color: black;
+}

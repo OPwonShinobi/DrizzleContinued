@@ -2,13 +2,12 @@
 session_start();
 require_once('config.php');
 if (!isset($_SESSION['Userid'])){
-    header('Location: login.php');
+	header('Location: login.php');	
 }
 $now = time();
 if ($now > $_SESSION['expire']) {
     header('Location: logout.php');
 }
-
 
 $conn = get_db_connection();
 $stmt = $conn->prepare("SELECT PhotoId, Nickname FROM User WHERE ID=:theID");
@@ -125,7 +124,7 @@ if ($_POST) {
                 </li>
 
                 <li>
-                    <a data-toggle="collapse" data-target="#indevidual_leaderboard"><i class="fa fa-fw fa-empire"></i> Individual leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a class="leaderboard-menu" data-toggle="collapse" data-target="#indevidual_leaderboard"><i class="fa fa-fw fa-empire"></i> Individual leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="indevidual_leaderboard" class="collapse">
                         <li>
                             <a id="link_personal_rank_in_school" data-toggle="tab" href="#row_user_compare_within_school"><i class="fa fa-fw fa-trophy"></i> School </a>
@@ -142,7 +141,7 @@ if ($_POST) {
                     </ul>
                 </li>
 				<li>
-                    <a data-toggle="collapse" data-target="#school_leaderboard"><i class="fa fa-fw fa-empire"></i> School leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a class="leaderboard-menu" data-toggle="collapse" data-target="#school_leaderboard"><i class="fa fa-fw fa-empire"></i> School leaderboard <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="school_leaderboard" class="collapse">
                         <li>
                             <a id="link_school_rank_in_city" data-toggle="tab" href="#row_user_compare_school_in_city"> <i class="fa fa-fw fa-trophy"></i> City </a>
@@ -200,16 +199,16 @@ if ($_POST) {
                 <?php include 'dashboard-allactions.php' ?>
             </div>
             <!-- row_user_compare_city -->
-            <div id = "row_user_compare_city" class="row tab-pane fade">
-                <?php include 'dashboard-comparecity.php' ?>
+            <!-- <div id = "row_user_compare_city" class="row tab-pane fade">
+                <?php// include 'dashboard-comparecity.php' ?>
+            </div> -->
+            <!-- row_user_compare_within_school-->
+            <div id = "row_user_compare_within_school" class="row tab-pane fade">
+                <?php include 'dashboard-comparewithinschool.php' ?>
             </div>
             <!-- row_user_compare_within_city -->
             <div id = "row_user_compare_within_city" class="row tab-pane fade">
                 <?php include 'dashboard-comparewithincity.php' ?>
-            </div>
-            <!-- row_user_compare_within_school-->
-            <div id = "row_user_compare_within_school" class="row tab-pane fade">
-                <?php include 'dashboard-comparewithinschool.php' ?>
             </div>
             <!-- row_user_compare_within_state-->
             <div id = "row_user_compare_within_state" class="row tab-pane fade">

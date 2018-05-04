@@ -128,6 +128,9 @@ if ($_POST) {
 		case 'checkMyactionfinish':
 			checkMyactionfinish();
 			break;
+		case 'modifyStudentRecord':
+			modifyStudentRecord();
+			break;
 		case 'getAllAdmins':
 			getAllAdmins();
 			break;
@@ -267,6 +270,30 @@ function deleteSchool() {
 		WHERE ID=:theDeleteSchoolId
 	");
 	$stmt->bindParam(":theDeleteSchoolId", $_POST['SchoolId']);
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+}
+
+function ModifyStudentRecord(){
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		UPDATE User
+		SET LastName=:theLastName,
+		FirstName=:theFirstName,
+		NickName=:theNickName,
+		Email=:theEmail
+		WHERE ID=:theUserID;
+	");
+
+	$stmt->bindParam(":theLastName", $_POST['LastName']);
+	$stmt->bindParam(":theFirstName", $_POST['FirstName']);
+	$stmt->bindParam(":theNickName", $_POST['NickName']);
+	$stmt->bindParam(":theEmail", $_POST['Email']);
+	$stmt->bindParam(":theUserID", $_POST['UserID']);
+
 	$result = $stmt->execute();
 	if ($result) {
 		$response = array("Result"=>"Success");
@@ -733,6 +760,7 @@ function getAllStudentScore() {
 				u.FirstName,
 				u.LastName,
 				u.NickName,
+				u.Email,
 				SUM(a.Points) As Score
 		FROM School s
 		JOIN User u ON u.SchoolID=s.ID
@@ -948,15 +976,16 @@ function checkMyactionfinish() {
     echo json_encode($result);
 }
 
+//Roger changed admin to administrator
 function getAllAdmins() {
 	$conn = get_db_connection();
 	if ($conn) {
 		$stmt = $conn->prepare("
 			SELECT ID, Username, Email, Authorization
-			FROM Admin
+			FROM Administrator
 			WHERE Authorization < (
 				SELECT Authorization 
-				FROM Admin
+				FROM Administrator
 				WHERE Username=:theAdmin
 			) OR Username=:theAdmin
 			ORDER BY Authorization DESC, Username ASC
