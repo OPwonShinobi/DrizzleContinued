@@ -3,21 +3,6 @@ if (!isset($_SESSION['Userid']))
     header('Location: login.php');
 ?>
 <script src="/js/all_action.js"></script>
-<div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">
-			All Actions <small>The movement for a greener future through youth action</small>
-		</h1>
-		<ol class="breadcrumb">
-			<li>
-				<i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
-			</li>
-			<li class="active">
-				<i class="fa fa-wrench"></i> All Actions
-			</li>
-		</ol>
-	</div>
-</div>
 <!-- /.row -->
 
 <div class="row">

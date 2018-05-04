@@ -5,12 +5,11 @@ if (!isset($_SESSION['Userid']))
 <script src="js/dashboard.js"></script>
 <script src="js/myaction.js"></script>
 
-<h1 class="page-header">  Dashboard <small>The movement for a greener future through youth action</small></h1>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2 class="panel-title"><i class="fa fa-home"></i> Dashboard</h2>
+				<h1 class="panel-title"><i class="fa fa-home"></i> Dashboard</h1>
 			</div>
 			<div class="panel-body">
 
