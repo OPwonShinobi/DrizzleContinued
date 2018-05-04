@@ -9,10 +9,10 @@ if (!isset($_SESSION['Userid']))
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h1 class="panel-title"><i class="fa fa-home"></i> Dashboard</h1>
+				<h2 class="panel-title"><i class="fa fa-home"></i> Overview</h2>
 			</div>
+			
 			<div class="panel-body">
-
 				<div class="row">
 					<div class="col-lg-3 col-md-6">
 						<div class="panel panel-green">

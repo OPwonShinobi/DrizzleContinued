@@ -24,17 +24,19 @@ function get_myaction_table() {
         data: {QueryData: 'myActionsWithUserIndication'},
         dataType: 'JSON',
         success: function(data){
-            //console.log(data);
-            update_my_action_table(data);
+            if($("#hide_completed_actions").is(':checked'))
+                filter_my_action_table(data);
+            else
+                update_my_action_table(data);
+
         },
         error: function(data){
-            //console.log(data);
+            console.log(data);
         }
     });
 }
 
-function update_my_action_table(data) {
-
+function filter_my_action_table(data) {
     $("#my_action_content").empty();
     $("#score_content").empty();
     myAction = [];
@@ -44,23 +46,32 @@ function update_my_action_table(data) {
     sum = 0;
     actionCounter = 0;
     for (action of data) {
-        $("#my_action_content").append(
-            '<div class="col-lg-4 text-center">'
-            + '<div class="panel panel-default">'
-            + '<div  class ="challenge_box">'
+        if (action['CompleteTime'] != null)
+        {
+            continue;
+        }
+        var userAction = $(
+            '<div class="col-lg-4 text-center" style="color:black">'
+            + '<div class="panel panel-default" >'
+            + '<div class ="challenge_box">'
 
             + '<div  class ="row">'
             + '<img src="/images/points/'+ action['Points'] + '.png" height="100px" width="100px" alt="" class ="challenge_img">'
-            + '<p class ="challenge_name">'+ action['Description'] + ' <br><br> Point: ' + action['Points'] +'</p>'
+            + '<p class ="challenge_name">'+ action['Description'] + '<br><br> Point: ' + action['Points'] +'</p>' 
             + '</div>'
 
-            + '<div  class ="row">'
-            + '<img src="images/check1.png" height="50px" width="50px" class ="challenge_check" id = "'+ action['ActionID'] + '" onclick="finishAction(\''+ action['ActionID'] + '\')">'
+            + '<div class ="row">'
+            + '<img src="images/check1.svg" height="50px" width="50px" class ="challenge_check" id = "'+ action['ActionID'] + '" onclick="finishAction(\''+ action['ActionID'] + '\')">'
             + '</div>'
+
+            + '<img src="images/hourglass.svg" style="visibility:hidden" height="150px" width="150px">'
+            + '<p style="font-size:40px; ">Ready to submit!</p>'
             + '</div>'
+            + '<p style="font-size:18px; visibility:hidden">Submission Time: ' + action['CompleteTime'] +'</p>'
             + '</div>'
             + '</div>'
         );
+        $("#my_action_content").append(userAction)
         myAction[action['ActionID']] = 1;
         list.push(action['ActionID']);
         pointRecord[action['ActionID']] = action['Points'];
@@ -69,26 +80,72 @@ function update_my_action_table(data) {
         get_num_action();
     }
     check_myAction_status();
-
-
     update_my_current_pick();
 }
 
-function finish_my_action(actionId) {
-    $.ajax({
-        type: "POST",
-        url: "/querydata.php",
-        data: {
-            QueryData: 'finishAction',
-            ActionId:  actionId
-        },
-        dataType: 'JSON',
-        success: function(data){
-        },
-        error: function(data){
-
+function update_my_action_table(data) {
+    $("#my_action_content").empty();
+    $("#score_content").empty();
+    myAction = [];
+    pointRecord= [];
+    list=[];
+    nameRecord=[];
+    sum = 0;
+    actionCounter = 0;
+    for (action of data) {
+        // submitted actions cannot be changed, instead displays submitted time & 
+        // a big hourglass icon over the action
+        var submissionStatus = $('<p style="font-size:18px; color:black">Submission Time: ' + action['CompleteTime'] +'</p>');
+        var cooldownStatus = '<p style="font-size:40px; color:black">Cooldown: 1 day</p>';
+        var cooldownIcon = $('<img src="images/hourglass.svg" style="color:black;" height="150px" width="150px">'); 
+        // userActions by default has CompleteTime null,
+        // resets submissionStatus & cooldownIcon to allow user to submit again
+        if (action['CompleteTime'] == null)
+        {
+            //make text bigger for no timestamped actions!
+            submissionStatus.css("visibility","hidden"); //i'd use this for submission Status but it's too cramped
+            cooldownIcon.css("visibility","hidden"); //hidden but the space is still there
+            cooldownStatus = '<p style="font-size:40px; color:black">Ready to submit!</p>';
         }
-    });
+        var userAction = $(
+            '<div class="col-lg-4 text-center">'
+            + '<div class="panel panel-default" >'
+            + '<div class ="challenge_box">'
+
+            + '<div  class ="row">'
+            + '<img src="/images/points/'+ action['Points'] + '.png" height="100px" width="100px" alt="" class ="challenge_img">'
+            + '<p class ="challenge_name">'+ action['Description'] + '<br><br> Point: ' + action['Points'] +'</p>' 
+            + '</div>'
+
+            + '<div class ="row">'
+            + '<img src="images/check1.svg" height="50px" width="50px" class ="challenge_check" id = "'+ action['ActionID'] + '" onclick="finishAction(\''+ action['ActionID'] + '\')">'
+            + '</div>'
+
+            + cooldownIcon.prop("outerHTML") //return jquery obj as html string
+            + cooldownStatus
+            + '</div>'
+            + submissionStatus.prop("outerHTML") 
+            + '</div>'
+            + '</div>'
+        );
+        // userAction.css("color", "Grey");
+        // if userAction has no timestamp (can be submitted), set it black
+        // unused for now
+        if (action['CompleteTime'] == null)
+        {
+            userAction.css("color", "black");
+        }
+
+        $("#my_action_content").append(userAction)
+        myAction[action['ActionID']] = 1;
+        list.push(action['ActionID']);
+        pointRecord[action['ActionID']] = action['Points'];
+        nameRecord[action['ActionID']] = action['Description'];
+        actionCounter = actionCounter+1;
+        get_num_action();
+    }
+    check_myAction_status();
+    update_my_current_pick();
 }
 
 function check_myAction_status() {
@@ -108,18 +165,38 @@ function check_myAction_status() {
     });
 }
 
+/* Updates the UI to signal a finished action. Doesn't do anything on backend. */
 function finishAction(id) {
     var S = document.getElementById(id);
     if(myAction[id] == 1) {
-        S.src='images/check2.png';
+        S.src='images/check2.svg';
         myAction[id] = 2;
     }
     else if(myAction[id] == 2){
-        S.src='images/check1.png';
+        S.src='images/check1.svg';
         myAction[id] = 1;
     }
 }
 
+/* Updates action in database to finished. */
+function finish_my_action(actionId) {
+    $.ajax({
+        type: "POST",
+        url: "/querydata.php",
+        data: {
+            QueryData: 'finishAction',
+            ActionId:  actionId
+        },
+        dataType: 'JSON',
+        success: function(data){
+            console.log("Just added accomplishment");
+            get_myaction_table();
+        },
+        error: function(data){
+            console.log("failed to add accomplishment:" + data);
+        }
+    });
+}
 function submit_my_finish() {
     shareCounter=0;
     for(var i = 0; i < list.length; i++) {
@@ -158,8 +235,11 @@ function lockAction(data){
     for (action of data) {
         if(action['CompleteActionID']!= null) {
             var S = document.getElementById(action['ActionID']);
+            //S is null when it's hidden was hidden
+            if (S == null)
+                continue;
             myAction[action['ActionID']] = 3;
-            S.src='images/check2.png';
+            S.src='images/check2.svg';
         }
     }
 

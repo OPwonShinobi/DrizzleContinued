@@ -6,17 +6,9 @@ if (!isset($_SESSION['Userid']))
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
+        <h1 class="my-page-header">
             My Actions <small>The movement for a greener future through youth action</small>
         </h1>
-        <ol class="breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>  <a href="index.php">Dashboard</a>
-            </li>
-            <li class="active">
-                <i class="fa fa-wrench"></i> My Action
-            </li>
-        </ol>
     </div>
 </div>
 <!-- /.row -->
@@ -27,6 +19,13 @@ if (!isset($_SESSION['Userid']))
                 <h2 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> My Backpack</h2>
             </div>
             <div class="panel-body">
+                <label class="switch">
+                    <!-- this also clears the timestamps for stuff older than a day -->
+                    <input type="checkbox" id="hide_completed_actions" onchange="get_myaction_table()"> 
+                    <span class="slider round"></span>
+                    <p class="checkbox-label">Hide Completed</p>
+                </label>
+
                 <div class="row" id="my_action_content">
 
                 </div>

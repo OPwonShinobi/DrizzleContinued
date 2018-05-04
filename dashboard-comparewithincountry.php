@@ -4,17 +4,9 @@ if (!isset($_SESSION['Userid']))
 ?>
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">
+		<h1 class="my-page-header">
 			Comparison <small>The movement for a greener future through youth action</small>
 		</h1>
-		<ol class="breadcrumb">
-			<li>
-				<i class="fa fa-home"></i><a href="index.php">Dashboard</a>
-			</li>
-			<li class="active">
-				<i class="fa fa-trophy"></i> Personal ranking in country
-			</li>
-		</ol>
 	</div>
 </div>
 <!-- /.row -->
@@ -26,6 +18,12 @@ if (!isset($_SESSION['Userid']))
 			</div>
 			<div class="panel-body">
 				<div class="row">
+					<div class="col-xs-12">
+						<div class="well">
+							<span class="h3">Your position: </span>
+							<span id="span_personal_rank_in_country" class="h1"></span>
+						</div>
+					</div>
 					<div class="col-xs-12">
 						<div class="panel panel-green text-center">
 						<span class="h1 span_user_country"> My Country</span><br>
@@ -49,12 +47,6 @@ if (!isset($_SESSION['Userid']))
 							<tbody id="personal_rank_in_country">
 							</tbody>
 						</table>
-					</div>
-					<div class="col-xs-12">
-						<div class="well">
-							<span class="h3">Your position: </span>
-							<span id="span_personal_rank_in_country" class="h1"></span>
-						</div>
 					</div>
 
 				</div>

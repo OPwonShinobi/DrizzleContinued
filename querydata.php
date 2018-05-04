@@ -35,11 +35,11 @@ if ($_POST) {
 			getAllActionsWithUserIndication();
 			break;
 
-		case 'addUerAction':
+		case 'addUserAction':
 			addUserAction($_POST['ActionId']);
 			break;
 
-		case 'deleteUerAction':
+		case 'deleteUserAction':
 			deleteUserAction($_POST['ActionId']);
 			break;
 
@@ -180,10 +180,20 @@ function getAllActions(){
 function getMyActionsWithUserIndication() {
 	$conn = get_db_connection();
 	if ($conn) {
-		$stmt = $conn->prepare("SELECT ua.UserID, ua.ActionID, a.Description, a.Points
+		// pulls the last completed time of an
+		$stmt = $conn->prepare("
+			UPDATE UserAction 
+			SET CompleteTime = NULL
+			WHERE DATEDIFF(CURRENT_TIMESTAMP, CompleteTime) >= 1; 
+			");
+		$stmt->bindParam(":theUser", $_SESSION['Userid']);
+		$stmt->execute();
+
+		$stmt = $conn->prepare("
+			SELECT ua.UserID, ua.ActionID, ua.CompleteTime, a.Description, a.Points
 			FROM UserAction ua
 			INNER JOIN Action a On ua.ActionID = a.ID
-			WHERE UserID=:theUser AND a.Active=TRUE
+			WHERE UserID=:theUser AND a.Active=TRUE;
 			");
 		$stmt->bindParam(":theUser", $_SESSION['Userid']);
 		$stmt->execute();
@@ -366,7 +376,7 @@ function toggleAction() {
 
 function addUserAction($actionId) {
 	$conn = get_db_connection();
-	$stmt = $conn->prepare("INSERT INTO UserAction VALUES (:theUserId, :theActionId)");
+	$stmt = $conn->prepare("INSERT INTO UserAction VALUES (:theUserId, :theActionId, NULL)");
 	$stmt->bindParam("theUserId", $_SESSION['Userid']);
 	$stmt->bindParam("theActionId", $actionId);
 	$result = $stmt->execute();
@@ -382,6 +392,12 @@ function addComplishment($actionId) {
 	$stmt->bindParam("theUserId", $_SESSION['Userid']);
 	$stmt->bindParam("theActionId", $actionId);
 	$result = $stmt->execute();
+
+	$stmt = $conn->prepare("UPDATE UserAction SET CompleteTime = CURRENT_TIMESTAMP WHERE Userid = :theUserId AND ActionID = :theActionId;");
+	$stmt->bindParam("theUserId", $_SESSION['Userid']);
+	$stmt->bindParam("theActionId", $actionId);
+	$result = $stmt->execute();
+
 	if ($result) {
 		$response = array("Result"=>"Success");
 		echo json_encode($response);

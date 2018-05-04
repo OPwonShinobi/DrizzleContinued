@@ -43,7 +43,7 @@ function pickup_action(actionId, parentElement) {
 		type: "POST",
 		url: "/querydata.php",
 		data: {
-			QueryData: 'addUerAction',
+			QueryData: 'addUserAction',
 			ActionId:  actionId
 		},
 		dataType: 'JSON',
@@ -68,7 +68,7 @@ function remove_action(actionId, parentElement) {
 		type: "POST",
 		url: "/querydata.php",
 		data: {
-			QueryData: 'deleteUerAction',
+			QueryData: 'deleteUserAction',
 			ActionId:  actionId
 		},
 		dataType: 'JSON',
