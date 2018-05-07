@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Action(
 CREATE TABLE IF NOT EXISTS UserAction(
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
-	CompleteTime TIMESTAMP NOT NULL DEFAULT '1975-04-01 12:00:00',
+	CompleteTime TIMESTAMP NULL,
 	PRIMARY KEY(UserID, ActionID),
 	FOREIGN KEY(UserID) REFERENCES User(ID),
 	FOREIGN KEY(ActionID) REFERENCES Action(ID)
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS UserAction(
 CREATE TABLE IF NOT EXISTS Accomplishment(
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
-	CompleteTime TIMESTAMP   NOT NULL,
+	CompleteTime TIMESTAMP NOT NULL,
 	PRIMARY KEY(UserID, ActionID, CompleteTime),
 	FOREIGN KEY(UserID) REFERENCES User(ID),
 	FOREIGN KEY(ActionID) REFERENCES Action(ID)

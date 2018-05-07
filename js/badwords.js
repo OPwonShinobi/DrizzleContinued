@@ -7,6 +7,7 @@ var baseList = {};
 var localList;
 $.getJSON('$2y$12$ZdrjTKpRo0UnQ6wyYBYZmOo5dW5ZZQZJTTfd4M9ulvyWt57J3fLMi.json', function(data) {         
     localList = data['words'];
+    console.log("word bank loaded");
 });
 var Filter = (function() {
   /**
