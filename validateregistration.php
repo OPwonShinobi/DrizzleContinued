@@ -217,12 +217,14 @@ if ($_POST) {
                 'cost'=>12,];
             $password=password_hash($password,PASSWORD_BCRYPT,$options);
             // register as user
-            $stmt = $conn->prepare("INSERT INTO User(Password, Email, FirstName, LastName, SchoolID) VALUES (:password,
-                                    :theEmail, :firstName, :lastName, (SELECT ID FROM School WHERE ID=:schoolID))");
+            $stmt = $conn->prepare("INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES (:password, :theEmail, :firstName, :lastName, :nickName
+,(SELECT ID FROM School WHERE ID=:schoolID))");
             $stmt->bindParam(":theEmail", $email);
             $stmt->bindParam(":password", $password);
             $stmt->bindParam(":firstName", $firstname);
             $stmt->bindParam(":lastName", $lastname);
+            $nickName = $firstname." ".$lastname;
+            $stmt->bindParam(":nickName", $nickName);
             $stmt->bindParam(":schoolID", $schoolId);
             $stmt->execute();
 
