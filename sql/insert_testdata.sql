@@ -211,4 +211,4 @@ INSERT INTO Accomplishment VALUES(38, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP 
 INSERT INTO Accomplishment VALUES(39, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 365) DAY + INTERVAL FLOOR(RAND() * 30000) SECOND);
 INSERT INTO Accomplishment VALUES(40, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 365) DAY + INTERVAL FLOOR(RAND() * 30000) SECOND);
 
-UPDATE `yecdata`.`administrator` SET `Password` = '$2y$12$R2hkDmGqPjG/c5VC1Xd9cus0awuokQCszXdnWimtYRiT2gdrBjnQi', `Email` = 'admin@123' WHERE (`ID` = '1');
+UPDATE `yecdata`.`Administrator` SET `Password` = '$2y$12$R2hkDmGqPjG/c5VC1Xd9cus0awuokQCszXdnWimtYRiT2gdrBjnQi', `Email` = 'admin@123' WHERE (`ID` = '1');
