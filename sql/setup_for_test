@@ -3,6 +3,6 @@ echo "Enter password for yecuser:"
 read -s db_password
 #echo $db_password
 
-mysql -u "yecuser" --password="$db_password" --show-warnings=true
-mysql -u "yecuser" --password="$db_password" --show-warnings=true
-mysql -u "yecuser" --password="$db_password" --show-warnings=true
+mysql -u "yecuser" --password="$db_password" --show-warnings=true < drop_database.sql
+mysql -u "yecuser" --password="$db_password" --show-warnings=true < setup_db.sql
+mysql -u "yecuser" --password="$db_password" --show-warnings=true < insert_testdata.sql
