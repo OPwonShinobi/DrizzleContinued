@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS Action(
 	Description  TEXT       NOT NULL,
 	Points       Integer(2) NOT NULL,
   	DateEntered  TIMESTAMP  NOT NULL,
-	Active       Boolean    DEFAULT TRUE
+	Active       Boolean    DEFAULT TRUE,
+	Catagory	 VARCHAR(128) NOT NULL
 );
 
 -- Create UserAction table
@@ -100,26 +101,26 @@ CREATE TABLE IF NOT EXISTS OldAccomplishment (
 ); 
 
 -- Insert initial action data
-INSERT INTO Action VALUES (NULL, 'Organized a park cleanup', 5,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Raised awareness for an environmental issue', 4,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Went for a nature walk or hike', 2,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Picked up garbage at the local beach', 4,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Introduced a compost bin to your home', 3,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Carpooled', 2,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Recycled a used item', 2,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Rode my bike to school or work', 2,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Created a community or school garden', 5,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Bought and used a reusable water bottle', 1,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Turned off all electronics at nighttime', 2,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Went vegetarian or vegan for a day', 3,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Volunteered for an environmental organization', 5,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Took public transit instead of driving', 2,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Fundraised for an environmental charity', 5,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Practiced \"leave no trace\" when camping', 3,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Donate used items to a charity', 3,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Retweeted a Drizzle tweet', 1,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIMESTAMP, TRUE);
-INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALSE);
+INSERT INTO Action VALUES (NULL, 'Organized a park cleanup', 5,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Raised awareness for an environmental issue', 4,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Went for a nature walk or hike', 2,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Picked up garbage at the local beach', 4,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Introduced a compost bin to your home', 3,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Carpooled', 2,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Recycled a used item', 2,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Rode my bike to school or work', 2,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Created a community or school garden', 5,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Bought and used a reusable water bottle', 1,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Turned off all electronics at nighttime', 2,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Went vegetarian or vegan for a day', 3,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Volunteered for an environmental organization', 5,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Took public transit instead of driving', 2,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Fundraised for an environmental charity', 5,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Practiced \"leave no trace\" when camping', 3,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Donate used items to a charity', 3,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Retweeted a Drizzle tweet', 1,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIMESTAMP, TRUE,'Default');
+INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALSE,'Default');
 
 
 -- Insert the super admin account
@@ -136,3 +137,7 @@ CREATE TABLE IF NOT EXISTS Images (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS ActionCatagory (
+    CatagoryName   VARCHAR(128),
+    CatagoryDescription  VARCHAR(256)
+);
