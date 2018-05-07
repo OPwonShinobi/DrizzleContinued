@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
   get_myfinishi_table();
   display_myNotification_table();
@@ -88,19 +89,13 @@ function checkNickname() {
         document.getElementById('nick-empty').style.display='block';
         return false;
     }
-    var badword=["fuck", "shit", "bitch", "ass", "penis", "damn","suck"];
-    var temp=x.toLowerCase();
-    var n;
-    for (var i = 0; i < badword.length; i++) {
-         n = temp.includes(badword[i]);
-         if(n)
-         break;
-    }
-    if(n){
+    var filter = new Filter();
+    var nicknameLowerCase=x.toLowerCase();
+    if(filter.isProfane(nicknameLowerCase)){
         document.getElementById('nick-empty').innerHTML = "Bad words detected."
         document.getElementById('nick-empty').style.display = 'block';
         return false;
-    }
+    }      
 }
 
 
