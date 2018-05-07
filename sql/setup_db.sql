@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Action(
 	Points       Integer(2) NOT NULL,
   	DateEntered  TIMESTAMP  NOT NULL,
 	Active       Boolean    DEFAULT TRUE,
-	Catagory	 VARCHAR(128) NOT NULL
+	Category	 VARCHAR(128) NOT NULL
 );
 
 -- Create UserAction table
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS Images (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS ActionCatagory (
-    CatagoryName   VARCHAR(128),
-    CatagoryDescription  VARCHAR(256)
+CREATE TABLE IF NOT EXISTS ActionCategory (
+    CategoryName   VARCHAR(128),
+    CategoryDescription  VARCHAR(256)
 );
