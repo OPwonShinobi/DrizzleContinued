@@ -83,20 +83,20 @@ CREATE TABLE IF NOT EXISTS Administrator (
 CREATE TABLE IF NOT EXISTS Forgot (
     Email         VARCHAR(64)  NOT NULL UNIQUE,
     selector      VARCHAR(256),
-    expires DATETIME
+    expires TIMESTAMP
 );
 
 -- Notification
 CREATE TABLE IF NOT EXISTS Notification (
     Message   VARCHAR(256),
-    PostTime  DATETIME
+    PostTime  TIMESTAMP
 );
 
 -- Create OldAccomplishment table
 CREATE TABLE IF NOT EXISTS OldAccomplishment (
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
-	CompleteTime DATETIME   NOT NULL
+	CompleteTime TIMESTAMP   NOT NULL
 ); 
 
 -- Insert initial action data
