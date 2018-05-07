@@ -15,7 +15,17 @@ if (!isset($_SESSION['Userid']))
       <!-- BootStrap Image Carousel -->
       <div id="myCarousel" class="carousel slide" data-ride="carousel" data-wrap="true" data-interval="3000">
         <div class="carousel-inner">
-        
+
+        <?php
+        $conn = get_db_connection();
+        $stmt = $conn->prepare("SELECT USERID FROM Images WHERE favflag = '1'");
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $ele)
+          foreach ($ele as $innerele)
+            echo $innerele; 
+        ?>
+
         <!--Gets images for display in /slideshow folder -->
         <?php 
         $dir = 'slideshow';
