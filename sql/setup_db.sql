@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS Images (
  `image` longblob NOT NULL,
  `created` datetime NOT NULL,
  `favflag` int DEFAULT 0,
+ `userID` int NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
