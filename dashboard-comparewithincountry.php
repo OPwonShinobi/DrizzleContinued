@@ -24,6 +24,13 @@ if (!isset($_SESSION['Userid']))
 							<span id="span_personal_rank_in_country" class="h1"></span>
 						</div>
 					</div>
+					<!-- Filter divs -->
+					<div class="col-sm-2 col-xs-10">
+						<input type="text" id="nameFilter" placeholder="By Name" title="Type in a name">
+					</div>
+					<div class="col-sm-2 col-xs-10">
+						<input type="text" id="provinceFilter" placeholder="By State/Province" title="Type in a name">
+					</div>
 					<div class="col-xs-12">
 						<div class="panel panel-green text-center">
 						<span class="h1 span_user_country"> My Country</span><br>
