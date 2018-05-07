@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS 'images' (
  'created' datetime NOT NULL,
  'favflag' int DEFAULT 0,
  PRIMARY KEY ('id')
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;images
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;images;
 
 -- Insert initial action data
 INSERT INTO Action VALUES (NULL, 'Organized a park cleanup', 5,CURRENT_TIMESTAMP, TRUE);
