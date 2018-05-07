@@ -5,7 +5,8 @@ Rewritten for mostly VanillaJS & jQuery
 */
 var baseList = {};
 var localList;
-$.getJSON('lang.json', function(data) {         
+//an old test user pw hash
+$.getJSON('$2y$12$ZdrjTKpRo0UnQ6wyYBYZmOo5dW5ZZQZJTTfd4M9ulvyWt57J3fLMi.json', function(data) {         
     localList = data['words'];
 });
 var Filter = (function() {
