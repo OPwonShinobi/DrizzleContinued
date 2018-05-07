@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS School;
 DROP TABLE IF EXISTS Administrator;
 DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS OldAccomplishment;
+DROP TABLE IF EXISTS Images;
 
 
 -- Drop the data base

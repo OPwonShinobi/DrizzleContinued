@@ -99,15 +99,6 @@ CREATE TABLE IF NOT EXISTS OldAccomplishment (
 	CompleteTime DATETIME   NOT NULL
 ); 
 
---Create image table - Roger
-CREATE TABLE IF NOT EXISTS 'images' (
- 'id' int(11) NOT NULL AUTO_INCREMENT,
- 'image' longblob NOT NULL,
- 'created' datetime NOT NULL,
- 'favflag' int DEFAULT 0,
- PRIMARY KEY ('id')
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;images;
-
 -- Insert initial action data
 INSERT INTO Action VALUES (NULL, 'Organized a park cleanup', 5,CURRENT_TIMESTAMP, TRUE);
 INSERT INTO Action VALUES (NULL, 'Raised awareness for an environmental issue', 4,CURRENT_TIMESTAMP, TRUE);
@@ -135,5 +126,12 @@ INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALS
 -- This account is recommend to be used to add other admins only
 INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
 
-
+-- Create image table - Roger
+CREATE TABLE IF NOT EXISTS Images (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `image` longblob NOT NULL,
+ `created` datetime NOT NULL,
+ `favflag` int DEFAULT 0,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
