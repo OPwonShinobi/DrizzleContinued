@@ -210,11 +210,13 @@ function  getAllActionsWithUserIndication() {
 	$conn = get_db_connection();
 	if ($conn) {
 		$stmt = $conn->prepare("
-			SELECT a.ID, a.Description, a.Points, ua.UserID
-			FROM Action a LEFT JOIN (
+			SELECT a.ID, a.Description, a.Points, a.Category ,ua.UserID, ac.CategoryDescription
+			FROM Action a 
+			LEFT JOIN (
 				SELECT * FROM UserAction WHERE UserID=:theUser
 			) ua ON a.ID=ua.ActionID
-			WHERE a.Active=TRUE
+			LEFT JOIN ActionCategory ac on a.Category = ac.CategoryName
+			WHERE a.Active=TRUE;		
 		");
 		$stmt->bindParam(":theUser", $_SESSION['Userid']);
 		$stmt->execute();
