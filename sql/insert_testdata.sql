@@ -212,7 +212,7 @@ INSERT INTO Accomplishment VALUES(39, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP 
 INSERT INTO Accomplishment VALUES(40, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 365) DAY + INTERVAL FLOOR(RAND() * 30000) SECOND);
 
 UPDATE `yecdata`.`Administrator` SET `Password` = '$2y$12$R2hkDmGqPjG/c5VC1Xd9cus0awuokQCszXdnWimtYRiT2gdrBjnQi', `Email` = 'admin@123' WHERE (`ID` = '1');
-INSERT INTO ActionCategory VALUES ('Default', 'This is default category');
+-- INSERT INTO ActionCategory VALUES ('Default', 'This is default category');
 
 INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES ('$2y$12$5ko9DcW7k3JooQneLRmq2uAHbZUDXEk1gN8xGOTybFjIERK26T.tC', 'xiaalex1998@gmail.com', 'alex', 'xia', 'alex xia',
 1); 

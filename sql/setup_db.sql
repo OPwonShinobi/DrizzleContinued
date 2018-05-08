@@ -41,6 +41,13 @@ CREATE TABLE IF NOT EXISTS OutsideBC (
 	City          VARCHAR(60)  NOT NULL,
 	Email         VARCHAR(60)  NOT NULL UNIQUE
 );
+
+CREATE TABLE IF NOT EXISTS ActionCategory (
+    CategoryName   VARCHAR(128) NOT NULL,
+    CategoryDescription  VARCHAR(256) NOT NULL,
+    PRIMARY KEY(CategoryName)
+);
+
 -- Create action table
 CREATE TABLE IF NOT EXISTS Action(
 	ID           INTEGER(8) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -48,7 +55,8 @@ CREATE TABLE IF NOT EXISTS Action(
 	Points       Integer(2) NOT NULL,
   	DateEntered  TIMESTAMP  NOT NULL,
 	Active       Boolean    DEFAULT TRUE,
-	Category	 VARCHAR(128) NOT NULL
+	Category	 VARCHAR(128) NOT NULL,
+	FOREIGN KEY(Category) REFERENCES ActionCategory(CategoryName) ON DELETE CASCADE
 );
 
 -- Create UserAction table
@@ -57,8 +65,8 @@ CREATE TABLE IF NOT EXISTS UserAction(
 	ActionID     Integer(8) NOT NULL,
 	CompleteTime TIMESTAMP NULL,
 	PRIMARY KEY(UserID, ActionID),
-	FOREIGN KEY(UserID) REFERENCES User(ID),
-	FOREIGN KEY(ActionID) REFERENCES Action(ID)
+	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE,
+	FOREIGN KEY(ActionID) REFERENCES Action(ID) ON DELETE CASCADE
 );
 
 -- Create Accomplishment table
@@ -67,8 +75,8 @@ CREATE TABLE IF NOT EXISTS Accomplishment(
 	ActionID     Integer(8) NOT NULL,
 	CompleteTime TIMESTAMP NOT NULL,
 	PRIMARY KEY(UserID, ActionID, CompleteTime),
-	FOREIGN KEY(UserID) REFERENCES User(ID),
-	FOREIGN KEY(ActionID) REFERENCES Action(ID)
+	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE,
+	FOREIGN KEY(ActionID) REFERENCES Action(ID) ON DELETE CASCADE
 );
 
 -- Create Admin table
@@ -100,33 +108,6 @@ CREATE TABLE IF NOT EXISTS OldAccomplishment (
 	CompleteTime TIMESTAMP   NOT NULL
 ); 
 
--- Insert initial action data
-INSERT INTO Action VALUES (NULL, 'Organized a park cleanup', 5,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Raised awareness for an environmental issue', 4,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Went for a nature walk or hike', 2,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Picked up garbage at the local beach', 4,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Introduced a compost bin to your home', 3,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Carpooled', 2,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Recycled a used item', 2,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Rode my bike to school or work', 2,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Created a community or school garden', 5,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Bought and used a reusable water bottle', 1,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Turned off all electronics at nighttime', 2,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Went vegetarian or vegan for a day', 3,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Volunteered for an environmental organization', 5,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Took public transit instead of driving', 2,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Fundraised for an environmental charity', 5,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Practiced \"leave no trace\" when camping', 3,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Donate used items to a charity', 3,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Retweeted a Drizzle tweet', 1,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIMESTAMP, TRUE,'Default');
-INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALSE,'Default');
-
-
--- Insert the super admin account
--- This account is recommend to be used to add other admins only
-INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
-
 -- Create image table - Roger
 CREATE TABLE IF NOT EXISTS Images (
  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -137,7 +118,36 @@ CREATE TABLE IF NOT EXISTS Images (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS ActionCategory (
-    CategoryName   VARCHAR(128),
-    CategoryDescription  VARCHAR(256)
-);
+INSERT INTO ActionCategory VALUES ('Activism', 'You do stuff, usually around the community');
+INSERT INTO ActionCategory VALUES ('Transportation', 'Getting around comes around');
+INSERT INTO ActionCategory VALUES ('Energy', 'Conservation of energy is not only a law but is encouraged');
+INSERT INTO ActionCategory VALUES ('Reduce Reuse Recycle', 'The 3 Rs');
+INSERT INTO ActionCategory VALUES ('Food', 'Eat money. Save better');
+INSERT INTO ActionCategory VALUES ('Social Media', 'Tell your friends. Help spread the word!');
+INSERT INTO ActionCategory VALUES ('Outdoors', 'Natural green is best green!');
+
+-- Insert initial action data
+INSERT INTO Action VALUES (NULL, 'Organized a park cleanup', 5,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Raised awareness for an environmental issue', 4,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Went for a nature walk or hike', 2,CURRENT_TIMESTAMP, TRUE,'Transportation');
+INSERT INTO Action VALUES (NULL, 'Picked up garbage at the local beach', 4,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Introduced a compost bin to your home', 3,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Carpooled', 2,CURRENT_TIMESTAMP, TRUE,'Transportation');
+INSERT INTO Action VALUES (NULL, 'Recycled a used item', 2,CURRENT_TIMESTAMP, TRUE,'Reduce Reuse Recycle');
+INSERT INTO Action VALUES (NULL, 'Rode my bike to school or work', 2,CURRENT_TIMESTAMP, TRUE,'Transportation');
+INSERT INTO Action VALUES (NULL, 'Created a community or school garden', 5,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Bought and used a reusable water bottle', 1,CURRENT_TIMESTAMP, TRUE,'Reduce Reuse Recycle');
+INSERT INTO Action VALUES (NULL, 'Turned off all electronics at nighttime', 2,CURRENT_TIMESTAMP, TRUE,'Energy');
+INSERT INTO Action VALUES (NULL, 'Went vegetarian or vegan for a day', 3,CURRENT_TIMESTAMP, TRUE,'Food');
+INSERT INTO Action VALUES (NULL, 'Volunteered for an environmental organization', 5,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Took public transit instead of driving', 2,CURRENT_TIMESTAMP, TRUE,'Transportation');
+INSERT INTO Action VALUES (NULL, 'Fundraised for an environmental charity', 5,CURRENT_TIMESTAMP, TRUE,'Activism');
+INSERT INTO Action VALUES (NULL, 'Practiced \"leave no trace\" when camping', 3,CURRENT_TIMESTAMP, TRUE,'Outdoors');
+INSERT INTO Action VALUES (NULL, 'Donate used items to a charity', 3,CURRENT_TIMESTAMP, TRUE,'Reduce Reuse Recycle');
+INSERT INTO Action VALUES (NULL, 'Retweeted a Drizzle tweet', 1,CURRENT_TIMESTAMP, TRUE,'Social Media');
+INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIMESTAMP, TRUE,'Social Media');
+-- INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALSE,'Default');
+
+-- Insert the super admin account
+-- This account is recommend to be used to add other admins only
+INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
