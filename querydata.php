@@ -89,6 +89,9 @@ if ($_POST) {
 		case 'addAction':
 			addAction();
 			break;
+		case 'addCatagory':
+			addCatagory();
+			break;
 		case 'modifyAction':
 			modifyAction();
 			break;
@@ -170,7 +173,7 @@ function establishDbConnection() {
 function getAllActions(){
 	$conn = get_db_connection();
 	if ($conn) {
-		$stmt = $conn->prepare("SELECT ID, Description, Points, Active FROM Action");
+		$stmt = $conn->prepare("SELECT ID, Description, Points, Active, Catagory FROM Action");
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($result);
@@ -320,6 +323,17 @@ function addAction() {
 	$result = $stmt->execute();
 	if ($result) {
 		getAllActions();
+	}
+}
+
+function addCatagory() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("INSERT INTO ActionCatagory VALUES(:name, :actionDescription)");
+	$stmt->bindParam(":actionDescription", $_POST['Description']);
+	$stmt->bindParam(":name", $_POST['Name']);
+	$result = $stmt->execute();
+	if ($result) {
+		//getAllActions();
 	}
 }
 

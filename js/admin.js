@@ -21,9 +21,17 @@ $(document).ready(function(){
 		$("#popup_modal_add_action").modal({backdrop: "static"});
 	});
 
+	$("#button_add_catagory").click(function(){
+		$("#popup_modal_add_catagory").modal({backdrop: "static"});
+	});
+
 	/* Handle confirm adding new action */
 	$("#button_add_action_confirm").click(function(){
 		request_add_action();
+	});
+
+	$("#button_add_catagory_confirm").click(function(){
+		request_add_catagory();
 	});
 
 	/* Enable "Add school" button only if a city has been selected. */
@@ -228,7 +236,9 @@ $(document).on('click', '.modify_action_links', function(){
 	$("#popup_modal_edit_action").modal({backdrop: "static"});
 	$("#input_edit_action_description").val(action[0].Description);
 	$("#input_edit_action_points").val(action[0].Points);
+	$("#input_edit_category").val(action[0].Catagory);
 	$("#edit_action_id").val(action[0].ID);
+
 });
 
 $(document).on('click','#button_add_admin', function(){
@@ -439,6 +449,33 @@ function request_add_action() {
 	});
 
 }
+
+function request_add_catagory() {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'addCatagory',
+			Description: $("#input_catagory_description").val(),
+			Name: $("#input_catagory_name").val()
+		},
+		dataType: 'JSON',
+		success: function(data){
+			console.log(data);
+			if (data != "undefined" && data != null) {
+				console.log("success");
+			}
+			// data retrieved from server
+			// Use the data to change the elements here
+
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+
+}
+
 function request_modify_action() {
 	modifyId = $("#edit_action_id").val();
 	modifyDescription = $("#input_edit_action_description").val();
@@ -539,6 +576,7 @@ function update_action_table(data) {
 		$("#action_table_content").append('<tr>'
 				+ '<td>' + ++count + '</td>'
 				+ '<td><a name=' + action['ID'] + ' class="modify_action_links">' + action['Description'] + '</a></td>'
+				+ '<td>' + action['Catagory'] + '</td>'
 				+ '<td>' + action['Points'] + '</td>'
 				+ '<td><input value="' + action['ID']
 				+ '" type="checkbox" name="switch" data-on-color="success" data-off-color="danger" '

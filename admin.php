@@ -172,6 +172,7 @@ if ($_POST) {
 						<div class="col-xs-12">
 							<label class="h2"> All actions</label>
 							<button id="button_add_action" class="btn btn-danger">Add action</button>
+							<button id="button_add_catagory" class="btn btn-danger">Add category</button>
 						</div>
 						<div class="col-xs-12">
 							<table  class="table">
@@ -179,6 +180,7 @@ if ($_POST) {
 									<tr>
 										<th>ID</th>
 										<th>Description</th>
+										<th>Category</th>
 										<th>Points</th>
 									</tr>
 								</thead>
@@ -433,7 +435,6 @@ if ($_POST) {
 						</div>
 					</div>
 
-
 					<!-- modify actions popup modal -->
 					<div id="popup_modal_edit_action" class="modal fade" role="dialog">
 						<div class="modal-dialog">
@@ -454,6 +455,28 @@ if ($_POST) {
 											<label>Points</label>
 											<input id="input_edit_action_points" type="number" min="1" required class="form-control modify-action-fields">
 											<input id="edit_action_id" type="hidden" class="form-control modify-action-fields">
+										</div>
+										<div class="form-group">
+											<label>Category</label>
+											<input id="input_edit_category" required class="form-control modify-action-fields">
+<?php
+$conn = new mysqli('localhost', 'yecuser', 'yec123!Q@W#E', 'yecdata') 
+or die ('Cannot connect to db');
+
+    $result = $conn->query("select CatagoryName from ActionCatagory");
+
+    echo "<select name='id'>";
+
+    while ($row = $result->fetch_assoc()) {
+
+                  unset($id, $name);
+                  $id = 1;
+                  $name = $row['CatagoryName']; 
+                  echo '<option class="form-control modify-action-fields" value="'.$id.'">'.$name.'</option>';
+
+}
+    echo "</select>";
+?> 
 										</div>
 									</form>
 								</div>
@@ -544,6 +567,35 @@ if ($_POST) {
 							</div>
 						</div>
 					</div>
+
+<div id="popup_modal_add_catagory" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+	<!--Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4>Add new catagory</h4>
+		</div>
+		<div class="modal-body">
+			<form>
+				<div class="form-group">
+					<label>Catagory description</label>
+					<textarea id="input_catagory_description" rows="10" class="form-control"></textarea>
+				</div>
+				<div class="form-group">
+					<label>Catagory name</label>
+					<input id="input_catagory_name" class="form-control">
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" id="button_add_catagory_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		</div>
+	</div>
+</div>
+
 				</div>
 				<!-- /.container-fluid -->
 			</div>
