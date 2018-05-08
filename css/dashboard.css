@@ -119,3 +119,10 @@ table {
 		margin-left: 75px;
 	}
 /*iphone checkbox css end*/
+
+.leaderboard-filter {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: flex-end;
+}

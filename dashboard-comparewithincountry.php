@@ -24,13 +24,6 @@ if (!isset($_SESSION['Userid']))
 							<span id="span_personal_rank_in_country" class="h1"></span>
 						</div>
 					</div>
-					<!-- Filter divs -->
-					<div class="col-sm-2 col-xs-10">
-						<input type="text" id="nameFilter" placeholder="By Name" title="Type in a name">
-					</div>
-					<div class="col-sm-2 col-xs-10">
-						<input type="text" id="provinceFilter" placeholder="By State/Province" title="Type in a name">
-					</div>
 					<div class="col-xs-12">
 						<div class="panel panel-green text-center">
 						<span class="h1 span_user_country"> My Country</span><br>
@@ -39,8 +32,29 @@ if (!isset($_SESSION['Userid']))
 						<button id="button_refresh_personal_rank_in_country" class="btn btn-warning"><span class="glyphicon glyphicon-refresh"></span></button>
 						</div>
 					</div>
+					<!-- Filter divs -->
+					<div class="leaderboard-filter">
+						<div class="col-sm-2">
+							<h4>Filter:</h4>
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="nameFilter" placeholder="By Name" title="Type in a name">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="stateFilter" placeholder="By State/Province" title="Type in a province">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="cityFilter" placeholder="By City" title="Type in a city">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="schoolFilter" placeholder="By School" title="Type in a school">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="scoreFilter" placeholder="By Score" title="Type in a score">
+						</div>
+					</div> <!-- End of filter divs -->
 					<div class="col-xs-10 col-xs-offset-1">
-						<table class="table">
+						<table class="table" id="personalInCountryTable">
 							<thead>
 								<tr>
 									<th>Rank</th>
@@ -52,6 +66,22 @@ if (!isset($_SESSION['Userid']))
 								</tr>
 							</thead>
 							<tbody id="personal_rank_in_country">
+								<tr>
+									<td>1</td>
+									<td>Test1</td>
+									<td>British Columbia</td>
+									<td>Burnaby</td>
+									<td>School 1</td>
+									<td>99</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>Hello</td>
+									<td>Alberta</td>
+									<td>Calgary</td>
+									<td>School 2</td>
+									<td>20</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

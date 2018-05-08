@@ -65,6 +65,7 @@ if ($_POST) {
 	<script src="/js/comparewithincountry.js"></script>
 	<script src="/js/compareschool.js"></script>
 	<script src="/js/tabcontrol.js"></script>
+    <script src="/js/filterleaderboarddata.js"></script>
     <?php
     echo "<script>var Userid = $_SESSION[Userid];
               var Photoid =$_SESSION[PhotoId];
