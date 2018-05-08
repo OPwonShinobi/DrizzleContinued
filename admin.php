@@ -172,7 +172,7 @@ if ($_POST) {
 						<div class="col-xs-12">
 							<label class="h2"> All actions</label>
 							<button id="button_add_action" class="btn btn-danger">Add action</button>
-							<button id="button_add_catagory" class="btn btn-danger">Add category</button>
+							<button id="button_add_category" class="btn btn-danger">Add category</button>
 						</div>
 						<div class="col-xs-12">
 							<table  class="table">
@@ -194,7 +194,7 @@ if ($_POST) {
 							<label class="h2"> Student records</label>
 							<input type="text" id="filterInput" onkeyup="filterStudentRecords()" placeholder="Search for records.." title="Type in a name">
 							<!--The values here for filter corresponds to the td number, do not change it! Unless you change the table layout-->
-							<select id="FilterCatagory">
+							<select id="FilterCategory">
 								<option value="4" selected="selected">School</option>
 								<option value="5">LastName</option>
 								<option value="6">FirstName</option>
@@ -463,7 +463,7 @@ if ($_POST) {
 $conn = new mysqli('localhost', 'yecuser', 'yec123!Q@W#E', 'yecdata') 
 or die ('Cannot connect to db');
 
-    $result = $conn->query("select CatagoryName from ActionCatagory");
+    $result = $conn->query("select CategoryName from ActionCategory");
 
     echo "<select name='id'>";
 
@@ -471,7 +471,7 @@ or die ('Cannot connect to db');
 
                   unset($id, $name);
                   $id = 1;
-                  $name = $row['CatagoryName']; 
+                  $name = $row['CategoryName']; 
                   echo '<option class="form-control modify-action-fields" value="'.$id.'">'.$name.'</option>';
 
 }
@@ -567,35 +567,34 @@ or die ('Cannot connect to db');
 							</div>
 						</div>
 					</div>
-
-<div id="popup_modal_add_catagory" class="modal fade" role="dialog">
+					
+<div id="popup_modal_add_category" class="modal fade" role="dialog">
 <div class="modal-dialog">
 
 	<!--Modal content-->
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4>Add new catagory</h4>
+			<h4>Add new Category</h4>
 		</div>
 		<div class="modal-body">
 			<form>
 				<div class="form-group">
-					<label>Catagory description</label>
-					<textarea id="input_catagory_description" rows="10" class="form-control"></textarea>
+					<label>Category description</label>
+					<textarea id="input_category_description" rows="10" class="form-control"></textarea>
 				</div>
 				<div class="form-group">
-					<label>Catagory name</label>
-					<input id="input_catagory_name" class="form-control">
+					<label>Category name</label>
+					<input id="input_category_name" class="form-control">
 				</div>
 			</form>
 		</div>
 		<div class="modal-footer">
-			<button type="submit" id="button_add_catagory_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
+			<button type="submit" id="button_add_category_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 		</div>
 	</div>
 </div>
-
 				</div>
 				<!-- /.container-fluid -->
 			</div>

@@ -21,8 +21,8 @@ $(document).ready(function(){
 		$("#popup_modal_add_action").modal({backdrop: "static"});
 	});
 
-	$("#button_add_catagory").click(function(){
-		$("#popup_modal_add_catagory").modal({backdrop: "static"});
+	$("#button_add_category").click(function(){
+		$("#popup_modal_add_category").modal({backdrop: "static"});
 	});
 
 	/* Handle confirm adding new action */
@@ -30,8 +30,8 @@ $(document).ready(function(){
 		request_add_action();
 	});
 
-	$("#button_add_catagory_confirm").click(function(){
-		request_add_catagory();
+	$("#button_add_category_confirm").click(function(){
+		request_add_category();
 	});
 
 	/* Enable "Add school" button only if a city has been selected. */
@@ -236,7 +236,7 @@ $(document).on('click', '.modify_action_links', function(){
 	$("#popup_modal_edit_action").modal({backdrop: "static"});
 	$("#input_edit_action_description").val(action[0].Description);
 	$("#input_edit_action_points").val(action[0].Points);
-	$("#input_edit_category").val(action[0].Catagory);
+	$("#input_edit_category").val(action[0].Category);
 	$("#edit_action_id").val(action[0].ID);
 
 });
@@ -273,7 +273,7 @@ function filterStudentRecords() {
 	table = document.getElementById("student_table_content");
 	tr = table.getElementsByTagName("tr");
 
-	var e = document.getElementById("FilterCatagory");
+	var e = document.getElementById("FilterCategory");
 	var strUser = e.options[e.selectedIndex].value;
 
 	for (i = 0; i < tr.length; i++) {
@@ -450,14 +450,14 @@ function request_add_action() {
 
 }
 
-function request_add_catagory() {
+function request_add_category() {
 	$.ajax({
 		type: "POST",
 		url: "/querydata.php",
 		data: {
-			QueryData: 'addCatagory',
-			Description: $("#input_catagory_description").val(),
-			Name: $("#input_catagory_name").val()
+			QueryData: 'addCategory',
+			Description: $("#input_category_description").val(),
+			Name: $("#input_category_name").val()
 		},
 		dataType: 'JSON',
 		success: function(data){
@@ -576,7 +576,7 @@ function update_action_table(data) {
 		$("#action_table_content").append('<tr>'
 				+ '<td>' + ++count + '</td>'
 				+ '<td><a name=' + action['ID'] + ' class="modify_action_links">' + action['Description'] + '</a></td>'
-				+ '<td>' + action['Catagory'] + '</td>'
+				+ '<td>' + action['Category'] + '</td>'
 				+ '<td>' + action['Points'] + '</td>'
 				+ '<td><input value="' + action['ID']
 				+ '" type="checkbox" name="switch" data-on-color="success" data-off-color="danger" '
