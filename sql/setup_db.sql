@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS School(
 
 
 -- Create user table
+-- User's school must already exist in db
 CREATE TABLE IF NOT EXISTS User(
 	ID            INTEGER(8)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Password      VARCHAR(256) NOT NULL,
@@ -42,6 +43,8 @@ CREATE TABLE IF NOT EXISTS OutsideBC (
 	Email         VARCHAR(60)  NOT NULL UNIQUE
 );
 
+-- Lists categories of actions user can select
+-- Note that any changes here will cascade to actions with that option
 CREATE TABLE IF NOT EXISTS ActionCategory (
     CategoryName   VARCHAR(128) NOT NULL,
     CategoryDescription  VARCHAR(256) NOT NULL,
@@ -49,6 +52,14 @@ CREATE TABLE IF NOT EXISTS ActionCategory (
 );
 
 -- Create action table
+-- updates with actioncategory table
+-- deleting entries from actioncategory will be allowed & affect this table
+-- but for truncating / dropping actioncategory before action table is changed,
+-- do the following:
+-- SET FOREIGN_KEY_CHECKS = 0;
+--    TRUNCATE / DROP TABLE actioncategory;
+-- 	  TRUNCATE / DROP TABLE action; 
+-- SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE IF NOT EXISTS Action(
 	ID           INTEGER(8) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Description  TEXT       NOT NULL,
@@ -56,10 +67,14 @@ CREATE TABLE IF NOT EXISTS Action(
   	DateEntered  TIMESTAMP  NOT NULL,
 	Active       Boolean    DEFAULT TRUE,
 	Category	 VARCHAR(128) NOT NULL,
-	FOREIGN KEY(Category) REFERENCES ActionCategory(CategoryName) ON DELETE CASCADE
+	FOREIGN KEY(Category) REFERENCES ActionCategory(CategoryName) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Create UserAction table
+-- if any user is deleted (not truncated or dropped) 
+--    their entry will be deleted from here too
+-- if any action is deleted (not truncated or dropped) that entry
+--    that entry will be deleted from here too
 CREATE TABLE IF NOT EXISTS UserAction(
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
@@ -70,6 +85,10 @@ CREATE TABLE IF NOT EXISTS UserAction(
 );
 
 -- Create Accomplishment table
+-- if any user is deleted (not truncated or dropped) 
+--    their entry will be deleted from here too
+-- if any action is deleted (not truncated or dropped) that entry
+--    that entry will be deleted from here too
 CREATE TABLE IF NOT EXISTS Accomplishment(
 	UserID       Integer(8) NOT NULL,
 	ActionID     Integer(8) NOT NULL,
