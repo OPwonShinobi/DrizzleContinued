@@ -123,6 +123,9 @@ table {
 .leaderboard-filter {
 	width: 100%;
 	margin: 0 auto;
-	display: flex;
 	justify-content: flex-end;
+}
+
+.table-div {
+	overflow-x: auto;
 }
