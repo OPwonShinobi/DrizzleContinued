@@ -109,40 +109,31 @@ require_once('config.php');
                     </div>
                     <!--CITY END-->
                     <script src="https://geodata.solutions//includes/countrystatecity.js"></script>
-                    <!--REGION LOCK SCRIPT-->
-                    <?php
-                    if($regionlock) {
-                        echo "<script>var regionlock = true;";
-                        echo "$('select[name=state]').change(function () {";
-                    } else {
-                        echo "<script>var regionlock = false;";
-                        echo "$(document).ready(function(){";
+                    <script type="text/javascript">
+                    var regionlock = false;
+                    $(document).ready(function(){
+                        var pwd = $('#password');
+                        var cpwd = $('#cpassword');
+                        var schooldiv = $('.school');
+                        var schoolselect = $('#schoolid');
 
-                    }
-                    ?>
-                            var pwd = $('#password');
-                            var cpwd = $('#cpassword');
-                            var schooldiv = $('.school');
-                            var schoolselect = $('#schoolid');
-
-                            if (regionlock == false || $('select[name=state]').val() == 'British Columbia') {
-                                pwd.attr('type', 'password');
-                                pwd.prop("required", true);
-                                cpwd.attr('type', 'password');
-                                cpwd.prop("required", true);
-                                schoolselect.prop("required", true);
-                                schooldiv.css("display", "block");
-
-                            } else {
-                                pwd.attr('type', 'hidden');
-                                pwd.prop("required", false);
-                                $("#passworderror").css("display", "none");
-                                cpwd.attr('type', 'hidden');
-                                cpwd.prop("required", false);
-                                $("#cpassworderror").css("display", "none");
-                                schooldiv.css("display", "none");
-                                schoolselect.prop("required", false);
-                            }
+                        // if ($('select[name=state]').val() == 'British Columbia')
+                        // {
+                        pwd.attr('type', 'password');
+                        pwd.prop("required", true);
+                        cpwd.attr('type', 'password');
+                        cpwd.prop("required", true);
+                        schoolselect.prop("required", true);
+                        schooldiv.css("display", "block");
+                        // } else {
+                        //     pwd.attr('type', 'hidden');
+                        //     pwd.prop("required", false);
+                        //     $("#passworderror").css("display", "none");
+                        //     cpwd.attr('type', 'hidden');
+                        //     cpwd.prop("required", false);
+                        //     $("#cpassworderror").css("display", "none");
+                        //     schooldiv.css("display", "none");
+                        //     schoolselect.prop("required", false);
                         });
                     </script>
                     <!--END OF REGIONLOCK-->
@@ -183,7 +174,6 @@ require_once('config.php');
                         <select name="school" class="form-control" id="schoolid">
                             <option value="">Select School</option>
                             <script>
-
                                 function refresh_school_table(){
                                     $.ajax({
                                         type: "POST",
@@ -197,11 +187,10 @@ require_once('config.php');
                                         dataType: 'JSON',
                                         success: function(data){
                                             //console.log(data);
-                                            if (data != "undefined" && data != null) {
+                                            if (data != "undefined" && data != null)
+                                            {
                                                 update_school_table(data);
                                             }
-                                            // data retrieved from server
-                                            // Use the data to change the elements here
                                         },
                                         error: function(data){
                                             console.log(data);
@@ -221,6 +210,14 @@ require_once('config.php');
                                                 value: school['SchoolName'],
                                                 text: school['SchoolName']
                                             }));
+                                    }
+                                    if (data.length == 0)
+                                    {
+                                        $("#schoolid").append($('<option>', 
+                                        {
+                                            value: 'unsupported',
+                                            text: 'Choose this if your school isn\'t in the list'
+                                        }));
                                     }
                                 }
                             </script>

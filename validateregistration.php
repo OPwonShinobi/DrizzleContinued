@@ -16,7 +16,6 @@ if(isset($_GET['success']) && $_GET['success'] == true) {
 $redirect = '/register.php?';
 $errorredirect = $redirect;
 $error = false;
-$regionRestriction = "British Columbia";
 $withinRegion = false;
 $sendNewsletter=false;
 
@@ -132,9 +131,31 @@ if ($_POST) {
             $error = true;
         }
     }
-
-    if($regionlock == false || (isset($state) && strcmp($state, $regionRestriction) === 0)) {
+    //specific query, see if specific region added to db regionlock table
+    $stmt = $conn->prepare("SELECT CountryName, RegionName FROM RegionLock WHERE CountryName=:userCountry AND RegionName=:userState" );
+    $stmt->bindParam(":userCountry", $country);
+    $stmt->bindParam(":userState", $state);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $stmt->fetch();
+    //specific region been added to table
+    if( isset($result['RegionName']) ) {
         $withinRegion = true;
+    //specific region not been added to table
+    } else {
+        //general query, see if specific region added to db regionlock table
+        $stmt = $conn->prepare("SELECT CountryName FROM RegionLock WHERE CountryName=:userCountry AND RegionName IS NULL" );
+        $stmt->bindParam(":userCountry", $country);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+        //general country been added to regionlock 
+        if( isset($result['CountryName']) ) {
+            $withinRegion = true;
+        }
+    }
+
+    if( $withinRegion ) {
         if(!isset($_POST['password'])) {
             $errorredirect = $errorredirect . "password=Missing&";
             $error = true;
@@ -189,13 +210,13 @@ if ($_POST) {
                 $result = $stmt->fetch(PDO::FETCH_OBJ);
                 if (isset($result->ID)) {
                     $schoolId=$result->ID;
+                } else {
+                    $withinRegion = false;
                 }
             }
 
         }
     }
-
-
 
     $captcha = $_POST['captcha_code'];
     include_once $_SERVER['DOCUMENT_ROOT'] . '/securimage/securimage.php';
@@ -212,13 +233,12 @@ if ($_POST) {
         if($sendNewsletter) {
             sendNewsletterEmail($firstname, $lastname, $email, $country, $state, $city);
         }
-        if($regionlock == false || $withinRegion) {
+        if( $withinRegion ) {
             $options=[
                 'cost'=>12,];
             $password=password_hash($password,PASSWORD_BCRYPT,$options);
             // register as user
-            $stmt = $conn->prepare("INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES (:password, :theEmail, :firstName, :lastName, :nickName
-,(SELECT ID FROM School WHERE ID=:schoolID))");
+            $stmt = $conn->prepare("INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES (:password, :theEmail, :firstName, :lastName, :nickName ,(SELECT ID FROM School WHERE ID=:schoolID))");
             $stmt->bindParam(":theEmail", $email);
             $stmt->bindParam(":password", $password);
             $stmt->bindParam(":firstName", $firstname);
@@ -240,18 +260,16 @@ if ($_POST) {
             $_SESSION['expire'] = $_SESSION['start'] + (60 * 60);
 
             header('Location: /validateregistration.php?success=true');
-        } else {
-            echo $email . " " . $firstname . " " . $lastname . " " . $city . " " . $state . " " . $country;
-            $stmt = $conn->prepare("INSERT INTO OutsideBC(FirstName, LastName, Country, State, City, Email) VALUES (:firstName,
-                                    :lastName, :country, :state, :city, :theEmail)");
-            $stmt->bindParam(":theEmail", $email);
-            $stmt->bindParam(":firstName", $firstname);
-            $stmt->bindParam(":lastName", $lastname);
-            $stmt->bindParam(":city", $city);
-            $stmt->bindParam(":state", $state);
-            $stmt->bindParam(":country", $country);
-            $stmt->execute();
-
+        } 
+        if( !$withinRegion ) {
+            // $stmt = $conn->prepare("INSERT INTO OutsideBC(FirstName, LastName, Country, State, City, Email) VALUES (:firstName, :lastName, :country, :state, :city, :theEmail)");
+            // $stmt->bindParam(":theEmail", $email);
+            // $stmt->bindParam(":firstName", $firstname);
+            // $stmt->bindParam(":lastName", $lastname);
+            // $stmt->bindParam(":city", $city);
+            // $stmt->bindParam(":state", $state);
+            // $stmt->bindParam(":country", $country);
+            // $stmt->execute();
             header('Location: /welcomeinfo.php');
         }
     }

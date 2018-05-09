@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS Administrator;
 DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS OldAccomplishment;
 DROP TABLE IF EXISTS Images;
-
+DROP TABLE IF EXISTS RegionLock;
 -- Drop the data base
 DROP DATABASE IF EXISTS yecdata;
 

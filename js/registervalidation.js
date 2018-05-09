@@ -36,7 +36,7 @@ function validateregistration() {
 
 
 
-    if($('#stateId').val() == 'British Columbia') {
+    // if($('#stateId').val() == 'British Columbia') {
         /*password character restriction*/
         var pwdpattern = new RegExp(/^[ !#$%&*+\-0-9@-Z_a-z]+$/);
         if (!pwdpattern.test($('#password').val())) {
@@ -86,10 +86,10 @@ function validateregistration() {
             $('#password').prop("required", false);
             input_long = false;
         }
-    } else {
-        $('#password').prop("required", false);
-        $('#cpassword').prop("required", false);
-    }
+    // } else {
+    //     $('#password').prop("required", false);
+    //     $('#cpassword').prop("required", false);
+    // }
 
     $('form').find('.flname').each(function() {
         if($(this).val().length > 30) {
