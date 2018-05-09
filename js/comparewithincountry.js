@@ -54,22 +54,22 @@ function update_personal_rank_in_country_table(data){
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
 			$("#personal_rank_in_country").append('<tr>'
-					+ '<td class="col-xs-2"><img src="'
+					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 nameCell">'
 					+ student['NickName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 stateCell">'
 					+ student['StateProvince']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 cityCell">'
 					+ student['City']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 schoolCell">'
 					+ student['SchoolName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 scoreCell">'
 					+ student['Score']
 					+ '</td>'
 					+ '</tr>'

@@ -94,13 +94,13 @@ function update_personal_rank_in_school_table(data) {
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
 			$("#personal_rank_in_school").append('<tr>'
-					+ '<td class="col-xs-2"><img src="'
+					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'
-					+ '<td class="col-xs-5">'
+					+ '<td class="col-xs-5 nameCell">'
 					+ student['NickName']
 					+ '</td>'
-					+ '<td class="col-xs-5">'
+					+ '<td class="col-xs-5 scoreCell">'
 					+ student['Score']
 					+ '</td>'
 					+ '</tr>'

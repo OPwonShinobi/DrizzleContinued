@@ -38,23 +38,23 @@ if (!isset($_SESSION['Userid']))
 							<h4>Filter:</h4>
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="nameFilter" placeholder="By Name" title="Type in a name">
+							<input type="text" class="form-control order-alpha" id="nameFilter-country" onkeyup="nameOnkeyup(this.id)" placeholder="By Name" title="Type in a name">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="stateFilter" placeholder="By State/Province" title="Type in a province">
+							<input type="text" class="form-control order-alpha" id="stateFilter-country" onkeyup="stateOnkeyup(this.id)" placeholder="By State/Province" title="Type in a province">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="cityFilter" placeholder="By City" title="Type in a city">
+							<input type="text" class="form-control order-alpha" id="cityFilter-country" onkeyup="cityOnkeyup(this.id)" placeholder="By City" title="Type in a city">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="schoolFilter" placeholder="By School" title="Type in a school">
+							<input type="text" class="form-control order-alpha" id="schoolFilter-country" onkeyup="schoolOnkeyup(this.id)" placeholder="By School" title="Type in a school">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="scoreFilter" placeholder="By Score" title="Type in a score">
+							<input type="text" class="form-control order-alpha" id="scoreFilter-country" onkeyup="scoreOnkeyup(this.id)" placeholder="By Score" title="Type in a score">
 						</div>
 					</div> <!-- End of filter divs -->
 					<div class="col-xs-10 col-xs-offset-1">
-						<table class="table" id="personalInCountryTable">
+						<table class="table">
 							<thead>
 								<tr>
 									<th>Rank</th>
@@ -66,21 +66,21 @@ if (!isset($_SESSION['Userid']))
 								</tr>
 							</thead>
 							<tbody id="personal_rank_in_country">
-								<tr>
-									<td>1</td>
-									<td>Test1</td>
-									<td>British Columbia</td>
-									<td>Burnaby</td>
-									<td>School 1</td>
-									<td>99</td>
+								<tr class="rank-row">
+									<td class="rankCell">1</td>
+									<td class="nameCell">Test1</td>
+									<td class="stateCell">British Columbia</td>
+									<td class="cityCell">Burnaby</td>
+									<td class="schoolCell">School 1</td>
+									<td class="scoreCell">99</td>
 								</tr>
-								<tr>
-									<td>2</td>
-									<td>Hello</td>
-									<td>Alberta</td>
-									<td>Calgary</td>
-									<td>School 2</td>
-									<td>20</td>
+								<tr class="rank-row">
+									<td class="rankCell">2</td>
+									<td class="nameCell">Hello</td>
+									<td class="stateCell">Alberta</td>
+									<td class="cityCell">Calgary</td>
+									<td class="schoolCell">School 2</td>
+									<td class="scoreCell">20</td>
 								</tr>
 							</tbody>
 						</table>

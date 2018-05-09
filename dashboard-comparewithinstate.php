@@ -32,6 +32,24 @@ if (!isset($_SESSION['Userid']))
 						<button id="button_refresh_personal_rank_in_state" class="btn btn-warning"><span class="glyphicon glyphicon-refresh"></span></button>
 						</div>
 					</div>
+					<!-- Filter divs -->
+					<div class="leaderboard-filter">
+						<div class="col-sm-2">
+							<h4>Filter:</h4>
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="nameFilter-state" onkeyup="nameOnkeyup(this.id)" placeholder="By Name" title="Type in a name">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="cityFilter-state" onkeyup="cityOnkeyup(this.id)" placeholder="By City" title="Type in a city">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="schoolFilter-state" onkeyup="schoolOnkeyup(this.id)" placeholder="By School" title="Type in a school">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="scoreFilter-state" onkeyup="scoreOnkeyup(this.id)" placeholder="By Score" title="Type in a score">
+						</div>
+					</div> <!-- End of filter divs -->
 					<div class="col-xs-10 col-xs-offset-1">
 						<table class="table">
 							<thead>
@@ -44,6 +62,20 @@ if (!isset($_SESSION['Userid']))
 								</tr>
 							</thead>
 							<tbody id="personal_rank_in_state">
+								<tr class="rank-row">
+									<td class="rankCell">1</td>
+									<td class="nameCell">Test1</td>
+									<td class="cityCell">Burnaby</td>
+									<td class="schoolCell">School 1</td>
+									<td class="scoreCell">99</td>
+								</tr>
+								<tr class="rank-row">
+									<td class="rankCell">2</td>
+									<td class="nameCell">Hello</td>
+									<td class="cityCell">Calgary</td>
+									<td class="schoolCell">School 2</td>
+									<td class="scoreCell">20</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

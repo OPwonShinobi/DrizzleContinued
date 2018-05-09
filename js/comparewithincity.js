@@ -54,16 +54,16 @@ function update_personal_rank_in_city_table(data){
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
 			$("#personal_rank_in_city").append('<tr>'
-					+ '<td class="col-xs-2"><img src="'
+					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'
-					+ '<td class="col-xs-3">'
+					+ '<td class="col-xs-3 nameCell">'
 					+ student['NickName']
 					+ '</td>'
-					+ '<td class="col-xs-3">'
+					+ '<td class="col-xs-3 schoolCell">'
 					+ student['SchoolName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 scoreCell">'
 					+ student['Score']
 					+ '</td>'
 					+ '</tr>'
