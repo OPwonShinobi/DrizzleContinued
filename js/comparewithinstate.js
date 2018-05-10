@@ -53,20 +53,20 @@ function update_personal_rank_in_state_table(data){
 			break;
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
-			$("#personal_rank_in_state").append('<tr>'
-					+ '<td class="col-xs-2"><img src="'
+			$("#personal_rank_in_state").append('<tr class="rank-row">'
+					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 nameCell">'
 					+ student['NickName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 cityCell">'
 					+ student['City']
 					+ '</td>'
-					+ '<td class="col-xs-4">'
+					+ '<td class="col-xs-4 schoolCell">'
 					+ student['SchoolName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 scoreCell">'
 					+ student['Score']
 					+ '</td>'
 					+ '</tr>'

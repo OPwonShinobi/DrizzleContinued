@@ -37,14 +37,14 @@ function update_school_rank_in_city_table(data){
 			break;
 		var image = '/images/rank/' + school['Rank']+ '.png';
 
-		$("#school_rank_in_city").append('<tr>'
-				+ '<td class="col-xs-2"><img src="'
+		$("#school_rank_in_city").append('<tr class="rank-row">'
+				+ '<td class="col-xs-2 rankCell"><img src="'
 				+ image
 				+ '"></td>'
-				+ '<td class="col-xs-5">'
+				+ '<td class="col-xs-5 schoolCell">'
 				+ school['SchoolName']
 				+ '</td>'
-				+ '<td class="col-xs-5">'
+				+ '<td class="col-xs-5 scoreCell">'
 				+ school['Score']
 				+ '</td>'
 				+ '</tr>'
@@ -92,17 +92,17 @@ function update_school_rank_in_state_table(data){
 			break;
 		var image = '/images/rank/' + school['Rank']+ '.png';
 
-		$("#school_rank_in_state").append('<tr>'
-				+ '<td class="col-xs-2"><img src="'
+		$("#school_rank_in_state").append('<tr class="rank-row">'
+				+ '<td class="col-xs-2 rankCell"><img src="'
 				+ image
 				+ '"></td>'
-				+ '<td class="col-xs-6">'
+				+ '<td class="col-xs-6 schoolCell">'
 				+ school['SchoolName']
 				+ '</td>'
-				+ '<td class="col-xs-2">'
+				+ '<td class="col-xs-2 cityCell">'
 				+ school['City']
 				+ '</td>'
-				+ '<td class="col-xs-2">'
+				+ '<td class="col-xs-2 scoreCell">'
 				+ school['Score']
 				+ '</td>'
 				+ '</tr>'
@@ -150,20 +150,20 @@ function update_school_rank_in_country_table(data){
 			break;
 		var image = '/images/rank/' + school['Rank']+ '.png';
 
-		$("#school_rank_in_country").append('<tr>'
-				+ '<td class="col-xs-2"><img src="'
+		$("#school_rank_in_country").append('<tr class="rank-row">'
+				+ '<td class="col-xs-2 rankCell"><img src="'
 				+ image
 				+ '"></td>'
-				+ '<td class="col-xs-2">'
+				+ '<td class="col-xs-2 schoolCell">'
 				+ school['SchoolName']
 				+ '</td>'
-				+ '<td class="col-xs-3">'
+				+ '<td class="col-xs-3 stateCell">'
 				+ school['StateProvince']
 				+ '</td>'
-				+ '<td class="col-xs-3">'
+				+ '<td class="col-xs-3 cityCell">'
 				+ school['City']
 				+ '</td>'
-				+ '<td class="col-xs-2">'
+				+ '<td class="col-xs-2 scoreCell">'
 				+ school['Score']
 				+ '</td>'
 				+ '</tr>'

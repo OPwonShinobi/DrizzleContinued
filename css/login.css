@@ -407,10 +407,20 @@ footer {
     color: #CCC;
 }
 
-@media only screen and (orientation:landscape)
-and (min-aspect-ratio: 47/32) {
+@media only screen
+and (max-device-width: 480px)
+and (orientation:portrait) {
     .wrap {
-        position: relative;;
+        margin-top: 50%;
+    }
+}
+
+@media only screen
+and (orientation:landscape)
+and (max-height: 565px) {
+    .wrap {
+        margin-top: 10%;
+        position: relative;
     }
 
     footer {

@@ -48,28 +48,28 @@ function update_personal_rank_in_country_table(data){
 	$("#personal_rank_in_country").empty();
 
 	for (student of data) {
-		//console.log(rank);
+		//console.log("student rank: " + student['Rank']);
 		if (parseInt(student['Rank']) >10)
 			break;
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
-			$("#personal_rank_in_country").append('<tr>'
-					+ '<td class="col-xs-2"><img src="'
+			$("#personal_rank_in_country").append('<tr class="rank-row">'
+					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 nameCell">'
 					+ student['NickName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 stateCell">'
 					+ student['StateProvince']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 cityCell">'
 					+ student['City']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 schoolCell">'
 					+ student['SchoolName']
 					+ '</td>'
-					+ '<td class="col-xs-2">'
+					+ '<td class="col-xs-2 scoreCell">'
 					+ student['Score']
 					+ '</td>'
 					+ '</tr>'

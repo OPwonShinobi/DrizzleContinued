@@ -32,7 +32,22 @@ if (!isset($_SESSION['Userid']))
 						<button id="button_refresh_personal_rank_in_city" class="btn btn-warning"><span class="glyphicon glyphicon-refresh"></span></button>
 						</div>
 					</div>
-					<div class="col-xs-10 col-xs-offset-1">
+					<!-- Filter divs -->
+					<div class="leaderboard-filter col-xs-12">
+						<div class="col-sm-2">
+							<h4>Filter:</h4>
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="nameFilter-city" onkeyup="nameOnkeyup(this.id)" placeholder="By Name" title="Type in a name">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="schoolFilter-city" onkeyup="schoolOnkeyup(this.id)" placeholder="By School" title="Type in a school">
+						</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control order-alpha" id="scoreFilter-city" onkeyup="scoreOnkeyup(this.id)" placeholder="By Score" title="Type in a score">
+						</div>
+					</div> <!-- End of filter divs -->
+					<div class="col-xs-10 col-xs-offset-1 table-div">
 						<table class="table">
 							<thead>
 								<tr>
