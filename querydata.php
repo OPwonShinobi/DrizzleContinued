@@ -375,12 +375,14 @@ function modifyImageRecord() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
 		UPDATE Images
-		SET favflag=:favflagID
+		SET favflag=:favflagID,
+		description=:description
 		WHERE id=:imageID
 	");
 
 	$stmt->bindParam(":imageID", $_POST['ImageID']);
 	$stmt->bindParam(":favflagID", $_POST['FavFlagID']);
+	$stmt->bindParam(":description", $_POST['Description']);
 
 	$result = $stmt->execute();
 	if ($result) {
@@ -883,7 +885,7 @@ function getAllStudentScore() {
 function getAllImages() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
-	SELECT id, favflag, userID
+	SELECT id, favflag, userID, description
 	FROM Images
 	");
 	$stmt->execute();

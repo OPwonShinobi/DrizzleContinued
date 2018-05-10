@@ -772,6 +772,7 @@ function update_images(images) {
 				+ '<td class="image_id">' + image.id +'</td>'
 				+ '<td><img src=\"' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\" height=\"100\" width=\"100\" onclick="window.open(\'' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\')\"></td>'
 				+ '<td class="image_flag"><div contenteditable>' + image.favflag + '</td>'
+				+ '<td class="image_description"><div contenteditable>' + image.description + '</td>'
 				+ '<td>' + image.userID + '</td>'
 				+ '<td> <button style="height:30px;width:80px" class="update_image_btn">Update</button> </td>'
 				+ '</tr>');
@@ -792,6 +793,7 @@ function update_image_record(row){
 	var id = Number(idt);
 	var idflag = row.find('.image_flag').text();
 	var idflagnum = Number(idflag);
+	var descrip = row.find('.image_description').text();
 
 	$.ajax({
 		type: "POST",
@@ -799,7 +801,8 @@ function update_image_record(row){
 		data: {
 			QueryData: 'modifyImageRecord',
 			ImageID:id,
-			FavFlagID:idflagnum
+			FavFlagID:idflagnum,
+			Description:descrip
 		},
 		dataType: 'JSON',
 		success: function(data){

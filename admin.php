@@ -327,6 +327,7 @@ if ($_POST) {
 										<th>ID</th>
 										<th>Image</th>
 										<th>Flag</th>
+										<th>Description</th>
 										<th>UserID</th>
 									</tr>
 								</thead>
