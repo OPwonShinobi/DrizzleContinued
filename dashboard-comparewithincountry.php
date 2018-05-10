@@ -66,22 +66,6 @@ if (!isset($_SESSION['Userid']))
 								</tr>
 							</thead>
 							<tbody id="personal_rank_in_country">
-								<tr class="rank-row">
-									<td class="rankCell">1</td>
-									<td class="nameCell">Test1</td>
-									<td class="stateCell">British Columbia</td>
-									<td class="cityCell">Burnaby</td>
-									<td class="schoolCell">School 1</td>
-									<td class="scoreCell">99</td>
-								</tr>
-								<tr class="rank-row">
-									<td class="rankCell">2</td>
-									<td class="nameCell">Hello</td>
-									<td class="stateCell">Alberta</td>
-									<td class="cityCell">Calgary</td>
-									<td class="schoolCell">School 2</td>
-									<td class="scoreCell">20</td>
-								</tr>
 							</tbody>
 						</table>
 					</div>

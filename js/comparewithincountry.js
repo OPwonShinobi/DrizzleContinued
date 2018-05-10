@@ -48,12 +48,12 @@ function update_personal_rank_in_country_table(data){
 	$("#personal_rank_in_country").empty();
 
 	for (student of data) {
-		//console.log(rank);
+		//console.log("student rank: " + student['Rank']);
 		if (parseInt(student['Rank']) >10)
 			break;
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
-			$("#personal_rank_in_country").append('<tr>'
+			$("#personal_rank_in_country").append('<tr class="rank-row">'
 					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'

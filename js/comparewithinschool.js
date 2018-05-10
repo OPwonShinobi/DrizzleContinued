@@ -93,7 +93,7 @@ function update_personal_rank_in_school_table(data) {
 			break;
 		var image = '/images/rank/' + student['Rank']+ '.png'
 
-			$("#personal_rank_in_school").append('<tr>'
+			$("#personal_rank_in_school").append('<tr class="rank-row">'
 					+ '<td class="col-xs-2 rankCell"><img src="'
 					+ image
 					+ '"></td>'

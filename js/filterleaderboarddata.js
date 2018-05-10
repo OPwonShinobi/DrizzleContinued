@@ -14,12 +14,14 @@ function updateFilters() {
 		var self = $(this)
 		var result = true;
 
+		console.log("In updateFilters! " + schoolFilVal);
+
 		if (nameFilVal && nameFilVal != "") {
-			console.log("Name filter");
+			console.log("Name filter value: " + nameFilVal);
 			result = result && filterLeaderboard(self, nameFilVal, "nameCell");
 		}
 		if (stateFilVal && stateFilVal != "") {
-			console.log("state value: " + stateFilVal);
+			console.log("State filter value: " + stateFilVal);
 			result = result && filterLeaderboard(self, stateFilVal, "stateCell");
 		}
 		if (cityFilVal && cityFilVal != "") {
@@ -38,10 +40,11 @@ function updateFilters() {
 
 function filterLeaderboard(self, filterValue, tdClass) {
 	var td = self.find("td." + tdClass);
+	console.log("Class is: " + tdClass);
 	if (td) {
 		var tdText = td.text().toUpperCase();
 		console.log(tdText);
-		console.log(nameFilVal);
+		console.log(filterValue);
 		if (tdText.indexOf(filterValue) > -1) {
 			return true;
 		} else {
@@ -67,6 +70,7 @@ function onkeyupFilter() {
 function nameOnkeyup(inputFilter) {
 	var input = document.getElementById(inputFilter);
 	nameFilVal = input.value.toUpperCase();
+	console.log("Name on keyup: " + nameFilVal);
 	updateFilters();
 }
 

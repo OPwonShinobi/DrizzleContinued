@@ -480,12 +480,12 @@ function getUserRankInSchool() {
  */
 
 	$stmt = $conn->prepare("
-		SELECT ID, NickName, Score, Rank, :theUserId AS MyId
+		SELECT ID, NickName, Score, `Rank`, :theUserId AS MyId
 		FROM (
 			SELECT ID,
 				NickName,
 				Score,
-				@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+				@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 				@repeat:= case when Score =@s then @repeat + 1 else 0 end,
 				@s:=Score
 			FROM (
@@ -554,10 +554,10 @@ function myComplishment(){
 function getUserRankInCity(){
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
-	SELECT ID, NickName, Score, City, SchoolName, Rank, :theUserId AS MyId
+	SELECT ID, NickName, Score, City, SchoolName, `Rank`, :theUserId AS MyId
 	FROM (
 		SELECT ID, NickName, Score, City, SchoolName,
-		   @rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+		   @rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 		   @repeat:= case when Score =@s then @repeat + 1 else 0 end,
 		   @s:=Score
 		FROM (
@@ -616,11 +616,11 @@ function getSchoolRankInCity(){
 	$stmt->execute();
 
 	$stmt = $conn->prepare("
-	SELECT Rank, SchoolID, SchoolName, Score, MySchoolId, :theUserId AS MyId
+	SELECT `Rank`, SchoolID, SchoolName, Score, MySchoolId, :theUserId AS MyId
 	FROM
 	(
 		SELECT SchoolID, SchoolName, Score,
-			@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+			@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 			@repeat:= case when Score =@s then @repeat + 1 else 0 end,
 			@s:=Score,
 			MySchoolId
@@ -668,11 +668,11 @@ function getSchoolRankInState() {
 	$stmt->execute();
 
 	$stmt = $conn->prepare("
-	SELECT Rank, SchoolID, SchoolName, Score, City, MySchoolId, :theUserId AS MyId
+	SELECT `Rank`, SchoolID, SchoolName, Score, City, MySchoolId, :theUserId AS MyId
 	FROM
 	(
 		SELECT SchoolID, SchoolName, Score, City,
-			@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+			@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 			@repeat:= case when Score =@s then @repeat + 1 else 0 end,
 			@s:=Score,
 			MySchoolId
@@ -721,11 +721,11 @@ function getSchoolRankInCountry() {
 	$stmt->execute();
 
 	$stmt = $conn->prepare("
-	SELECT Rank, SchoolID, SchoolName, Score, City, StateProvince, MySchoolId, :theUserId AS MyId
+	SELECT `Rank`, SchoolID, SchoolName, Score, City, StateProvince, MySchoolId, :theUserId AS MyId
 	FROM
 	(
 		SELECT SchoolID, SchoolName, Score,City, StateProvince,
-			@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+			@rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 			@repeat:= case when Score =@s then @repeat + 1 else 0 end,
 			@s:=Score,
 			MySchoolId
@@ -822,10 +822,10 @@ function getUserCountry() {
 function getUserRankInState() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
-	SELECT ID, NickName, Score, City, SchoolName, Rank, :theUserId AS MyId
+	SELECT ID, NickName, Score, City, SchoolName, `Rank`, :theUserId AS MyId
 	FROM (
 		SELECT ID, NickName, Score, City, SchoolName,
-		   @rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+		   @rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 		   @repeat:= case when Score =@s then @repeat + 1 else 0 end,
 		   @s:=Score
 		FROM (
@@ -863,10 +863,10 @@ function getUserRankInState() {
 function getUserRankInCountry() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
-	SELECT ID, NickName, Score, StateProvince, City, SchoolName, Rank, :theUserId AS MyId
+	SELECT ID, NickName, Score, StateProvince, City, SchoolName, `Rank`, :theUserId AS MyId
 	FROM (
 		SELECT ID, NickName, Score, StateProvince, City, SchoolName,
-		   @rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS Rank,
+		   @rank:=case when Score=@s then @rank else @rank + @repeat + 1 end AS `Rank`,
 		   @repeat:= case when Score =@s then @repeat + 1 else 0 end,
 		   @s:=Score
 		FROM (
