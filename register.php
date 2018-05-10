@@ -109,41 +109,42 @@ require_once('config.php');
                     </div>
                     <!--CITY END-->
                     <script src="https://geodata.solutions//includes/countrystatecity.js"></script>
-                    <!--REGION LOCK SCRIPT-->
-                    <?php
-                    if($regionlock) {
-                        echo "<script>var regionlock = true;";
-                        echo "$('select[name=state]').change(function () {";
-                    } else {
-                        echo "<script>var regionlock = false;";
-                        echo "$(document).ready(function(){";
+                    <script type="text/javascript">
+                    var regionlock = false;
+                    $(document).ready(function(){
+                        var pwd = $('#password');
+                        var cpwd = $('#cpassword');
+                        var schooldiv = $('.school');
+                        var schoolselect = $('#schoolid');
 
-                    }
-                    ?>
-                            var pwd = $('#password');
-                            var cpwd = $('#cpassword');
-                            var schooldiv = $('.school');
-                            var schoolselect = $('#schoolid');
-
-                            if (regionlock == false || $('select[name=state]').val() == 'British Columbia') {
-                                pwd.attr('type', 'password');
-                                pwd.prop("required", true);
-                                cpwd.attr('type', 'password');
-                                cpwd.prop("required", true);
-                                schoolselect.prop("required", true);
-                                schooldiv.css("display", "block");
-
-                            } else {
-                                pwd.attr('type', 'hidden');
-                                pwd.prop("required", false);
-                                $("#passworderror").css("display", "none");
-                                cpwd.attr('type', 'hidden');
-                                cpwd.prop("required", false);
-                                $("#cpassworderror").css("display", "none");
-                                schooldiv.css("display", "none");
-                                schoolselect.prop("required", false);
-                            }
-                        });
+                        // if ($('select[name=state]').val() == 'British Columbia')
+                        // {
+                        pwd.attr('type', 'password');
+                        pwd.prop("required", true);
+                        cpwd.attr('type', 'password');
+                        cpwd.prop("required", true);
+                        schoolselect.prop("required", true);
+                        schooldiv.css("display", "block");
+                        // } else {
+                        //     pwd.attr('type', 'hidden');
+                        //     pwd.prop("required", false);
+                        //     $("#passworderror").css("display", "none");
+                        //     cpwd.attr('type', 'hidden');
+                        //     cpwd.prop("required", false);
+                        //     $("#cpassworderror").css("display", "none");
+                        //     schooldiv.css("display", "none");
+                        //     schoolselect.prop("required", false);
+                        schoolselect.change(
+                            function()
+                            {
+                                $('#NewSchoolName').css("display", "none");
+                                if (schoolselect.val() == 'unsupported') 
+                                {
+                                    $('#NewSchoolName').css("display", "block");
+                                }
+                            }    
+                        )
+                    });
                     </script>
                     <!--END OF REGIONLOCK-->
                     <!--PASSWORD START-->
@@ -183,7 +184,6 @@ require_once('config.php');
                         <select name="school" class="form-control" id="schoolid">
                             <option value="">Select School</option>
                             <script>
-
                                 function refresh_school_table(){
                                     $.ajax({
                                         type: "POST",
@@ -197,11 +197,10 @@ require_once('config.php');
                                         dataType: 'JSON',
                                         success: function(data){
                                             //console.log(data);
-                                            if (data != "undefined" && data != null) {
+                                            if (data != "undefined" && data != null)
+                                            {
                                                 update_school_table(data);
                                             }
-                                            // data retrieved from server
-                                            // Use the data to change the elements here
                                         },
                                         error: function(data){
                                             console.log(data);
@@ -222,11 +221,19 @@ require_once('config.php');
                                                 text: school['SchoolName']
                                             }));
                                     }
+                                    $("#schoolid").append($('<option>', 
+                                    {
+                                        value: 'unsupported',
+                                        text: 'Choose this if your school isn\'t in the list'
+                                    }));
                                 }
                             </script>
                         </select>
+                        <input type="text" id="NewSchoolName" class="form-control" name="NewSchoolName" placeholder="Enter your school's full name here" style="display: none">
+                        <!-- legacy code, this p not needed but will break stuff if left out -->
+                        <p id="NewSchoolNameerror"></p>
                     <br/>
-                    <p style="color:white"><small>If your school is not listed, please contact Drizzle Environmental Society at info@drizlesociety.org or on social media to have it added to our system</small></p>
+                    <p style="color:white"><small>If your school is not listed, please enter it above and click register, or find us on social media to have it added to our system. You can also email us at info@drizzlesociety.org.</small></p>
                     </div>
                     <!--SCHOOL END-->
                     <hr/>
@@ -244,6 +251,7 @@ require_once('config.php');
                         <label>
                             <input type="checkbox" id="newsletter" name="newsletter" value="yes">
                             <big>Sign up for our Newsletter</big>
+                            <p id="newslettererror"></p>
                         </label>
                     </div>
                     <!--NEWSLETTER END-->

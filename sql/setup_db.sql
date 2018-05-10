@@ -137,6 +137,15 @@ CREATE TABLE IF NOT EXISTS Images (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS RegionLock
+(
+	CountryName VARCHAR(128) not null,
+    RegionName VARCHAR(128) null,
+    CONSTRAINT UNIQUE (CountryName, RegionName)
+);
+-- I'm assuming the local region lock will always be on 
+INSERT INTO RegionLock VALUES ('Canada', 'British Columbia');
+
 INSERT INTO ActionCategory VALUES ('Activism', 'You do stuff, usually around the community');
 INSERT INTO ActionCategory VALUES ('Transportation', 'Getting around comes around');
 INSERT INTO ActionCategory VALUES ('Energy', 'Conservation of energy is not only a law but is encouraged');
