@@ -59,8 +59,13 @@ if (!isset($_SESSION['Userid']))
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearScore()">Close</button>
-                <button type="button" class="btn btn-primary" data-toggle="tab" data-target="#share_score" onclick="submit_my_finish()">Save Point</button>
+                <button type="submit" class="btn btn-primary" data-toggle="tab" data-target="#share_score" onclick="submit_my_finish()">Save Point</button>
             </div>
+            <!-- <form action="upload2.php" method="post" > -->
+                <span style="color:black">Add an image (optional)?:</span>
+                <input style="color:black" type="file" name="image" />
+            <!-- </form> -->
+
         </div>
 
         <div id="share_score" class="modal-content tab-pane fade">
