@@ -134,7 +134,17 @@ require_once('config.php');
                         //     $("#cpassworderror").css("display", "none");
                         //     schooldiv.css("display", "none");
                         //     schoolselect.prop("required", false);
-                        });
+                        schoolselect.change(
+                            function()
+                            {
+                                $('#NewSchoolName').css("display", "none");
+                                if (schoolselect.val() == 'unsupported') 
+                                {
+                                    $('#NewSchoolName').css("display", "block");
+                                }
+                            }    
+                        )
+                    });
                     </script>
                     <!--END OF REGIONLOCK-->
                     <!--PASSWORD START-->
@@ -211,19 +221,19 @@ require_once('config.php');
                                                 text: school['SchoolName']
                                             }));
                                     }
-                                    if (data.length == 0)
+                                    $("#schoolid").append($('<option>', 
                                     {
-                                        $("#schoolid").append($('<option>', 
-                                        {
-                                            value: 'unsupported',
-                                            text: 'Choose this if your school isn\'t in the list'
-                                        }));
-                                    }
+                                        value: 'unsupported',
+                                        text: 'Choose this if your school isn\'t in the list'
+                                    }));
                                 }
                             </script>
                         </select>
+                        <input type="text" id="NewSchoolName" class="form-control" name="NewSchoolName" placeholder="Enter your school's full name here" style="display: none">
+                        <!-- legacy code, this p not needed but will break stuff if left out -->
+                        <p id="NewSchoolNameerror"></p>
                     <br/>
-                    <p style="color:white"><small>If your school is not listed, please contact Drizzle Environmental Society at info@drizlesociety.org or on social media to have it added to our system</small></p>
+                    <p style="color:white"><small>If your school is not listed, please enter it above and click register, or find us on social media to have it added to our system. You can also email us at info@drizzlesociety.org.</small></p>
                     </div>
                     <!--SCHOOL END-->
                     <hr/>
@@ -241,6 +251,7 @@ require_once('config.php');
                         <label>
                             <input type="checkbox" id="newsletter" name="newsletter" value="yes">
                             <big>Sign up for our Newsletter</big>
+                            <p id="newslettererror"></p>
                         </label>
                     </div>
                     <!--NEWSLETTER END-->

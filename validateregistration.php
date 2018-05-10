@@ -5,11 +5,6 @@ require_once('config.php');
 
 if(isset($_GET['success']) && $_GET['success'] == true) {
     header("Location: welcome.php");
-    // $fkstr = "Location: /index.php?userid=".$_SESSION['Userid'];
-    // echo "<script>alert(".$fkstr.")</script>";
-    // sleep(5);
-    // header("refresh:5;url=/index.php?userid=".$_SESSION['Userid']);
-    // header("Location: /index.php?userid=".$_SESSION['Userid']);
     exit;
 }
 
@@ -18,6 +13,7 @@ $errorredirect = $redirect;
 $error = false;
 $withinRegion = false;
 $sendNewsletter=false;
+$newSchoolToAdd=false;
 
 if ($_POST) {
     $conn = get_db_connection();
@@ -155,6 +151,37 @@ if ($_POST) {
         }
     }
 
+    // originally school checking was only for within region lock
+    // but since the option to add a school exists for all schools, the new user might expect an email
+    $schoolId = 0;
+    if(!isset($_POST['school']) || empty($_POST['school'])) {
+        $errorredirect = $errorredirect . "school=Missing&";
+        $error = true;
+    } else {
+        $school = $_POST['school'];
+        if(detectTags($school)) {
+            $errorredirect = $errorredirect . "school=Invalid&";
+            $error = true;
+        } else {
+            $stmt = $conn->prepare("SELECT ID FROM School WHERE SchoolName=:school AND City=:city AND StateProvince=:state AND Country=:country");
+            $stmt->bindParam(":school", $school);
+            $stmt->bindParam(":city", $city);
+            $stmt->bindParam(":state", $state);
+            $stmt->bindParam(":country", $country);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            if (isset($result->ID)) {
+                $schoolId=$result->ID;
+            } else {
+                // new school means outside region lock, but need actual region 
+                // lock status for email to admin
+                // $withinRegion = false;
+                $newSchoolToAdd = true;
+            }
+        }
+    }
     if( $withinRegion ) {
         if(!isset($_POST['password'])) {
             $errorredirect = $errorredirect . "password=Missing&";
@@ -189,33 +216,6 @@ if ($_POST) {
                 $error = true;
             }
         }
-        $schoolId = 0;
-        if(!isset($_POST['school']) || empty($_POST['school'])) {
-            $errorredirect = $errorredirect . "school=Missing&";
-            $error = true;
-        } else {
-            $school = $_POST['school'];
-            if(detectTags($school)) {
-                $errorredirect = $errorredirect . "school=Invalid&";
-                $error = true;
-            } else {
-                $stmt = $conn->prepare("SELECT ID FROM School WHERE SchoolName=:school AND City=:city AND StateProvince=:state AND Country=:country");
-                $stmt->bindParam(":school", $school);
-                $stmt->bindParam(":city", $city);
-                $stmt->bindParam(":state", $state);
-                $stmt->bindParam(":country", $country);
-                $stmt->execute();
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-                $result = $stmt->fetch(PDO::FETCH_OBJ);
-                if (isset($result->ID)) {
-                    $schoolId=$result->ID;
-                } else {
-                    $withinRegion = false;
-                }
-            }
-
-        }
     }
 
     $captcha = $_POST['captcha_code'];
@@ -233,9 +233,13 @@ if ($_POST) {
         if($sendNewsletter) {
             sendNewsletterEmail($firstname, $lastname, $email, $country, $state, $city);
         }
-        if( $withinRegion ) {
-            $options=[
-                'cost'=>12,];
+        // regardless if new school in regionlock, dont add account
+        if( $newSchoolToAdd ) {
+            sendAddSchoolEmail($firstname, $lastname, $email, $country, $state, $city, $_POST['NewSchoolName'], $withinRegion);
+            $withinRegion = false;
+        }
+        if ( $withinRegion ) {
+            $options=['cost'=>12];
             $password=password_hash($password,PASSWORD_BCRYPT,$options);
             // register as user
             $stmt = $conn->prepare("INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES (:password, :theEmail, :firstName, :lastName, :nickName ,(SELECT ID FROM School WHERE ID=:schoolID))");
@@ -248,7 +252,6 @@ if ($_POST) {
             $stmt->bindParam(":schoolID", $schoolId);
             $stmt->execute();
 
-            //TODO send email to user telling them they successfully registered
             sendEmail($email);
             $stmt = $conn->prepare("SELECT ID FROM User WHERE Email=:theEmail");
             $stmt->bindParam(":theEmail", $email);
@@ -260,7 +263,8 @@ if ($_POST) {
             $_SESSION['expire'] = $_SESSION['start'] + (60 * 60);
 
             header('Location: /validateregistration.php?success=true');
-        } 
+        }
+        // outside of region lock or school wasnt added in db yet
         if( !$withinRegion ) {
             // $stmt = $conn->prepare("INSERT INTO OutsideBC(FirstName, LastName, Country, State, City, Email) VALUES (:firstName, :lastName, :country, :state, :city, :theEmail)");
             // $stmt->bindParam(":theEmail", $email);
