@@ -51,6 +51,10 @@ if ($_POST) {
 			addSchool();
 			break;
 
+		case 'addRegion':
+			addRegion();
+			break;
+
 		case 'getUserScore':
 			getUserScore();
 			break;
@@ -86,6 +90,9 @@ if ($_POST) {
 		case 'deleteSchool':
 			deleteSchool();
 			break;
+		case 'deleteRegion':
+			deleteRegion();
+			break;
 		case 'addAction':
 			addAction();
 			break;
@@ -103,6 +110,12 @@ if ($_POST) {
 			break;
 		case 'getUserState':
 			getUserState();
+			break;
+		case 'getAllImages':
+			getAllImages();
+			break;
+		case 'getAllRegion':
+			getAllRegion();
 			break;
 		case 'getUserRankInState':
 			getUserRankInState();
@@ -133,6 +146,9 @@ if ($_POST) {
 			break;
 		case 'modifyStudentRecord':
 			modifyStudentRecord();
+			break;
+		case 'modifyImageRecord':
+			modifyImageRecord();
 			break;
 		case 'getAllAdmins':
 			getAllAdmins();
@@ -244,6 +260,18 @@ function getAllSchoolsByCity() {
 	}
 }
 
+function getAllRegion() {
+
+	$conn = get_db_connection();
+	if ($conn) {
+		$stmt = $conn->prepare("SELECT *
+			FROM RegionLock");
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($result);
+	}
+}
+
 function addSchool() {
 	$country = $_POST['Country'];
 	$stateProvince = $_POST['StateProvince'];
@@ -259,6 +287,19 @@ function addSchool() {
 	$stmt->bindParam(":theCity", $city);
 	$stmt->execute();
 	getAllSchoolsByCity();
+}
+
+function addRegion() {
+	$country = $_POST['Country'];
+	$stateProvince = $_POST['StateProvince'];
+
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("INSERT INTO RegionLock
+		VALUES (:theCountryName, :theRegionName)");
+	$stmt->bindParam(":theCountryName", $country);
+	$stmt->bindParam(":theRegionName", $stateProvince);
+	$stmt->execute();
+	getAllRegion();
 }
 
 function modifySchool() {
@@ -292,6 +333,20 @@ function deleteSchool() {
 	}
 }
 
+function deleteRegion() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		DELETE FROM RegionLock
+		WHERE CountryName=:countryName AND RegionName=:regionName
+	");
+	$stmt->bindParam(":countryName", $_POST['CountryName']);
+	$stmt->bindParam(":regionName", $_POST['RegionName']);
+	$result = $stmt->execute();
+	if ($result) {
+		getAllRegion();
+	}
+}
+
 function ModifyStudentRecord(){
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
@@ -316,6 +371,23 @@ function ModifyStudentRecord(){
 	}
 }
 
+function modifyImageRecord() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		UPDATE Images
+		SET favflag=:favflagID
+		WHERE id=:imageID
+	");
+
+	$stmt->bindParam(":imageID", $_POST['ImageID']);
+	$stmt->bindParam(":favflagID", $_POST['FavFlagID']);
+
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+}
 
 function addAction() {
 	$conn = get_db_connection();
@@ -343,13 +415,14 @@ function modifyAction() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
 		UPDATE Action
-		SET Description=:actionDescription, Points=:points
+		SET Description=:actionDescription, Points=:points, Category=:category
 		WHERE ID=:theActionId
 	");
 
 	$stmt->bindParam(":actionDescription", $_POST['Description']);
 	$stmt->bindParam(":points", $_POST['Points']);
 	$stmt->bindParam(":theActionId", $_POST['ActionId']);
+	$stmt->bindParam(":category", $_POST['Category']);
 
 	$result = $stmt->execute();
 	if ($result) {
@@ -805,6 +878,17 @@ function getAllStudentScore() {
 	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	echo json_encode($result);
 
+}
+
+function getAllImages() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+	SELECT id, favflag, userID
+	FROM Images
+	");
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo json_encode($result);
 }
 
 function getUserState() {

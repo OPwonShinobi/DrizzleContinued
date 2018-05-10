@@ -1,6 +1,7 @@
 var schoolsInSelectedCity;
 var actions;
-var studens;
+var students;
+var images;
 var admins;
 
 $(document).ready(function(){
@@ -15,6 +16,11 @@ $(document).ready(function(){
 		$("#input_city").val($("#cityId option:selected").text());
 	});
 
+	$("#button_add_region").click(function(){
+		$("#popup_modal_add_region").modal({backdrop: "static"});
+		$("#input_country_region").val($("#countryId_region option:selected").text());
+		$("#input_state_province_region").val($("#stateId_region option:selected").text());
+	});
 
 	/* Handle "Add action" button  */
 	$("#button_add_action").click(function(){
@@ -107,6 +113,10 @@ $(document).ready(function(){
 		request_add_school();
 	});
 
+	$("#button_add_region_confirm").click(function(){
+		request_add_region();
+	});
+
 	/* Submit modifying school data */
 	$("#button_edit_school_confirm").click(function(){
 		request_modify_school();
@@ -132,6 +142,14 @@ $(document).ready(function(){
 	/* Get sutdent data when the student record tab clicked. */
 	$("#tab_show_student").click(function(){
 		getAllStudentScore();
+	});
+
+	$("#tab_manage_region").click(function(){
+		refresh_region_table();
+	});
+
+	$("#tab_show_notification").click(function(){
+		getAllImages();
 	});
 
 	/* Get all action data when the manage action tab clicked. */
@@ -220,6 +238,14 @@ $(document).on('click', '.remove_school_buttons', function(){
 
 	if (confirm("School \"" + school[0].SchoolName + "\" will be deleted \ncontinue?")) {
 		request_delete_school(deleteId);
+	}
+});
+
+$(document).on('click', '.remove_region_buttons', function(){
+	var regionName = this.getAttribute("data-region");
+	var countryName = this.getAttribute("data-country");
+	if (confirm("Region will be deleted \ncontinue?")) {
+		request_delete_region(countryName, regionName);
 	}
 });
 
@@ -317,6 +343,38 @@ function request_add_school() {
 
 }
 
+function request_add_region() {
+	var province = $("#stateId_region option:selected").text();
+	if (province == "Select State")
+	{
+		province = "ALL";
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'addRegion',
+			Country: $("#countryId_region option:selected").text(),
+			StateProvince: province,
+		},
+		dataType: 'JSON',
+		success: function(data){
+			//console.log(data);
+			if (data != "undefined" && data != null) {
+				regionInSelectedCity = data;
+				update_region_table(regionInSelectedCity);
+			}
+			// data retrieved from server
+			// Use the data to change the elements here
+
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
 function request_modify_school() {
 	var schoolId = $("#school_id").val();
 	var schoolName = $("#input_school_name_edit").val();
@@ -378,6 +436,29 @@ function request_delete_school(deleteId) {
 	});
 }
 
+function request_delete_region(countryName, regionName) {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'deleteRegion',
+			CountryName: countryName,
+			RegionName: regionName
+		},
+		dataType: 'JSON',
+		success: function(data){
+			//console.log(data);
+			if (data != "undefined" && data != null) {
+				regionInSelectedCity = data;
+				update_region_table(regionInSelectedCity);
+			}
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
 function refresh_school_table(){
 	$.ajax({
 		type: "POST",
@@ -405,6 +486,30 @@ function refresh_school_table(){
 	});
 }
 
+function refresh_region_table(){
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'getAllRegion',
+		},
+		dataType: 'JSON',
+		success: function(data){
+			//console.log(data);
+			if (data != "undefined" && data != null) {
+				regionInSelectedCity = data;
+				update_region_table(regionInSelectedCity);
+			}
+			// data retrieved from server
+			// Use the data to change the elements here
+
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
 function update_school_table(schoolsInSelectedCity) {
 	$("#school_table_content").empty();
 	for (school of schoolsInSelectedCity) {
@@ -418,6 +523,21 @@ function update_school_table(schoolsInSelectedCity) {
 				+ '" class= "btn btn-warning edit_school_buttons"><span class="glyphicon glyphicon-edit"></span></button></div>'
 				+ '<div class="col-xs-6"><button data-toggle="confirmation" value="' + school['ID']
 				+ '" class= "btn btn-danger remove_school_buttons"><span class="glyphicon glyphicon-trash"></span></button></div></div></td>'
+				+ '</tr>'
+				);
+	}
+}
+
+function update_region_table(regionInSelectedCity) {
+	$("#region_table_content").empty();
+	for (region of regionInSelectedCity) {
+		//console.log(school);
+		$("#region_table_content").append('<tr>'
+				+ '<td class="col-xs-2">' + region['CountryName'] + '</td>'
+				+ '<td class="col-xs-3">' + region['RegionName'] + '</td>'
+				+ '<td class="col-xs-2">'
+				+ '<div class="col-xs-6"><button data-toggle="confirmation" data-region="' + region['RegionName'] + '" data-country="' + region['CountryName']
+				+ '" class= "btn btn-danger remove_region_buttons"><span class="glyphicon glyphicon-trash"></span></button></div></td>'
 				+ '</tr>'
 				);
 	}
@@ -480,6 +600,7 @@ function request_modify_action() {
 	modifyId = $("#edit_action_id").val();
 	modifyDescription = $("#input_edit_action_description").val();
 	modifyPoints = $("#input_edit_action_points").val();
+	modifyCategory = $("#action_category option:selected").html();
 
 	$.ajax({
 		type: "POST",
@@ -488,7 +609,8 @@ function request_modify_action() {
 			QueryData: 'modifyAction',
 			ActionId: modifyId,
 			Description: modifyDescription,
-			Points: modifyPoints
+			Points: modifyPoints,
+			Category: modifyCategory
 		},
 		dataType: 'JSON',
 		success: function(data){
@@ -499,6 +621,7 @@ function request_modify_action() {
 					if (actions[i].ID == modifyId){
 						actions[i].Description = modifyDescription;
 						actions[i].Points = modifyPoints;
+						actions[i].Category = modifyCategory;
 						break;
 					}
 				}
@@ -616,6 +739,75 @@ function getAllStudentScore() {
 			//update_action_table(actions);
 		},
 		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function getAllImages() {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {QueryData: 'getAllImages'},
+		dataType: 'JSON',
+		success: function(data){
+			//console.log(data);
+			if (data != undefined && data != null) {
+				images = data;
+				update_images(images);
+			}
+			//update_action_table(actions);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function update_images(images) {
+	$("#action_table_images").empty();
+	for (image of images)
+	{
+		$("#action_table_images").append('<tr>'
+				+ '<td class="image_id">' + image.id +'</td>'
+				+ '<td><img src=\"' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\" height=\"100\" width=\"100\" onclick="window.open(\'' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\')\"></td>'
+				+ '<td class="image_flag"><div contenteditable>' + image.favflag + '</td>'
+				+ '<td>' + image.userID + '</td>'
+				+ '<td> <button style="height:30px;width:80px" class="update_image_btn">Update</button> </td>'
+				+ '</tr>');
+	}
+
+	$(".update_image_btn").click(function() {
+    	var $row = $(this).closest("tr");   // Find the row
+		if (confirm('Are you sure you want to save ' + $row.find('.image_id').text() + '\'s record?')) {
+		    update_image_record($row);
+		} else {
+		    // Do nothing!
+		}
+	});
+}
+
+function update_image_record(row){
+	var idt = row.find('.image_id').text();
+	var id = Number(idt);
+	var idflag = row.find('.image_flag').text();
+	var idflagnum = Number(idflag);
+
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'modifyImageRecord',
+			ImageID:id,
+			FavFlagID:idflagnum
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				getAllImages();
+			}
+		},
+	 	error: function(data){
 			console.log(data);
 		}
 	});
