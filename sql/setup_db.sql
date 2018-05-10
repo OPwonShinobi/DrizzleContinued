@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS Images (
 CREATE TABLE IF NOT EXISTS RegionLock
 (
 	CountryName VARCHAR(128) not null,
-    RegionName VARCHAR(128) null,
+    RegionName VARCHAR(128) not null,
     CONSTRAINT UNIQUE (CountryName, RegionName)
 );
 -- I'm assuming the local region lock will always be on 

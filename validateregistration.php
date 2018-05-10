@@ -140,7 +140,7 @@ if ($_POST) {
     //specific region not been added to table
     } else {
         //general query, see if specific region added to db regionlock table
-        $stmt = $conn->prepare("SELECT CountryName FROM RegionLock WHERE CountryName=:userCountry AND RegionName IS NULL" );
+        $stmt = $conn->prepare("SELECT CountryName FROM RegionLock WHERE CountryName=:userCountry AND RegionName = 'ALL'" );
         $stmt->bindParam(":userCountry", $country);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);

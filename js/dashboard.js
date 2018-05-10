@@ -66,7 +66,8 @@ function update_my_current_pick() {
         + '<div class="panel panel-default">'
         + '<div class ="challenge_box">'
         + '<div class="row">'
-        + '<img src="/images/points/'+ pointRecord[list[i]] + '.png" height="100px" width="100px" alt="" class ="challenge_img">'
+        + '<img src="/images/categories/'+ categoryRecord[list[i]] + '.png" height="100px" width="100px" style="margin-left:10%" alt="' + categoryRecord[list[i]] 
+        + '" class ="challenge_img">'
         + '<p class ="challenge_name">'+nameRecord[list[i]] + ' <br><br> Point: ' + pointRecord[list[i]] +'</p>'
         + '</div>'
         + '</div>'

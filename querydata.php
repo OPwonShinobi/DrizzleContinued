@@ -193,7 +193,7 @@ function getMyActionsWithUserIndication() {
 		$stmt->execute();
 
 		$stmt = $conn->prepare("
-			SELECT ua.UserID, ua.ActionID, ua.CompleteTime, a.Description, a.Points
+			SELECT ua.UserID, ua.ActionID, ua.CompleteTime, a.Description, a.Points, a.Category
 			FROM UserAction ua
 			INNER JOIN Action a On ua.ActionID = a.ID
 			WHERE UserID=:theUser AND a.Active=TRUE;
