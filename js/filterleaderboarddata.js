@@ -53,20 +53,6 @@ function filterLeaderboard(self, filterValue, tdClass) {
 	}
 }
 
-function onkeyupFilter() {
-	var nameInput = document.getElementById("nameFilter-country");
-	var stateInput = document.getElementById("stateFilter-country");
-	var cityInput = document.getElementById("cityFilter-country");
-	var schoolInput = document.getElementById("schoolFilter-country");
-	var scoreInput = document.getElementById("scoreFilter-country");
-	nameFilVal = nameInput.value.toUpperCase();
-	stateFilVal = stateInput.value.toUpperCase();
-	cityFilVal = cityInput.value.toUpperCase();
-	schoolFilVal = schoolInput.value.toUpperCase();
-	scoreFilVal = scoreInput.value.toUpperCase();
-	updateFilters();
-}
-
 function nameOnkeyup(inputFilter) {
 	var input = document.getElementById(inputFilter);
 	nameFilVal = input.value.toUpperCase();
