@@ -49,14 +49,19 @@ function update_personal_rank_in_state_table(data){
 
 	for (student of data) {
 		//console.log(rank);
-		if (parseInt(student['Rank']) >10)
-			break;
-		var image = '/images/rank/' + student['Rank']+ '.png'
+		var imageStr = student['Rank'];
+		if (parseInt(student['Rank']) >10) {
+			imageStr = "default";
+			//break;
+		}
+		var image = '/images/rank/' + imageStr + '.png'
 
 			$("#personal_rank_in_state").append('<tr class="rank-row">'
-					+ '<td class="col-xs-2 rankCell"><img src="'
+					+ '<td align="center" class="col-xs-2 rankCell"><img src="'
 					+ image
-					+ '"></td>'
+					+ '">'
+					+ student['Rank']
+					+ '</td>'
 					+ '<td class="col-xs-2 nameCell">'
 					+ student['NickName']
 					+ '</td>'
@@ -74,7 +79,14 @@ function update_personal_rank_in_state_table(data){
 	}
 
 	$("#time_update_personal_rank_in_state").text(get_current_time());
-
+	if ( $.fn.dataTable.isDataTable('#personal_rank_in_state_table')) {
+	    $("#personal_rank_in_state_table").DataTable();
+	}
+	else {
+	    $("#personal_rank_in_state_table").DataTable({
+	    	"sDom": 'lrtip'
+	    });
+	}
 }
 
 function updateUserRankInState(data) {

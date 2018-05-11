@@ -38,23 +38,23 @@ header('Location: login.php');
 					<!-- Filter divs -->
 					<div class="leaderboard-filter col-xs-12">
 						<div class="col-sm-2">
-							<h4>Filter:</h4>
+							<input type="text" class="form-control order-alpha" id="rankFilter-country-sch" onkeyup="rankOnkeyup(this.id)" placeholder="Rank" title="Type in rank number">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="schoolFilter-country-sch" onkeyup="schoolOnkeyup(this.id)" placeholder="By School" title="Type in a school">
+							<input type="text" class="form-control order-alpha" id="schoolFilter-country-sch" onkeyup="schoolOnkeyup(this.id)" placeholder="School" title="Type in a school">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="stateFilter-country-sch" onkeyup="stateOnkeyup(this.id)" placeholder="By State/Province" title="Type in a province">
+							<input type="text" class="form-control order-alpha" id="stateFilter-country-sch" onkeyup="stateOnkeyup(this.id)" placeholder="State/Province" title="Type in a province">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="cityFilter-country-sch" onkeyup="cityOnkeyup(this.id)" placeholder="By City" title="Type in a city">
+							<input type="text" class="form-control order-alpha" id="cityFilter-country-sch" onkeyup="cityOnkeyup(this.id)" placeholder="City" title="Type in a city">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="scoreFilter-country-sch" onkeyup="scoreOnkeyup(this.id)" placeholder="By Score" title="Type in a score">
+							<input type="text" class="form-control order-alpha" id="scoreFilter-country-sch" onkeyup="scoreOnkeyup(this.id)" placeholder="Score" title="Type in a score">
 						</div>
 					</div> <!-- End of filter divs -->
 					<div class="col-xs-10 col-xs-offset-1 table-div">
-						<table class="table">
+						<table id="school_rank_in_country_table" class="table">
 							<thead>
 								<tr>
 									<th>Rank</th>

@@ -33,14 +33,19 @@ function update_school_rank_in_city_table(data){
 
 	for (school of data) {
 		//console.log(rank);
-		if (parseInt(school['Rank']) >10)
-			break;
-		var image = '/images/rank/' + school['Rank']+ '.png';
+		var imageStr = school['Rank'];
+		if (parseInt(school['Rank']) >10) {
+			imageStr = "default";
+			//break;
+		}
+		var image = '/images/rank/' + imageStr + '.png'
 
 		$("#school_rank_in_city").append('<tr class="rank-row">'
-				+ '<td class="col-xs-2 rankCell"><img src="'
+				+ '<td align="center" class="col-xs-2 rankCell"><img src="'
 				+ image
-				+ '"></td>'
+				+ '">'
+				+ school['Rank']
+				+ '</td>'
 				+ '<td class="col-xs-5 schoolCell">'
 				+ school['SchoolName']
 				+ '</td>'
@@ -60,6 +65,14 @@ function update_my_school_rank_in_city(data) {
 
 	//console.log(mySchoolRecord);
 	$("#span_school_rank_in_city").text(mySchoolRecord[0]['Rank']);
+	if ($.fn.dataTable.isDataTable('#school_rank_in_city_table')) {
+	    $("#school_rank_in_city_table").DataTable();
+	}
+	else {
+	    $("#school_rank_in_city_table").DataTable({
+	    	"sDom": 'lrtip'
+	    });
+	}
 }
 
 
@@ -88,14 +101,19 @@ function update_school_rank_in_state_table(data){
 
 	for (school of data) {
 		//console.log(rank);
-		if (parseInt(school['Rank']) >10)
-			break;
-		var image = '/images/rank/' + school['Rank']+ '.png';
+		var imageStr = school['Rank'];
+		if (parseInt(school['Rank']) >10) {
+			imageStr = "default";
+			//break;
+		}
+		var image = '/images/rank/' + imageStr + '.png'
 
 		$("#school_rank_in_state").append('<tr class="rank-row">'
-				+ '<td class="col-xs-2 rankCell"><img src="'
+				+ '<td align="center" class="col-xs-2 rankCell"><img src="'
 				+ image
-				+ '"></td>'
+				+ '">'
+				+ school['Rank']
+				+ '</td>'
 				+ '<td class="col-xs-6 schoolCell">'
 				+ school['SchoolName']
 				+ '</td>'
@@ -110,6 +128,14 @@ function update_school_rank_in_state_table(data){
 	}
 
 	$("#time_update_school_rank_in_state").text(get_current_time());
+	if ($.fn.dataTable.isDataTable('#school_rank_in_state_table')) {
+	    $("#school_rank_in_state_table").DataTable();
+	}
+	else {
+	    $("#school_rank_in_state_table").DataTable({
+	    	"sDom": 'lrtip'
+	    });
+	}
 }
 
 function update_my_school_rank_in_state(data) {
@@ -146,14 +172,19 @@ function update_school_rank_in_country_table(data){
 
 	for (school of data) {
 		//console.log(rank);
-		if (parseInt(school['Rank']) >10)
-			break;
-		var image = '/images/rank/' + school['Rank']+ '.png';
+		var imageStr = school['Rank'];
+		if (parseInt(school['Rank']) >10) {
+			imageStr = "default";
+			//break;
+		}
+		var image = '/images/rank/' + imageStr + '.png'
 
 		$("#school_rank_in_country").append('<tr class="rank-row">'
-				+ '<td class="col-xs-2 rankCell"><img src="'
+				+ '<td align="center" class="col-xs-2 rankCell"><img src="'
 				+ image
-				+ '"></td>'
+				+ '">'
+				+ school['Rank']
+				+ '</td>'
 				+ '<td class="col-xs-2 schoolCell">'
 				+ school['SchoolName']
 				+ '</td>'
@@ -171,6 +202,14 @@ function update_school_rank_in_country_table(data){
 	}
 
 	$("#time_update_school_rank_in_country").text(get_current_time());
+	if ( $.fn.dataTable.isDataTable('#school_rank_in_country_table')) {
+	    $("#school_rank_in_country_table").DataTable();
+	}
+	else {
+	    $("#school_rank_in_country_table").DataTable({
+	    	"sDom": 'lrtip'
+	    });
+	}
 }
 
 function update_my_school_rank_in_country(data) {

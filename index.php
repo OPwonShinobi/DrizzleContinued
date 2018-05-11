@@ -66,6 +66,7 @@ if ($_POST) {
 	<script src="/js/compareschool.js"></script>
 	<script src="/js/tabcontrol.js"></script>
     <script src="/js/filterleaderboarddata.js"></script>
+
     <?php
     echo "<script>var Userid = $_SESSION[Userid];
               var Photoid =$_SESSION[PhotoId];
@@ -242,6 +243,9 @@ if ($_POST) {
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <!-- DATA TABES SCRIPT -->
+    <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 </body>
 
 </html>
