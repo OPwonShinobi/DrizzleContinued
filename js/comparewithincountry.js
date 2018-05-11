@@ -49,14 +49,19 @@ function update_personal_rank_in_country_table(data){
 
 	for (student of data) {
 		//console.log("student rank: " + student['Rank']);
-		if (parseInt(student['Rank']) >10)
-			break;
-		var image = '/images/rank/' + student['Rank']+ '.png'
+		var imageStr = student['Rank'];
+		if (parseInt(student['Rank']) >10) {
+			imageStr = "default";
+			//break;
+		}
+		var image = '/images/rank/' + imageStr + '.png'
 
 			$("#personal_rank_in_country").append('<tr class="rank-row">'
-					+ '<td class="col-xs-2 rankCell"><img src="'
+					+ '<td align="center" class="col-xs-2 rankCell"><img src="'
 					+ image
-					+ '"></td>'
+					+ '">'
+					+ student['Rank']
+					+ '</td>'
 					+ '<td class="col-xs-2 nameCell">'
 					+ student['NickName']
 					+ '</td>'
@@ -77,7 +82,15 @@ function update_personal_rank_in_country_table(data){
 	}
 
 	$("#time_update_personal_rank_in_country").text(get_current_time());
-
+	//$(".rank-row").hide().slice(0, 10).show();
+    if ( $.fn.dataTable.isDataTable('#personal_rank_in_country_table')) {
+	    $("#personal_rank_in_country_table").DataTable();
+	}
+	else {
+	    $("#personal_rank_in_country_table").DataTable({
+	    	"sDom": 'lrtip'
+	    });
+	}
 }
 
 function updateUserRankInCountry(data) {
@@ -94,4 +107,14 @@ function updateUserRankInCountry(data) {
 function update_User_Country(data){
 	//console.log(data);
 	$(".span_user_country").text(data[0]['Country']);
+}
+
+function showNextTen() {
+	console.log("Show More clicked!");
+	$(".rank-row td:hidden").slice(0, 10).show();
+	console.log("Current length: " + $(".rank-row td:hidden").length);
+	if ($(".rank-row td").length == $(".rank-row td:visible").length) {
+		console.log("No more to show");
+		$(".show-next-10").hide();
+	}
 }

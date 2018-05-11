@@ -7,15 +7,17 @@ $(document).ready(function() {
 	//filterLeaderboard("scoreFilter", "personal_rank_in_country", 5);
 });
 
-var nameFilVal, stateFilVal, cityFilVal, schoolFilVal, scoreFilVal;
+var rankFilVal, nameFilVal, stateFilVal, cityFilVal, schoolFilVal, scoreFilVal;
 
 function updateFilters() {
 	$('.rank-row').hide().filter(function() {
 		var self = $(this)
 		var result = true;
 
-		console.log("In updateFilters! " + schoolFilVal);
-
+		if (rankFilVal && rankFilVal != "") {
+			console.log("Rank filter value: " + rankFilVal);
+			result = result && filterLeaderboard(self, rankFilVal, "rankCell");
+		}
 		if (nameFilVal && nameFilVal != "") {
 			console.log("Name filter value: " + nameFilVal);
 			result = result && filterLeaderboard(self, nameFilVal, "nameCell");
@@ -53,24 +55,15 @@ function filterLeaderboard(self, filterValue, tdClass) {
 	}
 }
 
-function onkeyupFilter() {
-	var nameInput = document.getElementById("nameFilter-country");
-	var stateInput = document.getElementById("stateFilter-country");
-	var cityInput = document.getElementById("cityFilter-country");
-	var schoolInput = document.getElementById("schoolFilter-country");
-	var scoreInput = document.getElementById("scoreFilter-country");
-	nameFilVal = nameInput.value.toUpperCase();
-	stateFilVal = stateInput.value.toUpperCase();
-	cityFilVal = cityInput.value.toUpperCase();
-	schoolFilVal = schoolInput.value.toUpperCase();
-	scoreFilVal = scoreInput.value.toUpperCase();
+function rankOnkeyup(inputFilter) {
+	var input = document.getElementById(inputFilter);
+	rankFilVal = input.value.toUpperCase();
 	updateFilters();
 }
 
 function nameOnkeyup(inputFilter) {
 	var input = document.getElementById(inputFilter);
 	nameFilVal = input.value.toUpperCase();
-	console.log("Name on keyup: " + nameFilVal);
 	updateFilters();
 }
 

@@ -96,9 +96,6 @@ if ($_POST) {
 		case 'addAction':
 			addAction();
 			break;
-		case 'addCategory':
-			addCategory();
-			break;
 		case 'modifyAction':
 			modifyAction();
 			break;
@@ -190,7 +187,7 @@ function establishDbConnection() {
 function getAllActions(){
 	$conn = get_db_connection();
 	if ($conn) {
-		$stmt = $conn->prepare("SELECT ID, Description, Points, Active, Category FROM Action");
+		$stmt = $conn->prepare("SELECT ID, Description, Points, Active FROM Action");
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($result);
@@ -241,8 +238,7 @@ function  getAllActionsWithUserIndication() {
 			LEFT JOIN (
 				SELECT * FROM UserAction WHERE UserID=:theUser
 			) ua ON a.ID=ua.ActionID
-			LEFT JOIN ActionCategory ac on a.Category = ac.CategoryName
-			WHERE a.Active=TRUE;		
+			WHERE a.Active=TRUE
 		");
 		$stmt->bindParam(":theUser", $_SESSION['Userid']);
 		$stmt->execute();
@@ -409,17 +405,6 @@ function addAction() {
 	$result = $stmt->execute();
 	if ($result) {
 		getAllActions();
-	}
-}
-
-function addCategory() {
-	$conn = get_db_connection();
-	$stmt = $conn->prepare("INSERT INTO ActionCategory VALUES(:name, :actionDescription)");
-	$stmt->bindParam(":actionDescription", $_POST['Description']);
-	$stmt->bindParam(":name", $_POST['Name']);
-	$result = $stmt->execute();
-	if ($result) {
-		//getAllActions();
 	}
 }
 

@@ -37,17 +37,17 @@ if (!isset($_SESSION['Userid']))
 					<!-- Filter divs -->
 					<div class="leaderboard-filter col-xs-12">
 						<div class="col-sm-2">
-							<h4>Filter:</h4>
+							<input type="text" class="form-control order-alpha" id="rankFilter-school" onkeyup="rankOnkeyup(this.id)" placeholder="Rank" title="Type in rank number">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="nameFilter-school" onkeyup="nameOnkeyup(this.id)" placeholder="By Name" title="Type in a name">
+							<input type="text" class="form-control order-alpha" id="nameFilter-school" onkeyup="nameOnkeyup(this.id)" placeholder="Name" title="Type in a name">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control order-alpha" id="scoreFilter-school" onkeyup="scoreOnkeyup(this.id)" placeholder="By Score" title="Type in a score">
+							<input type="text" class="form-control order-alpha" id="scoreFilter-school" onkeyup="scoreOnkeyup(this.id)" placeholder="Score" title="Type in a score">
 						</div>
 					</div> <!-- End of filter divs -->
 					<div class="col-xs-10 col-xs-offset-1 table-div">
-						<table class="table">
+						<table id="personal_rank_in_school_table" class="table">
 							<thead>
 								<tr>
 									<th>Rank</th>
