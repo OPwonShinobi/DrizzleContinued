@@ -287,7 +287,7 @@ function validateImage(filepicker) {
     {
          uploadBtn.value = "File size exceeded";
     }
-    else if (file.type != "image/jpg" && file.type != "image/png" && file.type != "image/gif")
+    else if (file.type != "image/jpg" && file.type != "image/jpeg" && file.type != "image/png" && file.type != "image/gif")
     {
         uploadBtn.value = "File must be an image(jpg, png)";
     }
