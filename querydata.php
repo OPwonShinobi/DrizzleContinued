@@ -238,7 +238,8 @@ function  getAllActionsWithUserIndication() {
 			LEFT JOIN (
 				SELECT * FROM UserAction WHERE UserID=:theUser
 			) ua ON a.ID=ua.ActionID
-			WHERE a.Active=TRUE
+			LEFT JOIN ActionCategory ac on a.Category = ac.CategoryName
+			WHERE a.Active=TRUE;
 		");
 		$stmt->bindParam(":theUser", $_SESSION['Userid']);
 		$stmt->execute();
