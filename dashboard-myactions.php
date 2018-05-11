@@ -99,7 +99,7 @@ if (!isset($_SESSION['Userid']))
                 <div class="modal-body">
                     <h2>Send us a picture of you being green!</h2>
                     <p>Any image you upload may be featured on the homepage.</p>
-                    <p>Please note the max size is 5mB per image.</p>
+                    <p>Please note the max size is 4mB per image.</p>
                     <!-- these form elems dont need names, using ajax to submit -->
                     <img src="" id="imagePreview" style="max-height: 150px;max-height: 150px" hidden="true">
                     <input id="imageToUpload" name="image" type="file" onchange="validateImage(this)" />

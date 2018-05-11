@@ -7,8 +7,9 @@ var actionCounter = 0;
 var nameRecord=[];
 var shareCounter=0;
 var hideSubmitted = false;
-// ~5MB max image size for uploading 
-var MAXFILESIZE = 5000000;
+// ~4MB max image size for uploading, seems like ajax
+// file limit is around~4.7MB  
+var MAXFILESIZE = 4000000;
 
 $(document).ready(function(){
     myAction = [];
@@ -287,7 +288,7 @@ function validateImage(filepicker) {
     {
          uploadBtn.value = "File size exceeded";
     }
-    else if (file.type != "image/jpg" && file.type != "image/png" && file.type != "image/gif")
+    else if (file.type != "image/jpg" && file.type != "image/jpeg" && file.type != "image/png" && file.type != "image/gif")
     {
         uploadBtn.value = "File must be an image(jpg, png)";
     }
