@@ -99,6 +99,12 @@ function update_action_pickup_table(data) {
 		var buttonText  = '<span class="glyphicon '
 			+ ((action['UserID'] == null)? 'glyphicon-plus' : 'glyphicon-trash')
 			+ '"></span>';
+		//action is on cooldown, cannot select it regardless if user has it already
+		if (action['CompleteTime'] != null)
+		{
+			buttonClass = 'btn btn-basic disabled';
+			buttonText = '<span style="color:black;"class="glyphicon glyphicon-hourglass"></span>';
+		}	
 		// var actionImage = parseInt(action['Points']) > 5 ? '0' : action['Points']
 		var categoryID = action['Category'].replace(/\s/g, "_");
 		var categoryBody = $("#" + categoryID); // selector never returns null
