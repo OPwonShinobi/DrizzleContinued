@@ -3,10 +3,9 @@ session_start();
 require_once('config.php');
 if (!isset($_SESSION['admin']))
 	header('Location: admin_login.php');
-if(!isset($_SESSION['Userid']))
-{
+else
 	$_SESSION['Userid'] = -1;
-}
+
 if ($_POST) {
     $message=$_POST['myNotification'];
     $conn = get_db_connection();
