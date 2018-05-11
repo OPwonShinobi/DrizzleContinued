@@ -6,7 +6,8 @@ if (!isset($_SESSION['Userid']))
 <script src="js/myaction.js"></script>
 
 <div class="row">
-	<div class="col-lg-12">
+
+	<div class="col-lg-6">
 		<div class="panel panel-default">
 <div class="panel-heading">
   <h1 class="panel-title"><i class="fa fa-image"></i> New Photos</h1>
@@ -18,36 +19,26 @@ if (!isset($_SESSION['Userid']))
 
         <?php
         $conn = get_db_connection();
-        $stmt = $conn->prepare("SELECT USERID FROM Images WHERE favflag = '1'");
+        $stmt = $conn->prepare("SELECT ID FROM Images WHERE favflag = '1' ORDER BY RAND()");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $url = 'retrieveImage.php?id=';
+        $first = true;
         foreach ($result as $ele)
           foreach ($ele as $innerele)
-            echo $innerele; 
-        ?>
-
-        <!--Gets images for display in /slideshow folder -->
-        <?php 
-        $dir = 'slideshow';
-        $images = scandir($dir);
-        $images = array_diff($images,array('.','..'));
-        $first = true;
-
-        foreach ($images as $image)
-        {
-          if ($first)
           {
-            echo '<div class="item slideimg active">';
-            $first = false;
-          } 
-          else 
-          {
-            echo '<div class="item slideimg">'; 
+            if ($first)
+            {
+              echo '<div class="item slideimg active">';
+              $first = false;
+            }
+            else
+            { 
+              echo '<div class="item slideimg">'; 
+            }
+            echo '<img class="slideimg" src="/retrieveImage.php?id='. $innerele . '">';
+            echo '</div>';
           }
-          echo '<img class="slideimg" src="/slideshow/'. $image . '">';
-          echo '</div>';
-          
-        }
         ?>
 
         </div>
@@ -55,12 +46,28 @@ if (!isset($_SESSION['Userid']))
       <!-- End of Carousel -->
       </div>
 		</div>
-	</div>
-</div>
+  </div>
 
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title"><i class="fa fa-gift"></i> Current Prize</h1>
+      </div>
+      <div class="panel-body">
+        <div class="col-lg-12 prize">
+          <img class="prize" src="http://ddeubel.edublogs.org/files/2010/12/present-16ufgnb.jpg">
+        </div>
+        <div class="prizedesc col-lg-12">
+          <h2>The current prize is this box!</h2>
+          <p> A description of the prize with all relevant details that people will care about... </p>
+        </div>
+      </div> 
+    </div>
+ </div>
+</div>
 <!-- /.row -->
 
-<div class="row">
+<div class="row row-eq-height">
   <!-- Column 1 my actions -->
   <div class="col-lg-6">
 		<div class="panel panel-default">
@@ -109,17 +116,7 @@ if (!isset($_SESSION['Userid']))
               <h3>Challenges Completed</h3>
             </div>
             <div class="col-lg-2 pointsum">
-              <h3>
-              <?php
-              $conn = get_db_connection();
-              $sess = $_SESSION['Userid'];;
-              $stmt = $conn->prepare("SELECT COUNT(*) FROM Accomplishment WHERE UserID =" . $sess);
-              $stmt->execute();
-              $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              foreach ($result as $ele)
-                foreach ($ele as $innerele)
-                  echo $innerele;
-              ?>
+              <h3 class="myActions">
               </h3>
             </div>
           </div>
@@ -130,23 +127,30 @@ if (!isset($_SESSION['Userid']))
         <div class="col-lg-12">
           <div class="panel panel-yellow panel-body">
             <div class="col-lg-2">
-              <i class="fa fa-trophy fa-5x"></i>
+              <i class="fa fa-tree fa-5x"></i>
             </div>
             <div class="col-lg-8 descsum">
               <h3>Total Points</h3>
             </div>
             <div class="col-lg-2 pointsum">
+              <h3 class="myScore">
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-red panel-body">
+            <div class="col-lg-2">
+              <i class="fa fa-trophy fa-5x"></i>
+            </div>
+            <div class="col-lg-8 descsum">
+              <h3></h3>
+            </div>
+            <div class="col-lg-2 pointsum">
               <h3>
-              <?php
-              $conn = get_db_connection();
-              $sess = $_SESSION['Userid'];;
-              $stmt = $conn->prepare("SELECT SUM(Points) FROM Action INNER JOIN Accomplishment ON ID = ActionID WHERE USERID =" . $sess);
-              $stmt->execute();
-              $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-              foreach ($result as $ele)
-                foreach ($ele as $innerele)
-                  echo $innerele;
-              ?>
               </h3>
             </div>
           </div>

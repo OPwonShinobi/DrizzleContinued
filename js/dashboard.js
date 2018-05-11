@@ -5,17 +5,17 @@ $(document).ready(function(){
 });
 
 function get_num_action() {
-  $("#myActions").empty();
+  $(".myActions").empty();
 
-  $("#myActions").append(
+  $(".myActions").append(
     actionCounter
   );
 }
 
 function display_score() {
-  $("#myScore").empty();
+  $(".myScore").empty();
 
-  $("#myScore").append(
+  $(".myScore").append(
     user_score
   );
     $("#currentS").empty();
