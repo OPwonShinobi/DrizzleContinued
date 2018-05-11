@@ -104,7 +104,7 @@ if (!isset($_SESSION['Userid']))
                     <img src="" id="imagePreview" style="max-height: 150px;max-height: 150px" hidden="true">
                     <input id="imageToUpload" name="image" type="file" onchange="validateImage(this)" />
                     <br/>
-                    <textarea id="imageDescription" name="description" cols="80" rows="4" placeholder="Write something about your picture!"></textarea>
+                    <textarea id="imageDescription" name="description" rows="4" style="width: 100%;" placeholder="Write something about your picture!"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
