@@ -162,8 +162,9 @@ if ($_POST) {
 		case 'deleteAdmin':
 			deleteAdmin();
 			break;
-
-
+		case 'saveUploadedImage':
+			saveUploadedImage();
+			break;
 			/* Add more more query operation by matching the $query string if needed. */
 		default:
 		}
@@ -225,8 +226,17 @@ function getMyActionsWithUserIndication() {
 function  getAllActionsWithUserIndication() {
 	$conn = get_db_connection();
 	if ($conn) {
+		//like getMyActionsWithUserIndication, refreshes useraction date has passed
 		$stmt = $conn->prepare("
-			SELECT a.ID, a.Description, a.Points, a.Category ,ua.UserID, ac.CategoryDescription
+			UPDATE UserAction 
+			SET CompleteTime = NULL
+			WHERE DATEDIFF(CURRENT_TIMESTAMP, CompleteTime) >= 1; 
+			");
+		$stmt->bindParam(":theUser", $_SESSION['Userid']);
+		$stmt->execute();
+		// gets all active actions by category, and a completion timestamp if user has already submitted it today  
+		$stmt = $conn->prepare("
+			SELECT a.ID, a.Description, a.Points, a.Category ,ua.UserID, ac.CategoryDescription, ua.CompleteTime
 			FROM Action a 
 			LEFT JOIN (
 				SELECT * FROM UserAction WHERE UserID=:theUser
@@ -1166,6 +1176,28 @@ function deleteAdmin() {
 		$result=$stmt->execute();
 		if ($result) {
 			getAllAdmins();
+		}
+	}
+}
+
+function saveUploadedImage() 
+{
+	$conn = get_db_connection();
+	if ($conn) 
+	{
+		$stmt = $conn->prepare("INSERT into Images (image, created, userID, description) VALUES (:image, NOW(), :Userid, :description)");
+		$stmt->bindParam("image", $_POST["image"]);
+		// $stmt->bindParam("dateSubmitted", date("Y-m-d H:i:s"));
+		$stmt->bindParam("Userid", $_SESSION['Userid']);
+		$stmt->bindParam("description", $_POST["description"]);
+		$result = $stmt->execute();
+		if ($result) 
+		{
+			$response = array("ImageUploadResult"=>"Success");
+			echo json_encode($response);
+		} else {
+			$response = array("ImageUploadResult"=>"fail");
+			echo json_encode($response);			
 		}
 	}
 }

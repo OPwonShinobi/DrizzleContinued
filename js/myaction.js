@@ -7,6 +7,8 @@ var actionCounter = 0;
 var nameRecord=[];
 var shareCounter=0;
 var hideSubmitted = false;
+// ~5MB max image size for uploading 
+var MAXFILESIZE = 5000000;
 
 $(document).ready(function(){
     myAction = [];
@@ -266,5 +268,77 @@ function lockAction(data){
             S.src='images/check2.svg';
         }
     }
+}
 
+//filepicker argument should be input elem with type set to 'file'
+//call this onchange
+function validateImage(filepicker) {
+    var uploadBtn = document.getElementById('imageUploadButton');
+    document.getElementById("imagePreview").hidden = true;
+    uploadBtn.disabled = true;
+
+    var file = filepicker.files[0];
+    if (file == undefined || file.size <= 0)
+    {
+        uploadBtn.value = "please choose a file";
+    }
+    else if (file.size > MAXFILESIZE) 
+    {
+         uploadBtn.value = "File size exceeded";
+    }
+    else if (file.type != "image/jpg" && file.type != "image/png" && file.type != "image/gif")
+    {
+        uploadBtn.value = "File must be an image(jpg, png)";
+    }
+    else
+    {
+        uploadBtn.disabled = false;
+        uploadBtn.value = "Upload";
+        generateImagePreview(file);
+    }
+}
+
+// imgFile must be a file object from an input type='file' 
+// NOTE, This func creates a temp url reference to the 
+// img file on the system. File is never loaded into browser memory 
+// As such, if you clear cache or move the original file 
+// it won't work. But for larger files ~5MB this is much faster than the 
+// alternative which needs to parse & recreate the file. 
+function generateImagePreview(imgFile) {
+    var imagePreview = document.getElementById("imagePreview");
+    imagePreview.hidden = false;
+    imagePreview.src = URL.createObjectURL(imgFile);
+}
+
+function uploadImage() {
+    var imageHtml = document.getElementById('imageToUpload').files[0];
+    var descriptionContent = document.getElementById('imageDescription').value;
+    var formData = new FormData();
+    var reader = new FileReader();
+    reader.onload = function(){
+        var imageContent = reader.result;
+        formData.append('QueryData', 'saveUploadedImage');
+        formData.append("image", imageContent);
+        formData.append("description", descriptionContent);
+
+        $.ajax({
+            type: "POST",
+            url: "/querydata.php",
+            success: function (data) {
+                console.log("img upload success");
+                $("#uploadSuccessButton").click();
+            },
+            error: function (error) {
+                console.log("fail");
+                console.log(error);
+            },
+            async: true,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout: 60000
+        });
+    }
+    reader.readAsDataURL(imageHtml);
 }
