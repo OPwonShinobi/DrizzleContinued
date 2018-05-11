@@ -2,7 +2,11 @@
 session_start();
 require_once('config.php');
 if (!isset($_SESSION['admin']))
-header('Location: admin_login.php');
+	header('Location: admin_login.php');
+if(!isset($_SESSION['Userid']))
+{
+	$_SESSION['Userid'] = -1;
+}
 if ($_POST) {
     $message=$_POST['myNotification'];
     $conn = get_db_connection();
@@ -300,7 +304,7 @@ if ($_POST) {
 							    </div>
 
 							</div>
-							<label for="notification"> Notification message </label>
+							<label class="uploadImageFont" for="notification"> Notification message </label>
 							<form class = "text-center" action="admin.php" method="post">
 								<textarea class = "form-control" rows="5" id="notification" name="myNotification" maxlength="255"> </textarea>
 								<input type="submit" class="btn btn-success btn-block" onclick="get_myNotification_table()" value="Post">
@@ -313,13 +317,31 @@ if ($_POST) {
 							    <input type="submit" value="Upload Image" name="submit">
 							</form>
 							-->
-							<form action="upload2.php" method="post" enctype="multipart/form-data">
-								<input type="hidden" name="destination" value="<?php echo $_SERVER["REQUEST_URI"]; ?>"/>
+<!-- 							<form action="upload2.php" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="destination" value="<?php //echo $_SERVER["REQUEST_URI"]; ?>"/>
 							    <h3 style="color:white">Select image to upload:</h3>
 							    <input style="color:white" type="file" name="image"/>
 							    <input type="submit" name="submit" value="UPLOAD"/>
-							</form>
-
+							</form> -->
+<!-- image upload pop up -->
+			 <form  method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+					<h3 class="uploadImageFont">Select image to upload:</h3>
+                    <h4 class="uploadImageFont"">Please note image size can only be < 4MB.</h3>
+                    <!-- these form elems dont need names, using ajax to submit -->
+                    <img src="" id="imagePreview" style="max-height: 150px;max-height: 150px" hidden="true">
+                    <input class="uploadImageFont" id="imageToUpload" name="image" type="file"/>
+                    <br/>
+                    <h4 class="uploadImageFont">Add a description here:</h3>
+                    <textarea id="imageDescription" name="description" rows="4" style="width: 100%;" placeholder="Write something about your picture!"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="button" value="Upload" id="imageUploadButton" class="btn btn-primary" onclick="uploadImage()">
+                    <!-- this btn is triggered via code to activate a popup, should never click it -->
+                    <button type="button" id="uploadSuccessButton" hidden  data-toggle="tab" data-target="#uploadSuccessModal" />
+                </div>
+            </form>
 						<div class="col-xs-12">
 							<table  class="table">
 								<thead>

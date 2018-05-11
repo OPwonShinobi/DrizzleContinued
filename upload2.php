@@ -1,7 +1,9 @@
 <?php
 if(isset($_POST["submit"])){
+    $check = false;
+    echo "<script>console.log('here is ".filesize($_FILES["image"]["tmp_name"])."')</script>";
     $check = getimagesize($_FILES["image"]["tmp_name"]);
-    if($check !== false){
+    if($check){
         $image = $_FILES['image']['tmp_name'];
         $imgContent = addslashes(file_get_contents($image));
 
@@ -36,6 +38,7 @@ if(isset($_POST["submit"])){
         } 
     }else{
         echo "Please select an image file to upload.";
+        echo '<button onclick="goBack()">Go back</button>';
     }
 }
 ?>

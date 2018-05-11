@@ -773,7 +773,7 @@ function update_images(images) {
 				+ '<td><img src=\"' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\" height=\"100\" width=\"100\" onclick="window.open(\'' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\')\"></td>'
 				+ '<td class="image_flag"><div contenteditable>' + image.favflag + '</td>'
 				+ '<td class="image_description"><div contenteditable>' + image.description + '</td>'
-				+ '<td>' + image.userID + '</td>'
+				+ '<td>' + (image.userID==-1?"admin":image.userID) + '</td>'
 				+ '<td> <button style="height:30px;width:80px" class="update_image_btn">Update</button> </td>'
 				+ '</tr>');
 	}
@@ -1075,6 +1075,42 @@ function refresh_admin_table() {
 			console.log(data);
 		}
 	});
+}
+
+function uploadImage() {
+    var imageHtml = document.getElementById('imageToUpload').files[0];
+    var descriptionContent = document.getElementById('imageDescription').value;
+    var formData = new FormData();
+    var reader = new FileReader();
+    reader.onload = function(){
+        var imageContent = reader.result;
+        formData.append('QueryData', 'saveUploadedImage');
+        formData.append("image", imageContent);
+        formData.append("description", descriptionContent);
+
+        $.ajax({
+            type: "POST",
+            url: "/querydata.php",
+            success: function (data) {
+                console.log("img upload success");
+                alert("Image upload successful!");
+                getAllImages();
+            },
+            error: function (error) {
+                console.log("fail");
+                console.log(error);
+            },
+            async: true,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout: 60000
+        });
+    }
+    // var blob = imageHtml.slice(0, imageHtml.size);
+    reader.readAsDataURL(imageHtml);
+    // reader.readAsBinaryString(imageHtml);
 }
 
 function update_admin_table(admins) {
