@@ -217,4 +217,4 @@ UPDATE `yecdata`.`Administrator` SET `Password` = '$2y$12$R2hkDmGqPjG/c5VC1Xd9cu
 INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES ('$2y$12$5ko9DcW7k3JooQneLRmq2uAHbZUDXEk1gN8xGOTybFjIERK26T.tC', 'xiaalex1998@gmail.com', 'alex', 'xia', 'alex xia',
 1); 
 
-INSERT INTO RegionLock VALUES ('United States', NULL);
+INSERT INTO RegionLock VALUES ('United States', 'ALL');

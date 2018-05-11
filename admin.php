@@ -101,6 +101,9 @@ if ($_POST) {
 							<a id="tab_manage_school" data-toggle="tab" href="#row_manage_school"><i class="fa fa-fw fa-graduation-cap"></i> Manage school data</a>
 						</li>
 						<li>
+							<a id="tab_manage_region" data-toggle="tab" href="#row_manage_region"><i class="fa fa-fw fa-graduation-cap"></i> Manage region data</a>
+						</li>
+						<li>
 							<a id="tab_manage_action" data-toggle="tab" href="#row_manage_action"><i class="fa fa-fw fa-anchor"></i> Manage action data</a>
 						</li>
 						<li>
@@ -163,6 +166,39 @@ if ($_POST) {
 										<th>Operation</th>
 									</tr>
 									<tbody id="school_table_content">
+									</tbody>
+								</thead>
+							</table>
+						</div>
+					</div>
+					<div id="row_manage_region" class="row tab-pane fade">
+						<div class="col-xs-12">
+							<label class="h2"> Search region</label>
+							<button type="button" id="button_add_region" class="btn btn-danger" data-toggle="tooltip" data-placement="top"> Add region</button>
+						</div>
+						<div class="col-sm-4 col-xs-12">
+							<select name="country" class="form-control countries order-alpha" id="countryId_region" required>
+								<option value="">Select Country</option>
+								<option value="" disabled>&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;</option>
+							</select>
+						</div>
+						<div class="col-sm-4 col-xs-12">
+							<select name="state" class="form-control states order-alpha" id="stateId_region" required>
+								<option value="">Select Province/State</option>
+							</select>
+						</div>
+
+						<script src="https://geodata.solutions//includes/countrystatecity.js"></script>
+
+						<div class="col-xs-12">
+							<table  class="table">
+								<thead>
+									<tr>
+										<th>Country</th>
+										<th>State/Province</th>
+										<th></th>
+									</tr>
+									<tbody id="region_table_content">
 									</tbody>
 								</thead>
 							</table>
@@ -283,6 +319,23 @@ if ($_POST) {
 							    <input style="color:white" type="file" name="image"/>
 							    <input type="submit" name="submit" value="UPLOAD"/>
 							</form>
+
+						<div class="col-xs-12">
+							<table  class="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Image</th>
+										<th>Flag</th>
+										<th>Description</th>
+										<th>UserID</th>
+									</tr>
+								</thead>
+								<tbody id="action_table_images">
+								</tbody>
+							</table>
+						</div>
+
 						</div>
 					</div>
 
@@ -360,6 +413,35 @@ if ($_POST) {
 								</div>
 								<div class="modal-footer">
 									<button type="submit" id="button_add_school_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="popup_modal_add_region" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+
+							<!--Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4>Add new region</h4>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label>Country</label>
+											<input id="input_country_region" type="text" class="form-control" disabled>
+										</div>
+										<div class="form-group">
+											<label>State/Province</label>
+											<input id="input_state_province_region" type="text" class="form-control" disabled>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" id="button_add_region_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 								</div>
 							</div>
@@ -465,7 +547,7 @@ or die ('Cannot connect to db');
 
     $result = $conn->query("select CategoryName from ActionCategory");
 
-    echo "<select name='id'>";
+    echo "<select name='category' id='action_category' requred class=\"form-control modify-action-fields\">";
 
     while ($row = $result->fetch_assoc()) {
 
@@ -567,34 +649,34 @@ or die ('Cannot connect to db');
 							</div>
 						</div>
 					</div>
-					
-<div id="popup_modal_add_category" class="modal fade" role="dialog">
-<div class="modal-dialog">
 
-	<!--Modal content-->
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4>Add new Category</h4>
-		</div>
-		<div class="modal-body">
-			<form>
-				<div class="form-group">
-					<label>Category description</label>
-					<textarea id="input_category_description" rows="10" class="form-control"></textarea>
-				</div>
-				<div class="form-group">
-					<label>Category name</label>
-					<input id="input_category_name" class="form-control">
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="submit" id="button_add_category_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		</div>
-	</div>
-</div>
+					<div id="popup_modal_add_category" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+
+						<!--Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4>Add new Category</h4>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label>Category description</label>
+										<textarea id="input_category_description" rows="10" class="form-control"></textarea>
+									</div>
+									<div class="form-group">
+										<label>Category name</label>
+										<input id="input_category_name" class="form-control">
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" id="button_add_category_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<!-- /.container-fluid -->
 			</div>

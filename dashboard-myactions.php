@@ -19,18 +19,30 @@ if (!isset($_SESSION['Userid']))
                 <h2 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> My Backpack</h2>
             </div>
             <div class="panel-body">
-                <label class="switch">
+                <!-- <label class="switch"> -->
                     <!-- this also clears the timestamps for stuff older than a day -->
-                    <input type="checkbox" id="hide_completed_actions" onchange="get_myaction_table()"> 
-                    <span class="slider round"></span>
-                    <p class="checkbox-label">Hide Completed</p>
-                </label>
+<!--                     <input type="checkbox" id="hide_completed_actions" onchange="get_myaction_table()"> 
+                    <span class="slider round"></span> -->
+                    <div class="well well-sm" style="min-height: 10px">
+                        <img src="images/check1.svg" height="50px" width="50px" onclick="toggleSubmittedActions(this)">
+                        <span>Hide Completed</span>
+                    </div>
+                <!-- </label> -->
 
                 <div class="row" id="my_action_content">
 
                 </div>
-                <div>
-                    <span style="margin-left:45%;">  <a class="btn btn-primary btn-lg" id="submit1"  data-toggle="modal" data-target="#myActionModel"  onclick="subCheck()">Submit</a> </span>
+                <div class="row">
+                    <span class="col-sm-12" style="text-align: center">
+                    <!-- <span style="margin-left:45%;">   -->
+                        <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#submitPointsModal" onclick="subCheck()">Submit
+                        </a> 
+                    <!-- </span> -->
+                    <!-- <span class="col-sm-6" style="text-align: left;"> -->
+                        <a class="btn btn-info btn-lg" data-toggle="modal" data-target="#uploadImgModel" >
+                        Upload an image
+                        </a> 
+                    </span>
                 </div>
             </div>
         </div>
@@ -38,17 +50,11 @@ if (!isset($_SESSION['Userid']))
     <!-- /.row -->
 </div>
 
-<!-- pop up model -->
-<div class="modal fade" id="myActionModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- points submission pop up -->
+<div class="modal fade" id="submitPointsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog tab-content" role="document">
 
         <div id="share_before" class="modal-content tab-pane fade in active">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myActionModalLabel">Submitting actions</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
                 <h2> Are you sure you want to submit? </h2><br>
 
@@ -79,6 +85,43 @@ if (!isset($_SESSION['Userid']))
                     <li><a href="https://plus.google.com/share?url=https%3A%2F%2Fwww.drizzlesociety.org%2F" target="_blank" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=' + encodeURIComponent(document.URL)); return false;"><i class="fa fa-google-plus-square fa-3x"></i></a></li>
                     <li><a href="https://www.instagram.com/drizzlesociety/"><i class="fa fa-instagram fa-3x"></i></a></li>
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- image upload pop up -->
+<div class="modal fade" id="uploadImgModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog tab-content" role="document">
+        <div id="uploadModel" class="modal-content tab-pane fade in active">
+            <!-- <form action="upload2.php" method="post" enctype="multipart/form-data"> -->
+            <form  method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <h2>Send us a picture of you being green!</h2>
+                    <p>Any image you upload may be featured on the homepage.</p>
+                    <p>Please note the max size is 5mB per image.</p>
+                    <!-- these form elems dont need names, using ajax to submit -->
+                    <img src="" id="imagePreview" style="max-height: 150px;max-height: 150px" hidden="true">
+                    <input id="imageToUpload" name="image" type="file" onchange="validateImage(this)" />
+                    <br/>
+                    <textarea id="imageDescription" name="description" rows="4" style="width: 100%;" placeholder="Write something about your picture!"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="button" id="imageUploadButton" value="No image selected" class="btn btn-primary" disabled="true" onclick="uploadImage()">
+                    <!-- this btn is triggered via code to activate a popup, should never click it -->
+                    <button type="button" id="uploadSuccessButton" hidden  data-toggle="tab" data-target="#uploadSuccessModal" />
+                </div>
+            </form>
+        </div>
+
+        <div id="uploadSuccessModal" class="modal-content tab-pane fade">
+            <div class="modal-body">
+                <div class="row text-center"><img width="100px" height="100px" src="images/color/check.png"></div>
+                <div class="row text-center"><h2> Upload Success! </h2></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal" data-toggle="tab" data-target="#uploadModel">Back</button>
             </div>
         </div>
     </div>
