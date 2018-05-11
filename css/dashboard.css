@@ -31,9 +31,24 @@ p.challenge_name{
 }
 
 .slideimg{
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   height: 250px;
+}
+
+.prize{
+  display: block;
+  margin: 0 auto;
+  height 250px;
+}
+
+.prizedesc{
+ text-align: center; 
+}
+
+.row_match_cols{
+  overflow: hidden;
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
 }
 
 .panel-newactions{
@@ -105,7 +120,7 @@ table {
 	  -ms-transform: translateX(26px);
 	  transform: translateX(26px);
 	}
-
+  
 	/* Rounded sliders */
 	.slider.round {
 	  border-radius: 34px;

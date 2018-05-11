@@ -23,7 +23,7 @@ if (!isset($_SESSION['Userid']))
 										<i class="fa fa-book fa-5x"></i>
 									</div>
 									<div class="col-xs-9 text-right">
-										<div class="huge" id = "myActions"></div>
+                    <div class="huge myActions"></div>
 										<div>Actions I've Picked Up</div>
 									</div>
 								</div>
@@ -39,7 +39,7 @@ if (!isset($_SESSION['Userid']))
 										<i class="fa fa-trophy fa-5x"></i>
 									</div>
 									<div class="col-xs-9 text-right">
-										<div class="huge" id = "myScore"></div>
+										<div class="huge myScore"></div>
 										<div>Points I've Earned</div>
 									</div>
 								</div>
