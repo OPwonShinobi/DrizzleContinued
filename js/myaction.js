@@ -1,20 +1,23 @@
 var myAction = [];
 var pointRecord=[];
+var categoriesByIndex=[];
 var list= [];
 var sum = 0;
 var actionCounter = 0;
 var nameRecord=[];
 var shareCounter=0;
+var hideSubmitted = false;
 
 $(document).ready(function(){
     myAction = [];
     pointRecord= [];
+    categoryRecord=[];
     sum = 0;
     list=[];
     actionCounter = 0;
     nameRecord=[];
     get_myaction_table();
-
+    hideSubmitted = false;
 });
 
 function get_myaction_table() {
@@ -24,11 +27,10 @@ function get_myaction_table() {
         data: {QueryData: 'myActionsWithUserIndication'},
         dataType: 'JSON',
         success: function(data){
-            if($("#hide_completed_actions").is(':checked'))
+            if (hideSubmitted)
                 filter_my_action_table(data);
             else
                 update_my_action_table(data);
-
         },
         error: function(data){
             console.log(data);
@@ -36,11 +38,28 @@ function get_myaction_table() {
     });
 }
 
+function toggleSubmittedActions(img) {
+    //user just checked box, hide submitted
+    var src = img.getAttribute('src');
+    if (src == 'images/check1.svg')
+    {
+        img.src = 'images/check2.svg';
+        hideSubmitted = true;
+    } 
+    else
+    {
+        img.src = 'images/check1.svg';
+        hideSubmitted = false;
+    }
+    get_myaction_table();
+}
+
 function filter_my_action_table(data) {
     $("#my_action_content").empty();
     $("#score_content").empty();
     myAction = [];
     pointRecord= [];
+    categoryRecord=[];
     list=[];
     nameRecord=[];
     sum = 0;
@@ -56,8 +75,9 @@ function filter_my_action_table(data) {
             + '<div class ="challenge_box">'
 
             + '<div  class ="row">'
-            + '<img src="/images/points/'+ action['Points'] + '.png" height="100px" width="100px" alt="" class ="challenge_img">'
-            + '<p class ="challenge_name">'+ action['Description'] + '<br><br> Point: ' + action['Points'] +'</p>' 
+            + '<img src="/images/categories/'+ action['Category'] + '.png" alt="" class ="challenge_img">'
+            + '<p class ="challenge_name col-sm-7" style="text-align:left;">'+ action['Description'] + '</p>'
+            + '<p class ="label label-danger col-sm-3" style="font-size:1em;margin-left:2%;">Points: ' + action['Points'] +'</p>' 
             + '</div>'
 
             + '<div class ="row">'
@@ -76,6 +96,7 @@ function filter_my_action_table(data) {
         list.push(action['ActionID']);
         pointRecord[action['ActionID']] = action['Points'];
         nameRecord[action['ActionID']] = action['Description'];
+        categoryRecord[action['ActionID']] = action['Category'];
         actionCounter = actionCounter+1;
         get_num_action();
     }
@@ -88,6 +109,7 @@ function update_my_action_table(data) {
     $("#score_content").empty();
     myAction = [];
     pointRecord= [];
+    categoryRecord= [];
     list=[];
     nameRecord=[];
     sum = 0;
@@ -95,15 +117,15 @@ function update_my_action_table(data) {
     for (action of data) {
         // submitted actions cannot be changed, instead displays submitted time & 
         // a big hourglass icon over the action
-        var submissionStatus = $('<p style="font-size:18px; color:black">Submission Time: ' + action['CompleteTime'] +'</p>');
+        var submissionStatus = '<p style="font-size:18px; color:black;visibility:hidden">Submission Time: ' + action['CompleteTime'] +'</p>';
         var cooldownStatus = '<p style="font-size:40px; color:black">Cooldown: 1 day</p>';
-        var cooldownIcon = $('<img src="images/hourglass.svg" style="color:black;" height="150px" width="150px">'); 
+        var cooldownIcon = $('<img src="images/hourglass.svg" style="color:black;position:relative;z-index:2;" height="150px" width="150px">'); 
         // userActions by default has CompleteTime null,
         // resets submissionStatus & cooldownIcon to allow user to submit again
         if (action['CompleteTime'] == null)
         {
             //make text bigger for no timestamped actions!
-            submissionStatus.css("visibility","hidden"); //i'd use this for submission Status but it's too cramped
+            // submissionStatus.css("visibility","hidden"); //i'd use this for submission Status but it's too cramped
             cooldownIcon.css("visibility","hidden"); //hidden but the space is still there
             cooldownStatus = '<p style="font-size:40px; color:black">Ready to submit!</p>';
         }
@@ -113,8 +135,9 @@ function update_my_action_table(data) {
             + '<div class ="challenge_box">'
 
             + '<div  class ="row">'
-            + '<img src="/images/points/'+ action['Points'] + '.png" height="100px" width="100px" alt="" class ="challenge_img">'
-            + '<p class ="challenge_name">'+ action['Description'] + '<br><br> Point: ' + action['Points'] +'</p>' 
+            + '<img src="/images/categories/'+ action['Category'] + '.png" alt="" class ="challenge_img">'
+            + '<p class ="challenge_name col-sm-7" style="text-align:left;">'+ action['Description'] + '</p>'
+            + '<p class ="label label-danger col-sm-3" style="font-size:1em;margin-left:2%;">Points: ' + action['Points'] +'</p>' 
             + '</div>'
 
             + '<div class ="row">'
@@ -124,7 +147,7 @@ function update_my_action_table(data) {
             + cooldownIcon.prop("outerHTML") //return jquery obj as html string
             + cooldownStatus
             + '</div>'
-            + submissionStatus.prop("outerHTML") 
+            + submissionStatus
             + '</div>'
             + '</div>'
         );
@@ -141,6 +164,7 @@ function update_my_action_table(data) {
         list.push(action['ActionID']);
         pointRecord[action['ActionID']] = action['Points'];
         nameRecord[action['ActionID']] = action['Description'];
+        categoryRecord[action['ActionID']] = action['Category'];
         actionCounter = actionCounter+1;
         get_num_action();
     }

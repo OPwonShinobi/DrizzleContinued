@@ -19,12 +19,15 @@ if (!isset($_SESSION['Userid']))
                 <h2 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> My Backpack</h2>
             </div>
             <div class="panel-body">
-                <label class="switch">
+                <!-- <label class="switch"> -->
                     <!-- this also clears the timestamps for stuff older than a day -->
-                    <input type="checkbox" id="hide_completed_actions" onchange="get_myaction_table()"> 
-                    <span class="slider round"></span>
-                    <p class="checkbox-label">Hide Completed</p>
-                </label>
+<!--                     <input type="checkbox" id="hide_completed_actions" onchange="get_myaction_table()"> 
+                    <span class="slider round"></span> -->
+                    <div class="well well-sm" style="min-height: 10px">
+                        <img src="images/check1.svg" height="50px" width="50px" onclick="toggleSubmittedActions(this)">
+                        <span>Hide Completed</span>
+                    </div>
+                <!-- </label> -->
 
                 <div class="row" id="my_action_content">
 
@@ -56,8 +59,13 @@ if (!isset($_SESSION['Userid']))
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearScore()">Close</button>
-                <button type="button" class="btn btn-primary" data-toggle="tab" data-target="#share_score" onclick="submit_my_finish()">Save Point</button>
+                <button type="submit" class="btn btn-primary" data-toggle="tab" data-target="#share_score" onclick="submit_my_finish()">Save Point</button>
             </div>
+            <!-- <form action="upload2.php" method="post" > -->
+                <span style="color:black">Add an image (optional)?:</span>
+                <input style="color:black" type="file" name="image" />
+            <!-- </form> -->
+
         </div>
 
         <div id="share_score" class="modal-content tab-pane fade">

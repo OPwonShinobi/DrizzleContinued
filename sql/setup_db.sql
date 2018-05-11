@@ -141,8 +141,8 @@ CREATE TABLE IF NOT EXISTS Images (
 CREATE TABLE IF NOT EXISTS RegionLock
 (
 	CountryName VARCHAR(128) NOT NULL,
-    RegionName VARCHAR(128) NULL,
-    CONSTRAINT UNIQUE (CountryName, RegionName)
+    RegionName VARCHAR(128) NOT NULL,
+    PRIMARY KEY (CountryName, RegionName)
 );
 -- I'm assuming the local region lock will always be on 
 INSERT INTO RegionLock VALUES ('Canada', 'British Columbia');

@@ -104,13 +104,14 @@ require_once('config.php');
                     <!--City START-->
                     <div class="form-group">
                         <select name="city" class="form-control cities order-alpha" id="cityId" required>
+
                             <option value="">Select City</option>
                         </select>
                     </div>
                     <!--CITY END-->
                     <script src="https://geodata.solutions//includes/countrystatecity.js"></script>
                     <script type="text/javascript">
-                    var regionlock = false;
+
                     $(document).ready(function(){
                         var pwd = $('#password');
                         var cpwd = $('#cpassword');
@@ -146,7 +147,6 @@ require_once('config.php');
                         )
                     });
                     </script>
-                    <!--END OF REGIONLOCK-->
                     <!--PASSWORD START-->
                     <div class="form-group pwd" >
                         <input type="hidden" class="form-control pwd_allowedchar" id="password"
@@ -229,7 +229,7 @@ require_once('config.php');
                                 }
                             </script>
                         </select>
-                        <input type="text" id="NewSchoolName" class="form-control" name="NewSchoolName" placeholder="Enter your school's full name here" style="display: none">
+                        <input type="text" id="NewSchoolName" class="form-control" name="NewSchoolName" placeholder="Enter your school's full name here" style="display: none" value="&nbsp">
                         <!-- legacy code, this p not needed but will break stuff if left out -->
                         <p id="NewSchoolNameerror"></p>
                     <br/>
