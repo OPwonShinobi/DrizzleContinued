@@ -93,18 +93,18 @@ if (!isset($_SESSION['Userid']))
 <!-- image upload pop up -->
 <div class="modal fade" id="uploadImgModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog tab-content" role="document">
-        <div class="modal-content tab-pane fade in active">
+        <div id="uploadModel" class="modal-content tab-pane fade in active">
             <!-- <form action="upload2.php" method="post" enctype="multipart/form-data"> -->
-            <form method="post" enctype="multipart/form-data">
+            <form  method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <h2>Send us a picture of you being green!</h2>
                     <p>Any image you upload may be featured on the homepage.</p>
                     <p>Please note the max size is 5mB per image.</p>
                     <!-- these form elems dont need names, using ajax to submit -->
                     <img src="" id="imagePreview" style="max-height: 150px;max-height: 150px" hidden="true">
-                    <input id="imageToUpload" type="file" onchange="validateImage(this)" />
+                    <input id="imageToUpload" name="image" type="file" onchange="validateImage(this)" />
                     <br/>
-                    <textarea id="imageDescription" cols="80" rows="4" placeholder="Write something about your picture!"></textarea>
+                    <textarea id="imageDescription" name="description" cols="80" rows="4" placeholder="Write something about your picture!"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -121,7 +121,7 @@ if (!isset($_SESSION['Userid']))
                 <div class="row text-center"><h2> Upload Success! </h2></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info btn-block" data-dismiss="modal" data-toggle="tab" >Back</button>
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal" data-toggle="tab" data-target="#uploadModel">Back</button>
             </div>
         </div>
     </div>

@@ -1180,23 +1180,31 @@ function deleteAdmin() {
 	}
 }
 
+/* This thing was driving me insane. I love you drew010 at https://stackoverflow.com/questions/11511511/how-to-save-a-png-image-server-side-from-a-base64-data-string*/
 function saveUploadedImage() 
 {
 	$conn = get_db_connection();
 	if ($conn) 
 	{
+		// $img = base64_decode();
+		// $img = base64_decode(preg_replace($_POST["image"], '', $img));
+		$data = $_POST["image"];
+		list($type, $data) = explode(';', $data);
+		list(, $data)      = explode(',', $data);
+		$data = base64_decode($data);
+
 		$stmt = $conn->prepare("INSERT into Images (image, created, userID, description) VALUES (:image, NOW(), :Userid, :description)");
-		$stmt->bindParam("image", $_POST["image"]);
+		$stmt->bindValue("image", $data);
 		// $stmt->bindParam("dateSubmitted", date("Y-m-d H:i:s"));
 		$stmt->bindParam("Userid", $_SESSION['Userid']);
 		$stmt->bindParam("description", $_POST["description"]);
 		$result = $stmt->execute();
 		if ($result) 
 		{
-			$response = array("ImageUploadResult"=>"Success");
-			echo json_encode($response);
+			// $response = array("ImageUploadResult"=>"Success");
+			echo json_encode($result);
 		} else {
-			$response = array("ImageUploadResult"=>"fail");
+			$response = array("ImageUploadResult"=>"Fail");
 			echo json_encode($response);			
 		}
 	}

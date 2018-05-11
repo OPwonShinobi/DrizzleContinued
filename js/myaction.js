@@ -275,8 +275,9 @@ function lockAction(data){
 function validateImage(filepicker) {
     var uploadBtn = document.getElementById('imageUploadButton');
     document.getElementById("imagePreview").hidden = true;
+    document.getElementById("imagePreview").src = "";
     uploadBtn.disabled = true;
-
+    
     var file = filepicker.files[0];
     if (file == undefined || file.size <= 0)
     {
@@ -326,6 +327,7 @@ function uploadImage() {
             url: "/querydata.php",
             success: function (data) {
                 console.log("img upload success");
+                console.log(data);
                 $("#uploadSuccessButton").click();
             },
             error: function (error) {
@@ -340,5 +342,7 @@ function uploadImage() {
             timeout: 60000
         });
     }
+    // var blob = imageHtml.slice(0, imageHtml.size);
     reader.readAsDataURL(imageHtml);
+    // reader.readAsBinaryString(imageHtml);
 }

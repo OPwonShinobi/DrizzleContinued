@@ -1,42 +1,38 @@
 <?php
 session_start();
 if(isset($_POST)){
-    // SCRAP THIS, CANT GET USERID
-    /*
-     * Insert image data into database
-     */
-    //DB details
-    $dbHost     = 'localhost';
-    $dbUsername = 'yecuser';
-    $dbPassword = 'yec123!Q@W#E';
-    $dbName     = 'yecdata';
-    //Create connection and select DB
-    $db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-    // Check connection
-    if($db->connect_error){
-        die("Connection failed: " . $db->connect_error);
+    saveUploadedImage();
+    header("Location: /index.php");
+}
+
+function saveUploadedImage() 
+{
+    define("DB_HOST", "localhost");
+    define("DB_USER", "yecuser");
+    define("DB_PASSWORD", "yec123!Q@W#E");
+    define("DB_DATABASE", "yecdata");
+    try {
+        $conn = new PDO("mysql:host=".DB_HOST .";dbname=".DB_DATABASE, DB_USER, DB_PASSWORD);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
     }
-    $dataTime = date("Y-m-d H:i:s");
-    $imgContent = $_POST["image"];
-    $description = $_POST["description"];
-    $UserID = $_SESSION['UserID'];
-    //Insert image content into database
-    $insert = $db->query("INSERT into Images (image, created, userID, description) VALUES ('$imgContent', '$dataTime', '$UserID', '$description')");
-    if($insert){
-        echo "File uploaded successfully.";
-        echo '<button onclick="goBack()">Go back</button>';
-    }else{
-        echo "File upload failed, please try again.";
-        echo '<button onclick="goBack()">Go back</button>';
-    } 
-}else{
-    echo "Please select an image file to upload.";
+    if ($conn) 
+    {
+        $stmt = $conn->prepare("INSERT into Images (image, created, userID, description) VALUES (:image, NOW(), :Userid, :description)");
+        $stmt->bindValue("image", $_FILES["image"]);
+        // $stmt->bindParam("dateSubmitted", date("Y-m-d H:i:s"));
+        $stmt->bindParam("Userid", $_SESSION['Userid']);
+        $stmt->bindParam("description", $_POST["description"]);
+        $result = $stmt->execute();
+        if ($result) 
+        {
+            // $response = array("ImageUploadResult"=>"Success");
+            echo json_encode($result);
+        } else {
+            $response = array("ImageUploadResult"=>"Fail");
+            echo json_encode($response);            
+        }
+    }
 }
-
 ?>
-
-<script>
-function goBack() {
-    window.history.back();
-}
-</script>
