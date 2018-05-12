@@ -9,7 +9,7 @@ var shareCounter=0;
 var hideSubmitted = false;
 // ~4MB max image size for uploading, seems like ajax
 // file limit is around~4.7MB  
-var MAXFILESIZE = 4000000;
+var MAXFILESIZE = 4194304;
 
 $(document).ready(function(){
     myAction = [];
