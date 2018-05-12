@@ -563,24 +563,9 @@ if ($_POST) {
 										<div class="form-group">
 											<label>Category</label>
 											<input id="input_edit_category" required class="form-control modify-action-fields">
-<?php
-$conn = new mysqli('localhost', 'yecuser', 'yec123!Q@W#E', 'yecdata') 
-or die ('Cannot connect to db');
+<select name='category' id='action_category' requred class="form-control modify-action-fields">
+</select>
 
-    $result = $conn->query("select CategoryName from ActionCategory");
-
-    echo "<select name='category' id='action_category' requred class=\"form-control modify-action-fields\">";
-
-    while ($row = $result->fetch_assoc()) {
-
-                  unset($id, $name);
-                  $id = 1;
-                  $name = $row['CategoryName']; 
-                  echo '<option class="form-control modify-action-fields" value="'.$id.'">'.$name.'</option>';
-
-}
-    echo "</select>";
-?> 
 										</div>
 									</form>
 								</div>

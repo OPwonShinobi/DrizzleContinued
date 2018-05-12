@@ -3,6 +3,7 @@ var actions;
 var students;
 var images;
 var admins;
+var categories;
 
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
@@ -257,6 +258,7 @@ $(document).on('click', '.modify_action_links', function(){
 		return action.ID == modifyId;
 	});
 
+	refresh_Category();
 	//console.log(action);
 
 	$("#popup_modal_edit_action").modal({backdrop: "static"});
@@ -581,9 +583,10 @@ function request_add_category() {
 		},
 		dataType: 'JSON',
 		success: function(data){
-			console.log(data);
 			if (data != "undefined" && data != null) {
 				console.log("success");
+				actions = data;
+				update_action_table(actions);
 			}
 			// data retrieved from server
 			// Use the data to change the elements here
@@ -1092,7 +1095,6 @@ function uploadImage() {
             type: "POST",
             url: "/querydata.php",
             success: function (data) {
-                console.log("img upload success");
                 alert("Image upload successful!");
                 getAllImages();
             },
@@ -1249,4 +1251,48 @@ function request_delete_admin(deleteRn) {
 			console.log(data);
 		}
 	});
+}
+
+function refresh_Category() {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'getAllCategory',
+			Description: $("#input_category_description").val(),
+			Name: $("#input_category_name").val()
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null) {
+				categories = data;
+				update_category_select(categories);
+			}
+			// data retrieved from server
+			// Use the data to change the elements here
+
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function update_category_select(categories) {
+	$("#action_category").empty();
+	var mySelect = document.getElementById('action_category');
+	for (category of categories) {
+		var newOption = document.createElement('option');
+		newOption.value = category['categoryName'];
+		if (typeof newOption.textContent === 'undefined')
+		{
+		    newOption.innerText = category['categoryName'];
+		}
+		else
+		{
+		    newOption.textContent = category['categoryName'];
+		}
+
+		mySelect.appendChild(newOption);
+	}
 }
