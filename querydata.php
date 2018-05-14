@@ -1156,16 +1156,16 @@ function checkMyactionfinish() {
     echo json_encode($result);
 }
 
-//Roger changed admin to administrator
+//Roger changed administrator to administrator
 function getAllAdmins() {
 	$conn = get_db_connection();
 	if ($conn) {
 		$stmt = $conn->prepare("
 			SELECT ID, Username, Email, Authorization
-			FROM Admin
+			FROM Administrator
 			WHERE Authorization < (
 				SELECT Authorization 
-				FROM Admin
+				FROM Administrator
 				WHERE Username=:theAdmin
 			) OR Username=:theAdmin
 			ORDER BY Authorization DESC, Username ASC
@@ -1183,7 +1183,7 @@ function addAdmin() {
 	$conn = get_db_connection();
 	if ($conn) {
 		$stmt = $conn->prepare("
-			INSERT INTO Admin VALUES(NULL, :username, :password, :email, :authorization) 
+			INSERT INTO Administrator VALUES(NULL, :username, :password, :email, :authorization) 
 		");
 		$stmt->bindParam(":username", $_POST['Username']);
 		$stmt->bindParam(":password", $password_hash) ;
@@ -1202,7 +1202,7 @@ function modifyAdmin() {
 	$conn = get_db_connection();
 	if ($conn) {
 		$stmt = $conn->prepare("
-			UPDATE Admin 
+			UPDATE Administrator 
 			SET Username=:username, Password=:password
 			WHERE ID=:adminId
 		");
@@ -1221,7 +1221,7 @@ function deleteAdmin() {
 	$conn = get_db_connection();
 	if ($conn) {
 		$stmt = $conn->prepare("
-			DELETE FROM Admin
+			DELETE FROM Administrator
 			WHERE ID=:adminId 
 		");
 		$stmt->bindParam(":adminId", $_POST['AdminId']);

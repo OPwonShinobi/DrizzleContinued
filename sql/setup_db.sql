@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS Accomplishment(
 	FOREIGN KEY(ActionID) REFERENCES Action(ID) ON DELETE CASCADE
 );
 
--- Create Admin table
-CREATE TABLE IF NOT EXISTS Admin (
+-- Create Administrator table
+CREATE TABLE IF NOT EXISTS Administrator (
 	ID            INTEGER(8)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Username      VARCHAR(20)  NOT NULL,
 	Password      VARCHAR(256) NOT NULL,
@@ -179,4 +179,4 @@ INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIM
 
 -- Insert the super admin account
 -- This account is recommend to be used to add other admins only
-INSERT INTO Admin VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
+INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
