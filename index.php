@@ -59,6 +59,15 @@ if ($_POST) {
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- DATA TABES SCRIPT -->
+    <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <link href="css/jquery.dataTables.min.css" rel="stylesheet">
+
     <script src="/js/comparewithinschool.js"></script>`
 	<script src="/js/comparewithincity.js"></script>
 	<script src="/js/comparewithinstate.js"></script>
@@ -239,13 +248,6 @@ if ($_POST) {
 
     <!-- /#wrapper -->
     </div>
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- DATA TABES SCRIPT -->
-    <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-    <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 </body>
 
 </html>
