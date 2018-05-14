@@ -9,7 +9,7 @@ if ($_POST) {
 	$conn = get_db_connection();
 
 	//Roger
-	$stmt = $conn->prepare("SELECT Username, Password FROM Administrator WHERE Email=:theEmail");
+	$stmt = $conn->prepare("SELECT Username, Password FROM Admin WHERE Email=:theEmail");
 	//$stmt = $conn->prepare("SELECT Username, Password FROM Admin WHERE Email=:theEmail");
 	$stmt->bindParam(":theEmail", $email);
 	$stmt->execute();
