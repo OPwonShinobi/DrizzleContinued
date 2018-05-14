@@ -88,7 +88,7 @@ function filter_my_action_table(data) {
             + '</div>'
 
             + '<img src="images/hourglass.svg" style="visibility:hidden" height="150px" width="150px">'
-            + '<p style="font-size:40px; ">Ready to submit!</p>'
+            + '<p class="submit-text">Ready to submit!</p>'
             + '</div>'
             + '<p style="font-size:18px;visibility:hidden">Submission Time: </p>'
             + '</div>'
@@ -130,7 +130,7 @@ function update_my_action_table(data) {
             //make text bigger for no timestamped actions!
             // submissionStatus.css("visibility","hidden"); //i'd use this for submission Status but it's too cramped
             cooldownIcon.css("visibility","hidden"); //hidden but the space is still there
-            cooldownStatus = '<p style="font-size:40px; color:black">Ready to submit!</p>';
+            cooldownStatus = '<p class="submit-text" style="color:black">Ready to submit!</p>';
         }
         var userAction = $(
             '<div class="col-lg-4 text-center">'
