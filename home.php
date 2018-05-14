@@ -27,12 +27,12 @@ if (!isset($_SESSION['Userid']))
         {
             if ($first)
             {
-              echo '<div class="item slideimg active">';
+              echo '<div class="item active">';
               $first = false;
             }
             else
             { 
-              echo '<div class="item slideimg">'; 
+              echo '<div class="item">'; 
             }
 
             echo '<img class="slideimg" src="/retrieveImage.php?id='. $row['ID'] . '">';
@@ -55,7 +55,7 @@ if (!isset($_SESSION['Userid']))
         <h1 class="panel-title"><i class="fa fa-gift"></i> Current Prize</h1>
       </div>
       <div class="panel-body">
-        <div class="col-lg-12 prize">
+        <div class="col-lg-12">
 <?php 
         $conn = get_db_connection();
         $stmt = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '2'");
