@@ -56,3 +56,13 @@ function get_current_time() {
 	return currentTime; 
 }
 
+$(function() {
+    var navMain = $(".navbar-collapse");
+    var navMainDom = document.querySelector(".navbar-collapse")[0];
+
+    navMain.on("click", "a:not(.leaderboard-menu)", null, function () {
+        // $('.navbar-collapse').collapse("hide");
+        navMainDom.style.collapse = "hide";
+    });
+});
+

@@ -73,6 +73,8 @@ if ($_POST) {
 	<script src="/js/comparewithinstate.js"></script>
 	<script src="/js/comparewithincountry.js"></script>
 	<script src="/js/compareschool.js"></script>
+    <script src="/js/all_action.js"></script>
+
 	<script src="/js/tabcontrol.js"></script>
     <script src="/js/filterleaderboarddata.js"></script>
 

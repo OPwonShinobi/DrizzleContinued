@@ -2,7 +2,6 @@
 if (!isset($_SESSION['Userid']))
     header('Location: login.php');
 ?>
-<script src="/js/all_action.js"></script>
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="my-page-header">
