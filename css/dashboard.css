@@ -66,6 +66,7 @@ p.challenge_name{
 
 .my-page-header, .my-page-header * {
 	color: white;
+	margin: 20px 10px 10px;
 }
 
 table {
@@ -134,6 +135,17 @@ table {
 		margin-left: 75px;
 	}
 /*iphone checkbox css end*/
+
+.submit-text {
+	font-size: 40px;
+}
+
+@media only screen
+and (max-width: 374px) {
+	.submit-text {
+		font-size: 10vw;
+	}
+}
 
 .leaderboard-filter {
 	width: 100%;
