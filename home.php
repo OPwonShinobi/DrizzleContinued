@@ -19,14 +19,12 @@ if (!isset($_SESSION['Userid']))
 
         <?php
         $conn = get_db_connection();
-        $stmt = $conn->prepare("SELECT ID FROM Images WHERE favflag = '1' ORDER BY RAND()");
+        $stmt = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '1' ORDER BY RAND()");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $url = 'retrieveImage.php?id=';
         $first = true;
-        foreach ($result as $ele)
-          foreach ($ele as $innerele)
-          {
+        foreach ($result as $row)
+        {
             if ($first)
             {
               echo '<div class="item slideimg active">';
@@ -36,9 +34,12 @@ if (!isset($_SESSION['Userid']))
             { 
               echo '<div class="item slideimg">'; 
             }
-            echo '<img class="slideimg" src="/retrieveImage.php?id='. $innerele . '">';
+
+            echo '<img class="slideimg" src="/retrieveImage.php?id='. $row['ID'] . '">';
+          echo '<figcaption class="imgcap">' . $row['Description'] . '</figcaption>';
             echo '</div>';
-          }
+
+        }
         ?>
 
         </div>
@@ -55,11 +56,19 @@ if (!isset($_SESSION['Userid']))
       </div>
       <div class="panel-body">
         <div class="col-lg-12 prize">
-          <img class="prize" src="http://ddeubel.edublogs.org/files/2010/12/present-16ufgnb.jpg">
-        </div>
-        <div class="prizedesc col-lg-12">
-          <h2>The current prize is this box!</h2>
-          <p> A description of the prize with all relevant details that people will care about... </p>
+<?php 
+        $conn = get_db_connection();
+        $stmt = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '2'");
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $row)
+        {
+          echo '<img class="prize" src="/retrieveImage.php?id=';
+          echo $row['ID'];
+          echo '">';
+          echo '<figcaption class="imgcap">' . $row['Description'] . '</figcaption>';
+        } 
+        ?>
         </div>
       </div> 
     </div>
@@ -77,20 +86,26 @@ if (!isset($_SESSION['Userid']))
 			<div class="panel-body">
         <?php
         $conn = get_db_connection();
-        $stmt = $conn->prepare("SELECT Description, Points from Action order by DateEntered limit 3");
+        $stmt = $conn->prepare("SELECT Description,Category,Points from Action order by DateEntered limit 3");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $ele)
+
+        foreach($result as $row)
         {
-          echo '<div class="panel panel-body panel-newactions">';
+          echo '<div class="panel panel-body">';
+          echo '<div class="col-lg-3">';
+          echo '<img class ="imagenewact" src="images/categories/' . $row['Category'] .'.png">';
+          echo '</div>';
+          echo '<div class="col-lg-6">';
           echo '<h3>';
-          foreach($ele as $inele)
-          {
-            echo $inele;
-            echo ' - ';
-          }
-          echo 'points';
+          echo $row['Description'];
           echo '</h3>';
+          echo '</div>';
+          echo '<div class="col-lg-3 newpoints">';
+          echo '<h3>';
+          echo $row['Points'] . ' Points';
+          echo '</h3>';
+          echo '</div>';
           echo '</div>';
         }
         ?>
@@ -144,10 +159,10 @@ if (!isset($_SESSION['Userid']))
         <div class="col-lg-12">
           <div class="panel panel-red panel-body">
             <div class="col-lg-2">
-              <i class="fa fa-trophy fa-5x"></i>
+              <i class="fa fa-university fa-5x"></i>
             </div>
             <div class="col-lg-8 descsum">
-              <h3></h3>
+              <h3>School Points</h3>
             </div>
             <div class="col-lg-2 pointsum">
               <h3>
@@ -169,8 +184,27 @@ if (!isset($_SESSION['Userid']))
 			<div class="panel-heading">
 				<h2 class="panel-title"><i class="fa fa-newspaper-o fa-fw"></i> News</h2>
 			</div>
-			<div class="panel-body">
+			<div class="panel-body panel-news">
         <div class="panel panel-white">
+<?php
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'https://www.drizzlesociety.org/blog/',
+          CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)'));
+        $page = curl_exec($curl);
+        curl_close($curl);
+        //echo $page;
+        //$xml = new SimpleXMLElement($page);
+        //$result = $xml->xpath('/p');
+        //echo $result;
+        $q1 = '//*[@id="post-5964f49be6f2e1c378931b75"]/div[2]/p';
+        $doc = new DOMDocument; 
+        $doc->loadHTML( $page);
+        $xpath = new DOMXpath( $doc);
+        $node = $xpath->query($q1);
+        //echo $node;
+        ?>
           <h1>Important News Item 1</h1>
         <p>bla b;lahdkljga dsklgjadlskg das gdakljaklds gdklasg dsalk fdskljg kdslgj dklsg jdsjfkldaskjg;dslafjghl;dfjg;fidds</p>
         </div>

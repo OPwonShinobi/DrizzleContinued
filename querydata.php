@@ -150,8 +150,14 @@ if ($_POST) {
 		case 'modifyStudentRecord':
 			modifyStudentRecord();
 			break;
+		case 'deleteStudentRecord':
+			deleteStudentRecord();
+			break;
 		case 'modifyImageRecord':
 			modifyImageRecord();
+			break;
+		case 'deleteImageRecord':
+			deleteImageRecord();
 			break;
 		case 'getAllAdmins':
 			getAllAdmins();
@@ -384,6 +390,23 @@ function ModifyStudentRecord(){
 	}
 }
 
+function deleteStudentRecord()
+{
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		DELETE FROM User
+		WHERE ID=:selectedUserID;
+	");
+	$stmt->bindParam(":selectedUserID", $_POST['UserID']);
+
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+
+}
+
 function modifyImageRecord() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("
@@ -396,6 +419,22 @@ function modifyImageRecord() {
 	$stmt->bindParam(":imageID", $_POST['ImageID']);
 	$stmt->bindParam(":favflagID", $_POST['FavFlagID']);
 	$stmt->bindParam(":description", $_POST['Description']);
+
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+}
+
+function deleteImageRecord() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		DELETE FROM Images
+		WHERE id=:imageID
+	");
+
+	$stmt->bindParam(":imageID", $_POST['ImageID']);
 
 	$result = $stmt->execute();
 	if ($result) {

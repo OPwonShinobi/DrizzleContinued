@@ -157,3 +157,22 @@ and (max-width: 374px) {
 .table-div {
 	overflow-x: auto;
 }
+
+.panel-news{
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.newpoints{
+  text-align: right;
+}
+
+.imgcap{
+  padding-top: 2%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.imagenewact{
+  height: 85px;
+}
