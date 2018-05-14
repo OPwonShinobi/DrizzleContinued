@@ -9,7 +9,7 @@ var shareCounter=0;
 var hideSubmitted = false;
 // ~4MB max image size for uploading, seems like ajax
 // file limit is around~4.7MB  
-var MAXFILESIZE = 4000000;
+var MAXFILESIZE = 4194304;
 
 $(document).ready(function(){
     myAction = [];
@@ -90,7 +90,7 @@ function filter_my_action_table(data) {
             + '<img src="images/hourglass.svg" style="visibility:hidden" height="150px" width="150px">'
             + '<p style="font-size:40px; ">Ready to submit!</p>'
             + '</div>'
-            + '<p style="font-size:18px; visibility:hidden">Submission Time: ' + action['CompleteTime'] +'</p>'
+            + '<p style="font-size:18px;visibility:hidden">Submission Time: </p>'
             + '</div>'
             + '</div>'
         );
@@ -120,7 +120,7 @@ function update_my_action_table(data) {
     for (action of data) {
         // submitted actions cannot be changed, instead displays submitted time & 
         // a big hourglass icon over the action
-        var submissionStatus = '<p style="font-size:18px; color:black;visibility:hidden">Submission Time: ' + action['CompleteTime'] +'</p>';
+        var submissionStatus = '<p style="font-size:18px; color:black;visibility:hidden">Submission Time: </p>';
         var cooldownStatus = '<p style="font-size:40px; color:black">Cooldown: 1 day</p>';
         var cooldownIcon = $('<img src="images/hourglass.svg" style="color:black;position:relative;z-index:2;" height="150px" width="150px">'); 
         // userActions by default has CompleteTime null,

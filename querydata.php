@@ -96,6 +96,12 @@ if ($_POST) {
 		case 'addAction':
 			addAction();
 			break;
+		case 'addCategory':
+			addCategory();
+			break;
+		case 'getAllCategory':
+			getAllCategory();
+			break;
 		case 'modifyAction':
 			modifyAction();
 			break;
@@ -147,6 +153,9 @@ if ($_POST) {
 		case 'modifyImageRecord':
 			modifyImageRecord();
 			break;
+		case 'deleteImageRecord':
+			deleteImageRecord();
+			break;
 		case 'getAllAdmins':
 			getAllAdmins();
 			break;
@@ -187,7 +196,7 @@ function establishDbConnection() {
 function getAllActions(){
 	$conn = get_db_connection();
 	if ($conn) {
-		$stmt = $conn->prepare("SELECT ID, Description, Points, Active FROM Action");
+		$stmt = $conn->prepare("SELECT ID, Description, Points, Active, Category FROM Action");
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		echo json_encode($result);
@@ -398,6 +407,22 @@ function modifyImageRecord() {
 	}
 }
 
+function deleteImageRecord() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		DELETE FROM Images
+		WHERE id=:imageID
+	");
+
+	$stmt->bindParam(":imageID", $_POST['ImageID']);
+
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+}
+
 function addAction() {
 	$conn = get_db_connection();
 	$stmt = $conn->prepare("INSERT INTO Action VALUES(NULL, :actionDescription, :points, TRUE)");
@@ -406,6 +431,27 @@ function addAction() {
 	$result = $stmt->execute();
 	if ($result) {
 		getAllActions();
+	}
+}
+
+function addCategory() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("INSERT INTO ActionCategory VALUES(:categoryName, :categoryDescription)");
+	$stmt->bindParam(":categoryName", $_POST['Name']);
+	$stmt->bindParam(":categoryDescription", $_POST['Description']);
+	$result = $stmt->execute();
+	if ($result) {
+		getAllActions();
+	}
+}
+
+function getAllCategory() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("SELECT categoryName FROM ActionCategory");
+	$result = $stmt->execute();
+	if ($result) {
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($result);
 	}
 }
 
