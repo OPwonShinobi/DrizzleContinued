@@ -773,7 +773,7 @@ function update_images(images) {
 	{
 		$("#action_table_images").append('<tr>'
 				+ '<td class="image_id">' + image.id +'</td>'
-				+ '<td><img src=\"' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\" height=\"100\" width=\"100\" onclick="window.open(\'' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveimage.php?id=' + image.id +'\')\"></td>'
+				+ '<td><img src=\"' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveImage.php?id=' + image.id +'\" height=\"100\" width=\"100\" onclick="window.open(\'' + window.location.protocol + "//" + window.location.host + "/" + 'retrieveImage.php?id=' + image.id +'\')\"></td>'
 				+ '<td class="image_flag"><div contenteditable>' + image.favflag + '</td>'
 				+ '<td class="image_description"><div contenteditable>' + image.description + '</td>'
 				+ '<td>' + (image.userID==-1?"admin":image.userID) + '</td>'
