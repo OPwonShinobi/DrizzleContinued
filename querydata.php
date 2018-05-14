@@ -150,6 +150,9 @@ if ($_POST) {
 		case 'modifyStudentRecord':
 			modifyStudentRecord();
 			break;
+		case 'deleteStudentRecord':
+			deleteStudentRecord();
+			break;
 		case 'modifyImageRecord':
 			modifyImageRecord();
 			break;
@@ -385,6 +388,23 @@ function ModifyStudentRecord(){
 		$response = array("Result"=>"Success");
 		echo json_encode($response);
 	}
+}
+
+function deleteStudentRecord()
+{
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		DELETE FROM User
+		WHERE ID=:selectedUserID;
+	");
+	$stmt->bindParam(":selectedUserID", $_POST['UserID']);
+
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+
 }
 
 function modifyImageRecord() {

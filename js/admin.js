@@ -883,7 +883,8 @@ function update_students_table(students) {
 				+ '<td class="student_table_Email"><div contenteditable>' + student.Email + '</td>'
 				+ '<td>' + student.Score + '</td>'
 				+ '<td class="student_table_UserID" style="display:none;">' + student.UserID + '</td>'
-				+ '<td> <button style="height:30px;width:80px" class="update_students_btn">Update</button> </td>'
+				+ '<td> <button style="height:30px;width:60px" class="update_students_btn">Update</button> </td>'
+				+ '<td> <button style="height:30px;width:60px" class="delete_students_btn">Delete</button> </td>'
 				+ '</tr>');
 	}
 
@@ -895,6 +896,16 @@ function update_students_table(students) {
 		    // Do nothing!
 		}
 	});
+
+	$(".delete_students_btn").click(function() {
+    	var $row = $(this).closest("tr");   // Find the row
+		if (confirm('Are you sure you want to delete ' + $row.find('.student_table_ln').text() + ' ' + $row.find('.student_table_fn').text() + '\'s record?')) {
+		    delete_students_record($row);
+		} else {
+		    // Do nothing!
+		}
+	});
+
 }
 
 //Roger
@@ -926,12 +937,29 @@ function update_students_record(row){
 			// data retrieved from server
 			// Use the data to change the elements here
 		},
-		// error: function(xhr, textStatus, error){
-	 //      console.log(xhr.statusText);
-	 //      console.log(textStatus);
-	 //      console.log(error);
-	 // 		}
-	 		error: function(data){
+ 		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function delete_students_record(row) {
+	var id = row.find('.student_table_UserID').text();
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'deleteStudentRecord',
+			UserID: id
+		},
+		dataType: 'JSON',
+		success: function(data){
+			console.log(data);
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				getAllStudentScore();
+			}
+		},
+ 		error: function(data){
 			console.log(data);
 		}
 	});
