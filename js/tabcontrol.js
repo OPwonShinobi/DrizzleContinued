@@ -60,6 +60,6 @@ $(function() {
      var navMain = $(".navbar-collapse");
 
      navMain.on("click", "a:not(.leaderboard-menu)", null, function () {
-         navMain.collapse('hide');
+         $('.navbar-collapse').collapse("hide");
      });
  });
