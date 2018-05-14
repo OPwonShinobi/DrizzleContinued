@@ -5,8 +5,13 @@
  */
 
 /* Global Styles */
+@font-face{
+  font-family:Futura;
+  src: url(/fonts/Futura/FuturaPTMedium.otf);
+}
 
 body {
+    font-family:Futura;
     margin-top: 100px;
     background-color: #222;
 }
