@@ -153,6 +153,9 @@ if ($_POST) {
 		case 'modifyImageRecord':
 			modifyImageRecord();
 			break;
+		case 'deleteImageRecord':
+			deleteImageRecord();
+			break;
 		case 'getAllAdmins':
 			getAllAdmins();
 			break;
@@ -396,6 +399,22 @@ function modifyImageRecord() {
 	$stmt->bindParam(":imageID", $_POST['ImageID']);
 	$stmt->bindParam(":favflagID", $_POST['FavFlagID']);
 	$stmt->bindParam(":description", $_POST['Description']);
+
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+}
+
+function deleteImageRecord() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		DELETE FROM Images
+		WHERE id=:imageID
+	");
+
+	$stmt->bindParam(":imageID", $_POST['ImageID']);
 
 	$result = $stmt->execute();
 	if ($result) {

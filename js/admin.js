@@ -778,6 +778,7 @@ function update_images(images) {
 				+ '<td class="image_description"><div contenteditable>' + image.description + '</td>'
 				+ '<td>' + (image.userID==-1?"admin":image.userID) + '</td>'
 				+ '<td> <button style="height:30px;width:80px" class="update_image_btn">Update</button> </td>'
+				+ '<td> <button style="height:30px;width:80px" class="delete_image_btn">Delete</button> </td>'
 				+ '</tr>');
 	}
 
@@ -785,6 +786,15 @@ function update_images(images) {
     	var $row = $(this).closest("tr");   // Find the row
 		if (confirm('Are you sure you want to save ' + $row.find('.image_id').text() + '\'s record?')) {
 		    update_image_record($row);
+		} else {
+		    // Do nothing!
+		}
+	});
+
+	$(".delete_image_btn").click(function() {
+    	var $row = $(this).closest("tr");   // Find the row
+		if (confirm('Are you sure you want to delete ' + $row.find('.image_id').text() + '\'s record?')) {
+		    delete_image_record($row);
 		} else {
 		    // Do nothing!
 		}
@@ -806,6 +816,29 @@ function update_image_record(row){
 			ImageID:id,
 			FavFlagID:idflagnum,
 			Description:descrip
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				getAllImages();
+			}
+		},
+	 	error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function delete_image_record(row){
+	var idt = row.find('.image_id').text();
+	var id = Number(idt);
+
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'deleteImageRecord',
+			ImageID:id,
 		},
 		dataType: 'JSON',
 		success: function(data){
