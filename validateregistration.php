@@ -148,6 +148,15 @@ if ($_POST) {
         //general country been added to regionlock 
         if( isset($result['CountryName']) ) {
             $withinRegion = true;
+        } else {
+            //world-wide regionlock, added at client request
+            $stmt = $conn->prepare("SELECT * FROM RegionLock WHERE CountryName='ALL'" );
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+            //all countries are added as region lock
+            if( isset($result['CountryName']) )
+                $withinRegion = true;
         }
     }
 

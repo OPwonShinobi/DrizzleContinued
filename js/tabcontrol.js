@@ -62,7 +62,8 @@ $(function() {
 
     navMain.on("click", "a:not(.leaderboard-menu)", null, function () {
         // $('.navbar-collapse').collapse("hide");
-        navMainDom.style.collapse = "hide";
+        document.querySelector('.navbar-collapse.collapse').classList.add("hide");
+        // navMainDom.style.collapse = "hide";
     });
 });
 
