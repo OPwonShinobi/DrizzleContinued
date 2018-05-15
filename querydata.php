@@ -1162,10 +1162,10 @@ function getAllAdmins() {
 	if ($conn) {
 		$stmt = $conn->prepare("
 			SELECT ID, Username, Email, Authorization
-			FROM Admin
+			FROM Administrator
 			WHERE Authorization < (
 				SELECT Authorization 
-				FROM Admin
+				FROM Administrator
 				WHERE Username=:theAdmin
 			) OR Username=:theAdmin
 			ORDER BY Authorization DESC, Username ASC
