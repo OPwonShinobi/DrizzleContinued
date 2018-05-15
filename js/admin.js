@@ -19,8 +19,18 @@ $(document).ready(function(){
 
 	$("#button_add_region").click(function(){
 		$("#popup_modal_add_region").modal({backdrop: "static"});
-		$("#input_country_region").val($("#countryId_region option:selected").text());
-		$("#input_state_province_region").val($("#stateId_region option:selected").text());
+		var country = $("#countryId_region option:selected").text();
+		var province = $("#stateId_region option:selected").text();
+		if (province == "Select State" || province == "Select Province/State" || province == "")
+		{
+			province = "ALL";
+		}
+		if (country == "Select Country")
+		{
+			country = "ALL";
+		}
+		$("#input_country_region").val(country);
+		$("#input_state_province_region").val(province);
 	});
 
 	/* Handle "Add action" button  */
@@ -347,9 +357,14 @@ function request_add_school() {
 
 function request_add_region() {
 	var province = $("#stateId_region option:selected").text();
-	if (province == "Select State")
+	var country = $("#countryId_region option:selected").text();
+	if (province == "Select State" || province == "Select Province/State" || province == "")
 	{
 		province = "ALL";
+	}
+	if (country == "Select Country")
+	{
+		country = "ALL";
 	}
 
 	$.ajax({
@@ -357,7 +372,7 @@ function request_add_region() {
 		url: "/querydata.php",
 		data: {
 			QueryData: 'addRegion',
-			Country: $("#countryId_region option:selected").text(),
+			Country: country,
 			StateProvince: province,
 		},
 		dataType: 'JSON',
