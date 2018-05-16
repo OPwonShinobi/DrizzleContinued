@@ -58,11 +58,11 @@ function get_current_time() {
 
 $(function() {
     var navMain = $(".navbar-collapse");
-    var navMainDom = document.querySelector(".navbar-collapse")[0];
+    //var navMainDom = document.querySelector(".navbar-collapse")[0];
 
     navMain.on("click", "a:not(.leaderboard-menu)", null, function () {
-        // $('.navbar-collapse').collapse("hide");
-        document.querySelector('.navbar-collapse.collapse').classList.add("hide");
+        navMain.collapse("hide");
+        //document.querySelector('.navbar-collapse.collapse').classList.add("hide");
         // navMainDom.style.collapse = "hide";
     });
 });
