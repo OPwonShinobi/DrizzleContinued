@@ -5,10 +5,17 @@
     <title>Title</title>
     <link type="text/css" href="css/login.css" rel="stylesheet" media="screen">
 <?php 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    require 'PHPMailer-master/vendor/autoload.php';
-	echo !extension_loaded('openssl')? "Openssl Not Available":"Openssl Available";
+// see config.php for what these constants mean
+define("SERVER_EMAIL", "yecdevnotification@gmail.com");
+define("SERVER_EMAIL_PW", "yec123!Q@W#E");
+define("NEWSLETTER_EMAIL", "yecdevnotification@gmail.com");
+define("INFO_EMAIL", "yecdevnotification@gmail.com");
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer-master/vendor/autoload.php';
+echo !extension_loaded('openssl')? "Openssl Not Available":"Openssl Available";
+
 function sendNewsletterEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncity)
 {
     $mail = new PHPMailer;
@@ -19,10 +26,10 @@ function sendNewsletterEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $nci
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = "yecdevnotification2@gmail.com";
-    $mail->Password = "yec123!Q@W#E";
-    $mail->setFrom('yecdevnotification2@gmail.com', 'Drizzle Environmental Society');
-    $mail->addAddress('yecdevnotification2@gmail.com');
+    $mail->Username = SERVER_EMAIL;
+    $mail->Password = SERVER_EMAIL_PW;
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
+    $mail->addAddress(NEWSLETTER_EMAIL);
     $mail->Subject = '[Yec Automated Newsletter Subscriber Request]';
     $mail->Body = '<!DOCTYPE html>';
     $mail->Body .='<html>';
@@ -66,10 +73,10 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $mail->SMTPAuth = true;
     $mail->SMTPAutoTLS = false;
     
-    $mail->Username = "yecdevnotification2@gmail.com";
-    $mail->Password = "yec123!Q@W#E";
-    $mail->setFrom('yecdevnotification2@gmail.com', 'Drizzle Environmental Society');
-    $mail->addAddress('yecdevnotification2@gmail.com');
+    $mail->Username = SERVER_EMAIL;
+    $mail->Password = SERVER_EMAIL_PW;
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
+    $mail->addAddress(INFO_EMAIL);
     $mail->Subject = '[Yec Automated Add School Request]';
     $mail->Body = '<!DOCTYPE html>';
     $mail->Body .='<html>';
