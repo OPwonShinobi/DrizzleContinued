@@ -5,6 +5,7 @@
     <title>Title</title>
     <link type="text/css" href="css/login.css" rel="stylesheet" media="screen">
 <?php 
+// visit this page to make sure email client is running
 // see config.php for what these constants mean
 define("SERVER_EMAIL", "yecdevnotification@gmail.com");
 define("SERVER_EMAIL_PW", "yec123!Q@W#E");

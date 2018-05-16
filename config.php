@@ -55,12 +55,12 @@ function sendEmail($toemail)
     $mail->SMTPAuth = true;
 //Username to use for SMTP authentication - use full email address for gmail
     //$mail->Username = "notetomecomp3975@gmail.com";
-    $mail->Username = "yecdevnotification@gmail.com";
+    $mail->Username = SERVER_EMAIL;
 //Password to use for SMTP authentication
     //$mail->Password = "comp3975";
-    $mail->Password = "yec123!Q@W#E";
+    $mail->Password = SERVER_EMAIL_PW;
 //Set who the message is to be sent from
-    $mail->setFrom('yecdevnotification@gmail.com', 'Drizzle Environmental Society');
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
     $mail->addAddress("$toemail");
 //Set the subject line
     $mail->Subject = 'Welcome to the Youth Environmental Challenge';
@@ -80,7 +80,7 @@ function sendEmail($toemail)
               $mail->Body .='<p>Your account has now been created!</p>';
               $mail->Body .='<p>You can now log in with your new account to track your environmental impact online!</p>';
               $mail->Body .='<br />';
-              $mail->Body .='<p>If you did not create an account for the Youth Environmental Challenge, please contact Drizzle Environmental Society at info@drizzlesociety.org</p>';
+              $mail->Body .='<p>If you did not create an account for the Youth Environmental Challenge, please contact Drizzle Environmental Society at '.INFO_EMAIL.'</p>';
               $mail->Body .='<br />';
             $mail->Body .='</div>';
           $mail->Body .='</div>';
@@ -127,11 +127,11 @@ function forgotPass($toemail,$code)
 //Whether to use SMTP authentication
     $mail->SMTPAuth = true;
 //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = "yecdevnotification@gmail.com";
+    $mail->Username = SERVER_EMAIL;
 //Password to use for SMTP authentication
-    $mail->Password = "yec123!Q@W#E";
+    $mail->Password = SERVER_EMAIL_PW;
 //Set who the message is to be sent from
-    $mail->setFrom('yecdevnotification@gmail.com', 'Drizzle Environmental Society');
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
     $mail->addAddress("$toemail");
 //Set the subject line
     $mail->Subject = 'Drizzle Environmental Society Account Password Reset';
@@ -147,7 +147,7 @@ function forgotPass($toemail,$code)
         .'<h1>Please use this Reset Code to reset your password.</h1>'
         .'<h2>This is your temporary reset code '.'<b style="color:#2ecc71">'.$code.'</b>'.'</h2>'
         .'<p>If you have any questions, please contact us.</p>'
-        .'<a href="#" style="color:#2ecc71">info@drizzlesociety.org</a>'
+        .'<a href="#" style="color:#2ecc71">'.INFO_EMAIL.'</a>'
         .'</div>'
         .'</div>'
         .'</html>';
@@ -174,16 +174,16 @@ function sendNewsletterEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $nci
 {
     $mail = new PHPMailer;
     $mail->isSMTP();
-    $mail->SMTPDebug = 0;
+    $mail->SMTPDebug = 2;
     $mail->Debugoutput = 'html';
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = "yecdevnotification@gmail.com";
-    $mail->Password = "yec123!Q@W#E";
-    $mail->setFrom('yecdevnotification@gmail.com', 'Drizzle Environmental Society');
-    $mail->addAddress('xiaalex1998@gmail.com');
+    $mail->Username = SERVER_EMAIL;
+    $mail->Password = SERVER_EMAIL_PW;
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
+    $mail->addAddress(NEWSLETTER_EMAIL);
     $mail->Subject = '[Yec Automated Newsletter Subscriber Request]';
     $mail->Body = '<!DOCTYPE html>';
     $mail->Body .='<html>';
@@ -236,10 +236,11 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = "yecdevnotification@gmail.com";
-    $mail->Password = "yec123!Q@W#E";
-    $mail->setFrom('yecdevnotification@gmail.com', 'Drizzle Environmental Society');
-    $mail->addAddress('xiaalex1998@gmail.com');
+
+    $mail->Username = SERVER_EMAIL;
+    $mail->Password = SERVER_EMAIL_PW;
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
+    $mail->addAddress(INFO_EMAIL);
     $mail->Subject = '[Yec Automated Add School Request]';
     $mail->Body = '<!DOCTYPE html>';
     $mail->Body .='<html>';

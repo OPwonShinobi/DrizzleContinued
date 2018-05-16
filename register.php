@@ -233,7 +233,7 @@ require_once('config.php');
                         <!-- legacy code, this p not needed but will break stuff if left out -->
                         <p id="NewSchoolNameerror"></p>
                     <br/>
-                    <p style="color:white"><small>If your school is not listed, please enter it above and click register, or find us on social media to have it added to our system. You can also email us at info@drizzlesociety.org.</small></p>
+                    <p style="color:white"><small>If your school is not listed, please enter it above and click register, or find us on social media to have it added to our system. You can also email us at <?php echo INFO_EMAIL;?>.</small></p>
                     </div>
                     <!--SCHOOL END-->
                     <hr/>
