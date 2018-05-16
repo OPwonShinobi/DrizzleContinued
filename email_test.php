@@ -8,11 +8,12 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
     require 'PHPMailer-master/vendor/autoload.php';
+	echo !extension_loaded('openssl')? "Openssl Not Available":"Openssl Available";
 function sendNewsletterEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncity)
 {
     $mail = new PHPMailer;
     $mail->isSMTP();
-    $mail->SMTPDebug = 0;
+    $mail->SMTPDebug = 2;
     $mail->Debugoutput = 'html';
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
@@ -57,7 +58,7 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $nwithinregion = $nwithinregionlock ? "TRUE" : "FALSE";
     $mail = new PHPMailer;
     $mail->isSMTP();
-    $mail->SMTPDebug = 0;
+    $mail->SMTPDebug = 2;
     $mail->Debugoutput = 'html';
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
@@ -109,7 +110,7 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $fname = "Test first";
     $lname = "Test last";
     $email = "test@test.test";
-    sendNewsletterEmail($fname,$lname,$email,$country,$state,$city); 
+    // sendNewsletterEmail($fname,$lname,$email,$country,$state,$city); 
     sendAddSchoolEmail($fname,$lname,$email,$country,$state,$city,$newschoolname, false);
 ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
