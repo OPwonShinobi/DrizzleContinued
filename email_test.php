@@ -64,6 +64,8 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
+    $mail->SMTPAutoTLS = false;
+    
     $mail->Username = "yecdevnotification2@gmail.com";
     $mail->Password = "yec123!Q@W#E";
     $mail->setFrom('yecdevnotification2@gmail.com', 'Drizzle Environmental Society');
