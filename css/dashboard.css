@@ -165,6 +165,8 @@ and (max-width: 374px) {
 
 .newpoints{
   text-align: right;
+  color: white;
+  font-size: 2em;
 }
 
 .imgcap{
@@ -175,4 +177,18 @@ and (max-width: 374px) {
 
 .imagenewact{
   height: 85px;
+}
+
+.info
+{
+  text-indent: 1em;
+  font-style: italic;
+}
+
+.newsitem{
+  padding: 1em;
+}
+
+.newstitle{
+  font-size: 3em;
 }

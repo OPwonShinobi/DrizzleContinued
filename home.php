@@ -7,7 +7,36 @@ if (!isset($_SESSION['Userid']))
 
 <div class="row">
 
-	<div class="col-lg-6">
+  
+        <?php
+        //This checks if there is a gift image and makes slides
+        // take up whole row if there is not
+        // also hides if no images for slideshow
+
+        $conn = get_db_connection();
+        $stmt = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '2'");
+        $stmt2 = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '1' ORDER BY RAND()");
+        $stmt->execute();
+        $stmt2->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result2 != NULL) {
+          if ($result == NULL)
+          {
+            echo '<div class="col-lg-12">';
+          }
+          else
+          {
+          echo '<div class="col-lg-6">';
+          }
+        }
+        else
+        {
+          echo '<div class="col-lg-6" style="display:none;">';
+        }
+        ?>
+
 		<div class="panel panel-default">
 <div class="panel-heading">
   <h1 class="panel-title"><i class="fa fa-image"></i> New Photos</h1>
@@ -49,14 +78,38 @@ if (!isset($_SESSION['Userid']))
 		</div>
   </div>
 
-  <div class="col-lg-6">
+        <?php
+
+        $conn = get_db_connection();
+        $stmt = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '2'");
+        $stmt2 = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '1' ORDER BY RAND()");
+        $stmt->execute();
+        $stmt2->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result != NULL) {
+          if ($result2 == NULL)
+          {
+            echo '<div class="col-lg-12">';
+          }
+          else
+          {
+          echo '<div class="col-lg-6">';
+          }
+        }
+        else
+        {
+          echo '<div class="col-lg-6" style="display:none;">';
+        }
+        ?>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h1 class="panel-title"><i class="fa fa-gift"></i> Current Prize</h1>
       </div>
       <div class="panel-body">
         <div class="col-lg-12">
-<?php 
+        <?php 
         $conn = get_db_connection();
         $stmt = $conn->prepare("SELECT ID,Description FROM Images WHERE favflag = '2'");
         $stmt->execute();
@@ -102,9 +155,9 @@ if (!isset($_SESSION['Userid']))
           echo '</h3>';
           echo '</div>';
           echo '<div class="col-lg-3 newpoints">';
-          echo '<h3>';
+          echo '<span class="label label-danger">';
           echo $row['Points'] . ' Points';
-          echo '</h3>';
+          echo '</span>';
           echo '</div>';
           echo '</div>';
         }
@@ -130,8 +183,8 @@ if (!isset($_SESSION['Userid']))
             <div class="col-lg-8 descsum">
               <h3>Challenges Completed</h3>
             </div>
-            <div class="col-lg-2 pointsum">
-              <h3 class="myActions">
+            <div class="col-lg-2 pointsum newpoints">
+              <h3 class="myActions label label-success">
               </h3>
             </div>
           </div>
@@ -147,8 +200,8 @@ if (!isset($_SESSION['Userid']))
             <div class="col-lg-8 descsum">
               <h3>Total Points</h3>
             </div>
-            <div class="col-lg-2 pointsum">
-              <h3 class="myScore">
+            <div class="col-lg-2 pointsum newpoints">
+              <h3 class="myScore label label-success">
               </h3>
             </div>
           </div>
@@ -164,8 +217,8 @@ if (!isset($_SESSION['Userid']))
             <div class="col-lg-8 descsum">
               <h3>School Points</h3>
             </div>
-            <div class="col-lg-2 pointsum">
-              <h3>
+            <div class="col-lg-2 pointsum newpoints">
+              <h3 class="label label-success">
               </h3>
             </div>
           </div>
@@ -185,7 +238,6 @@ if (!isset($_SESSION['Userid']))
 				<h2 class="panel-title"><i class="fa fa-newspaper-o fa-fw"></i> News</h2>
 			</div>
 			<div class="panel-body panel-news">
-        <div class="panel panel-white">
 <?php
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -194,26 +246,43 @@ if (!isset($_SESSION['Userid']))
           CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)'));
         $page = curl_exec($curl);
         curl_close($curl);
-        //echo $page;
-        //$xml = new SimpleXMLElement($page);
-        //$result = $xml->xpath('/p');
-        //echo $result;
-        $q1 = '//*[@id="post-5964f49be6f2e1c378931b75"]/div[2]/p';
-        $doc = new DOMDocument; 
-        $doc->loadHTML( $page);
-        $xpath = new DOMXpath( $doc);
-        $node = $xpath->query($q1);
-        //echo $node;
+        $doc = new \DOMDocument();
+        //libxml_use_internal_errors(true);
+        //$doc->strictErrorChecking = FALSE;
+        $doc->loadHTML($page);
+        //libxml_clear_errors();
+
+        $xpath = new \DOMXPath($doc);
+
+        //$images = "//section[1]//img/@src";
+        $base = "https://www.drizzlesociety.org";
+        $titles = "//section[1]//a[contains(@class,'BlogList-item-title')]";
+        $paras = "//section[1]//p";
+        $readmore = "//section[1]//a[contains(@class, 'BlogList-item-readmore')]/@href";
+        $datep = "//section[1]//time";
+        $authors = "//section[1]//a[contains(@class, 'Blog-meta-item--author')]";
+
+        $paras = $xpath->query($paras);
+        $titles = $xpath->query($titles);
+        $readmore = $xpath->query($readmore);
+        $datep = $xpath->query($datep);
+        $authors = $xpath->query($authors);
+        //$images = $xpath->query($images);
+
+        for ($i=0;$i<$titles->length;$i++)
+        {
+          echo '<div class="panel panelbody">';
+          echo '<div class="newsitem">';
+          echo '<h1>' .$titles->item($i)->nodeValue. '</h1>';
+          echo '<h5 class="info">' .$datep->item($i)->nodeValue. ' : ' . $authors->item($i)->nodeValue .'</h5>';
+          echo '<p>' .$paras->item($i)->nodeValue. '</p>';
+          echo '<a class="btn btn-info" role="btn" href="' .$base. $readmore->item($i)->nodeValue. '">Read More</a>';
+          echo '</div>';
+          echo '</div>';
+        }
         ?>
-          <h1>Important News Item 1</h1>
-        <p>bla b;lahdkljga dsklgjadlskg das gdakljaklds gdklasg dsalk fdskljg kdslgj dklsg jdsjfkldaskjg;dslafjghl;dfjg;fidds</p>
-        </div>
 
 
-        <div class="panel panel-white">
-        <h1>Important News Item 2</h1>
-        <p> dklgfjaldskg daktg gkldjg ls;daj gkfakldgf jdskalg sldag jasdk gdsa f</p>
-        </div>
 
 			</div>
 		</div>
