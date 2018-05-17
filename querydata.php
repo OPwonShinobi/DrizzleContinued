@@ -789,6 +789,7 @@ function getSchoolScore() {
 		) AS cs
 		JOIN Accomplishment ac ON ac.UserID=cs.ID
 		JOIN Action a ON ac.ActionID=a.ID
+		GROUP BY cs.SchoolID
 	");
 	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
 	$stmt->execute();
