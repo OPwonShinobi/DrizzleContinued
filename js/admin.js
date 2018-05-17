@@ -762,6 +762,29 @@ function getAllStudentScore() {
 	});
 }
 
+function ShowAllStudentRecords() {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {QueryData: 'getAllStudentInfo'},
+		dataType: 'JSON',
+		success: function(data){
+			//console.log(data);
+			if (data != undefined && data != null) {
+				students = data;
+				update_students_table_all(students);
+				all_yec_countries = getCountriesFromStudentRecord(students);
+				//console.log(all_yec_countries);
+				update_select_list($("#yecCountryId"), all_yec_countries, "country");
+			}
+			//update_action_table(actions);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
 function getAllImages() {
 	$.ajax({
 		type: "POST",
@@ -867,13 +890,68 @@ function delete_image_record(row){
 	});
 }
 
+function update_students_table_all(students) {
+	var rank = 0;
+	var sameScoreCount = 1;
+	var previousScore = 0;
+
+	$("#student_table_content").empty();
+	console.log(students);
+	for (student of students) {
+		currentScore = parseInt(student.Score);
+		if (currentScore == previousScore) {
+			++sameScoreCount;
+		} else {
+			rank+=sameScoreCount;
+			sameScoreCount = 1;
+		}
+
+
+		previousScore = currentScore;
+
+		$("#student_table_content").append('<tr>'
+				+ '<td>' + rank +'</td>'
+				+ '<td>' + student.Country +'</td>'
+				+ '<td>' + student.StateProvince + '</td>'
+				+ '<td>' + student.City +'</td>'
+				+ '<td>' + student.SchoolName +'</td>'
+				+ '<td class="student_table_ln"><div contenteditable>' + student.LastName + '</td>' 
+				+ '<td class="student_table_fn"><div contenteditable>' + student.FirstName +'</td>'
+				+ '<td class="student_table_NickName"><div contenteditable>' + student.NickName + '</td>'
+				+ '<td class="student_table_Email"><div contenteditable>' + student.Email + '</td>'
+				+ '<td class="student_table_UserID" style="display:none;">' + student.UserID + '</td>'
+				+ '<td> <button style="height:30px;width:60px" class="update_students_btn">Update</button> </td>'
+				+ '<td> <button style="height:30px;width:60px" class="delete_students_btn">Delete</button> </td>'
+				+ '</tr>');
+	}
+
+	$(".update_students_btn").click(function() {
+    	var $row = $(this).closest("tr");   // Find the row
+		if (confirm('Are you sure you want to save ' + $row.find('.student_table_ln').text() + ' ' + $row.find('.student_table_fn').text() + '\'s record?')) {
+		    update_students_record_all($row);
+		} else {
+		    // Do nothing!
+		}
+	});
+
+	$(".delete_students_btn").click(function() {
+    	var $row = $(this).closest("tr");   // Find the row
+		if (confirm('Are you sure you want to delete ' + $row.find('.student_table_ln').text() + ' ' + $row.find('.student_table_fn').text() + '\'s record?')) {
+		    delete_students_record_all($row);
+		} else {
+		    // Do nothing!
+		}
+	});
+
+}
+
 function update_students_table(students) {
 	var rank = 0;
 	var sameScoreCount = 1;
 	var previousScore = 0;
 
 	$("#student_table_content").empty();
-
+	console.log(students);
 	for (student of students) {
 		currentScore = parseInt(student.Score);
 		if (currentScore == previousScore) {
@@ -945,9 +1023,41 @@ function update_students_record(row){
 		},
 		dataType: 'JSON',
 		success: function(data){
-			console.log(data);
 			if (data != "undefined" && data != null && data.Result=="Success") {
 				getAllStudentScore();
+			}
+			// data retrieved from server
+			// Use the data to change the elements here
+		},
+ 		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function update_students_record_all(row){
+	var idt = row.find('.student_table_UserID').text();
+	var id = Number(idt);
+	var fn = row.find('.student_table_fn').text();
+	var ln = row.find('.student_table_ln').text();
+	var nickName = row.find('.student_table_NickName').text();
+	var email = row.find('.student_table_Email').text();
+
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'modifyStudentRecord',
+			UserID: id,
+			FirstName: fn,
+			LastName: ln,
+			NickName: nickName,
+			Email:email
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				ShowAllStudentRecords();
 			}
 			// data retrieved from server
 			// Use the data to change the elements here
@@ -969,9 +1079,29 @@ function delete_students_record(row) {
 		},
 		dataType: 'JSON',
 		success: function(data){
-			console.log(data);
 			if (data != "undefined" && data != null && data.Result=="Success") {
 				getAllStudentScore();
+			}
+		},
+ 		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function delete_students_record_all(row) {
+	var id = row.find('.student_table_UserID').text();
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'deleteStudentRecord',
+			UserID: id
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				ShowAllStudentRecords();
 			}
 		},
  		error: function(data){

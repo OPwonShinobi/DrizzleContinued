@@ -5,23 +5,32 @@
     <title>Title</title>
     <link type="text/css" href="css/login.css" rel="stylesheet" media="screen">
 <?php 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    require 'PHPMailer-master/vendor/autoload.php';
+// visit this page to make sure email client is running
+// see config.php for what these constants mean
+define("SERVER_EMAIL", "yecdevnotification@gmail.com");
+define("SERVER_EMAIL_PW", "yec123!Q@W#E");
+define("NEWSLETTER_EMAIL", "yecdevnotification@gmail.com");
+define("INFO_EMAIL", "yecdevnotification@gmail.com");
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer-master/vendor/autoload.php';
+echo !extension_loaded('openssl')? "Openssl Not Available":"Openssl Available";
+
 function sendNewsletterEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncity)
 {
     $mail = new PHPMailer;
     $mail->isSMTP();
-    $mail->SMTPDebug = 0;
+    $mail->SMTPDebug = 2;
     $mail->Debugoutput = 'html';
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = "yecdevnotification2@gmail.com";
-    $mail->Password = "yec123!Q@W#E";
-    $mail->setFrom('yecdevnotification2@gmail.com', 'Drizzle Environmental Society');
-    $mail->addAddress('yecdevnotification2@gmail.com');
+    $mail->Username = SERVER_EMAIL;
+    $mail->Password = SERVER_EMAIL_PW;
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
+    $mail->addAddress(NEWSLETTER_EMAIL);
     $mail->Subject = '[Yec Automated Newsletter Subscriber Request]';
     $mail->Body = '<!DOCTYPE html>';
     $mail->Body .='<html>';
@@ -57,16 +66,18 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $nwithinregion = $nwithinregionlock ? "TRUE" : "FALSE";
     $mail = new PHPMailer;
     $mail->isSMTP();
-    $mail->SMTPDebug = 0;
+    $mail->SMTPDebug = 2;
     $mail->Debugoutput = 'html';
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = "yecdevnotification2@gmail.com";
-    $mail->Password = "yec123!Q@W#E";
-    $mail->setFrom('yecdevnotification2@gmail.com', 'Drizzle Environmental Society');
-    $mail->addAddress('yecdevnotification2@gmail.com');
+    $mail->SMTPAutoTLS = false;
+    
+    $mail->Username = SERVER_EMAIL;
+    $mail->Password = SERVER_EMAIL_PW;
+    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
+    $mail->addAddress(INFO_EMAIL);
     $mail->Subject = '[Yec Automated Add School Request]';
     $mail->Body = '<!DOCTYPE html>';
     $mail->Body .='<html>';
@@ -109,7 +120,7 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $fname = "Test first";
     $lname = "Test last";
     $email = "test@test.test";
-    sendNewsletterEmail($fname,$lname,$email,$country,$state,$city); 
+    // sendNewsletterEmail($fname,$lname,$email,$country,$state,$city); 
     sendAddSchoolEmail($fname,$lname,$email,$country,$state,$city,$newschoolname, false);
 ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

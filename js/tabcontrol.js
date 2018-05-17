@@ -17,6 +17,7 @@ $(document).ready(function(){
 			getUserCountry();
 			getUserRankInCountry();
 		} else if ($(this)[0].id == "link_school_rank_in_city") {
+			getShoolScore();
 			getUserCity();
 			getSchoolRankInCity();
 		} else if ($(this)[0].id == "link_school_rank_in_state") {

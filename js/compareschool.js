@@ -1,4 +1,6 @@
+var school_score = 0;
 $(document).ready(function(){
+	getSchoolScore();
 	$("#button_refresh_school_rank_in_city").click(function(){
 		getSchoolRankInCity();
 		$(this).prop('disabled',true);
@@ -8,6 +10,26 @@ $(document).ready(function(){
 	});
 
 });
+
+function getSchoolScore() {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {QueryData: 'getSchoolScore'},
+		dataType: 'JSON',
+		success: function(data){
+			//console.log(data);
+			school_score = parseInt(data[0]['Score']);
+			//console.log(school_score);
+			display_school_score();
+			//console.log(data);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
 function getSchoolRankInCity(){
 	$.ajax({
 		type: "POST",

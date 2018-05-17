@@ -241,6 +241,7 @@ if ($_POST) {
 								<option value="8">Email</option>
 								<option value="9">Score</option>
 							</select>
+							<button onclick="ShowAllStudentRecords()"> Show all records </button>
 						</div>
 
 
@@ -309,20 +310,6 @@ if ($_POST) {
 								<input type="submit" class="btn btn-success btn-block" onclick="get_myNotification_table()" value="Post">
                                 <input type="button" class="btn btn-danger btn-block" onclick="deleteNotification()" value="Delete">
                             </form>
-                            <!--
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-							    Select image to upload:
-							    <input type="file" name="fileToUpload" id="fileToUpload">
-							    <input type="submit" value="Upload Image" name="submit">
-							</form>
-							-->
-<!-- 							<form action="upload2.php" method="post" enctype="multipart/form-data">
-								<input type="hidden" name="destination" value="<?php //echo $_SERVER["REQUEST_URI"]; ?>"/>
-							    <h3 style="color:white">Select image to upload:</h3>
-							    <input style="color:white" type="file" name="image"/>
-							    <input type="submit" name="submit" value="UPLOAD"/>
-							</form> -->
-<!-- image upload pop up -->
 			 <form  method="post" enctype="multipart/form-data">
                 <div class="modal-body">
 					<h3 class="uploadImageFont">Select image to upload:</h3>

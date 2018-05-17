@@ -41,6 +41,10 @@ function get_myaction_table() {
     });
 }
 
+/* The "hide submitted actions" checkbox is just a plain image. 
+This is the function called onclick so it behaves like a checkbox
+and the actions are hidden.
+*/
 function toggleSubmittedActions(img) {
     //user just checked box, hide submitted
     var src = img.getAttribute('src');
@@ -57,6 +61,8 @@ function toggleSubmittedActions(img) {
     get_myaction_table();
 }
 
+/* Get the list of useractions with no CompleteTime timestamps and appends
+them to the page. Also resets the action arrays. */
 function filter_my_action_table(data) {
     $("#my_action_content").empty();
     $("#score_content").empty();
@@ -107,6 +113,8 @@ function filter_my_action_table(data) {
     update_my_current_pick();
 }
 
+/* Get the entire list of useractions(disregarding timestamps) and appends
+them to the page. Also resets the action arrays. */
 function update_my_action_table(data) {
     $("#my_action_content").empty();
     $("#score_content").empty();
@@ -154,9 +162,7 @@ function update_my_action_table(data) {
             + '</div>'
             + '</div>'
         );
-        // userAction.css("color", "Grey");
         // if userAction has no timestamp (can be submitted), set it black
-        // unused for now
         if (action['CompleteTime'] == null)
         {
             userAction.css("color", "black");
@@ -175,6 +181,8 @@ function update_my_action_table(data) {
     update_my_current_pick();
 }
 
+/* Called every time list of useractions is updated. Disables the submitted
+useractions that are on timeout.*/
 function check_myAction_status() {
     $.ajax({
         type: "POST",
@@ -205,7 +213,7 @@ function finishAction(id) {
     }
 }
 
-/* Updates action in database to finished. */
+/* Updates action in backend database to finished. */
 function finish_my_action(actionId) {
     $.ajax({
         type: "POST",
@@ -224,6 +232,9 @@ function finish_my_action(actionId) {
         }
     });
 }
+
+/* Call this function to submit the currently selected actions & get points for them.
+After this all selected actions become disabled for a day.*/
 function submit_my_finish() {
     shareCounter=0;
     for(var i = 0; i < list.length; i++) {
@@ -231,6 +242,7 @@ function submit_my_finish() {
             finish_my_action(list[i]);
             myAction[list[i]] = 3;
             finishAction(list[i]);
+            getSchoolScore();
             getUserScore();
             get_myfinishi_table();
             shareCounter= shareCounter+1;
@@ -238,6 +250,8 @@ function submit_my_finish() {
     }
 }
 
+/* Get sum of points of useractions and updates UI on the popup 
+submission box to show sum of points.*/
 function subCheck(){
     calculatePoint();
     $("#score_content").append(
@@ -245,6 +259,7 @@ function subCheck(){
     );
 }
 
+/* Updates sum to current sum of all useractions' points. */
 function calculatePoint() {
     for(var i = 0; i < list.length; i++) {
         if(myAction[list[i]] == 2) {
@@ -300,18 +315,30 @@ function validateImage(filepicker) {
     }
 }
 
-// imgFile must be a file object from an input type='file' 
-// NOTE, This func creates a temp url reference to the 
-// img file on the system. File is never loaded into browser memory 
-// As such, if you clear cache or move the original file 
-// it won't work. But for larger files ~5MB this is much faster than the 
-// alternative which needs to parse & recreate the file. 
+/*
+Populates the image upload popup window with a image preview.
+
+imgFile must be a file object from an <input type='file'> 
+NOTE, This function creates a temporary URL reference to the 
+img file on the system; the file is never loaded into browser memory 
+As such, if you clear cache or move the original file the preview may 
+break. But for larger files (~4MB) this is much faster than the 
+alternative which needs to parse & recreate the file. */
 function generateImagePreview(imgFile) {
     var imagePreview = document.getElementById("imagePreview");
     imagePreview.hidden = false;
     imagePreview.src = URL.createObjectURL(imgFile);
 }
 
+/* Should only call this function after validateImage has checked 
+image file. Call this function to upload an image and a description to 
+querydata.php to handle. 
+NOTE: the image from an <input> needs to be scanned into the browser first,
+then an ajax call is sent to querydata to parse & decode the file. Then it's
+copied by value into the db. This could be made more efficient but I couldn't.
+To any future devs feel free to simplify this process from
+html(input)->js(FileReader)->ajax(FormData)->php(base64_decode)->mysql(longblob)
+*/
 function uploadImage() {
     var imageHtml = document.getElementById('imageToUpload').files[0];
     var descriptionContent = document.getElementById('imageDescription').value;
@@ -343,7 +370,6 @@ function uploadImage() {
             timeout: 60000
         });
     }
-    // var blob = imageHtml.slice(0, imageHtml.size);
     reader.readAsDataURL(imageHtml);
-    // reader.readAsBinaryString(imageHtml);
+    // reader.readAsBinaryString(imageHtml); doesnt decode properly on php side
 }

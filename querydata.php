@@ -1,9 +1,15 @@
 <?php session_start();
 require_once('config.php');
-/*
-if (!isset($_SESSION['Userid']))
-	header('Location: /login.php');
- */
+/* This file is used by many .js files to get/set data from the database. 
+Do not call any of the functions here directly, send an ajax call with Querydata set as one of the cases, eg 
+    $.ajax({
+        type: "POST",
+        url: "/querydata.php",
+        data: {
+            QueryData: 'getAllSchoolsByCity'
+        },
+
+*/
 if ($_POST) {
 	$query = $_POST['QueryData'];
 
@@ -81,6 +87,9 @@ if ($_POST) {
 		case 'getUserCity':
 			getUserCity();
 			break;
+		case 'getSchoolScore':
+			getSchoolScore();
+			break;
 		case 'getSchoolRankInCity':
 			getSchoolRankInCity();
 			break;
@@ -110,6 +119,9 @@ if ($_POST) {
 			break;
 		case 'getAllStudentScore':
 			getAllStudentScore();
+			break;
+		case 'getAllStudentInfo':
+			getAllStudentInfo();
 			break;
 		case 'getUserState':
 			getUserState();
@@ -600,7 +612,7 @@ function getUserScore() {
 		JOIN Accomplishment ac ON ac.UserID=u.ID
 		JOIN Action a ON ac.ActionID=a.ID
 		WHERE u.ID=:theUserId ");
-	$stmt->bindParam("theUserId", $_SESSION['Userid']);
+	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
 	$stmt->execute();
 	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	echo json_encode($result);
@@ -753,6 +765,30 @@ function getUserCity(){
 	FROM School s
 		JOIN User u ON u.SchoolID=s.ID
 	WHERE u.ID=:theUserId
+	");
+	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo json_encode($result);
+}
+
+function getSchoolScore() {
+	$conn = get_db_connection();
+
+	$stmt = $conn->prepare("
+		SELECT cs.SchoolID, SUM(a.Points) AS Score
+		FROM (
+			SELECT u.ID, u.NickName, u.SchoolID, s.City, s.SchoolName
+			FROM School s
+			JOIN User u ON u.SchoolID=s.ID
+			WHERE SchoolID = (
+			SELECT SchoolID
+			FROM School s
+			JOIN User u ON u.SchoolID=s.ID
+			WHERE u.ID=:theUserId)
+		) AS cs
+		JOIN Accomplishment ac ON ac.UserID=cs.ID
+		JOIN Action a ON ac.ActionID=a.ID
 	");
 	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
 	$stmt->execute();
@@ -937,6 +973,29 @@ function getAllStudentScore() {
 		JOIN Action a ON ac.ActionID=a.ID
 		GROUP BY UserID
 		ORDER BY Score DESC
+	");
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo json_encode($result);
+
+}
+
+function getAllStudentInfo() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		SELECT  s.Country,
+				s.StateProvince,
+				s.City,
+				s.SchoolName,
+				u.ID AS UserID,
+				u.FirstName,
+				u.LastName,
+				u.NickName,
+				u.Email
+		FROM School s
+		JOIN User u ON u.SchoolID=s.ID
+		GROUP BY UserID
+		ORDER by userID DESC
 	");
 	$stmt->execute();
 	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1232,14 +1291,13 @@ function deleteAdmin() {
 	}
 }
 
-/* This thing was driving me insane. I love you drew010 at https://stackoverflow.com/questions/11511511/how-to-save-a-png-image-server-side-from-a-base64-data-string*/
+/* Only call this when image uploaded via ajax. Inserts new image with current timestamp into images table. Decodes the image from a base64 url(the ajax side will need to encode an image as this to work) into a file/longblob.*/
+/* Special thanks to drew010 at https://stackoverflow.com/questions/11511511/how-to-save-a-png-image-server-side-from-a-base64-data-string*/
 function saveUploadedImage() 
 {
 	$conn = get_db_connection();
 	if ($conn) 
 	{
-		// $img = base64_decode();
-		// $img = base64_decode(preg_replace($_POST["image"], '', $img));
 		$data = $_POST["image"];
 		list($type, $data) = explode(';', $data);
 		list(, $data)      = explode(',', $data);
@@ -1247,13 +1305,11 @@ function saveUploadedImage()
 
 		$stmt = $conn->prepare("INSERT into Images (image, created, userID, description) VALUES (:image, NOW(), :Userid, :description)");
 		$stmt->bindValue("image", $data);
-		// $stmt->bindParam("dateSubmitted", date("Y-m-d H:i:s"));
 		$stmt->bindParam("Userid", $_SESSION['Userid']);
 		$stmt->bindParam("description", $_POST["description"]);
 		$result = $stmt->execute();
 		if ($result) 
 		{
-			// $response = array("ImageUploadResult"=>"Success");
 			echo json_encode($result);
 		} else {
 			$response = array("ImageUploadResult"=>"Fail");
