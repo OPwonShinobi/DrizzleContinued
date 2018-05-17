@@ -1,7 +1,8 @@
 /*
-Original code for NodeJS from 
+A profanity filter, using a .json file as a dictionary. 
+Original code was written for NodeJS from 
 https://github.com/web-mech/badwords
-Rewritten for mostly VanillaJS & jQuery
+Rewritten (with reduced functionality) by Alex Xia to be used with jQuery
 */
 var baseList = {};
 var localList;
@@ -9,16 +10,16 @@ $.getJSON('$2y$12$ZdrjTKpRo0UnQ6wyYBYZmOo5dW5ZZQZJTTfd4M9ulvyWt57J3fLMi.json', f
     localList = data['words'];
     console.log("word bank loaded");
 });
+
+/* Filter class, use like this:
+    var filter = new Filter();
+    if(filter.isProfane( string ))
+    	....
+
+*/
 var Filter = (function() {
   /**
-   * Filter constructor.
-   * @constructor
-   * @param {object} options - Filter instance options
-   * @param {boolean} options.emptyList - Instantiate filter with no blacklist
-   * @param {array} options.list - Instantiate filter with custom list
-   * @param {string} options.placeHolder - Character used to replace profane words.
-   * @param {string} options.regex - Regular expression used to sanitize words before comparing them to blacklist.
-   * @param {string} options.replaceRegex - Regular expression used to replace profane words with placeHolder.
+   * Profanity Filter constructor, same as original code from github.
    */
   function Filter(options) {
     options = options || {};
@@ -29,11 +30,13 @@ var Filter = (function() {
     this.replaceRegex = options.replaceRegex || /\w/g;
   }
 
-  /*
-  Escapes those rid of those pesky *$()/\ in reg expressions
-  Special Thanks to StackOverflow user Mathias Bynens for answering
-  https://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-  */
+  /**
+   * A private function. Escapes *$()/\ in reg expressions because the dictionary contains
+   * them in certain words like "@$$" 
+   * @param {string} text : the word from the dictionary
+   * Special Thanks to StackOverflow user Mathias Bynens for answering
+   * https://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+   */
   function escapeRegExp(text) {
       return text.replace(/[-[\]{}()*+?.,\\/^$|#\s]/g, '\\$&');
   }

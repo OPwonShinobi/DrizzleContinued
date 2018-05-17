@@ -1,7 +1,7 @@
 <?php
 session_start();
-
 require_once('config.php');
+/*This page is used by welcome.php for checking user input. It's the only file besides querydata that runs sql, mainly for things like checking if email is taken or adding a new user. */
 
 if(isset($_GET['success']) && $_GET['success'] == true) {
     header("Location: welcome.php");
@@ -275,14 +275,6 @@ if ($_POST) {
         }
         // outside of region lock or school wasnt added in db yet
         if( !$withinRegion ) {
-            // $stmt = $conn->prepare("INSERT INTO OutsideBC(FirstName, LastName, Country, State, City, Email) VALUES (:firstName, :lastName, :country, :state, :city, :theEmail)");
-            // $stmt->bindParam(":theEmail", $email);
-            // $stmt->bindParam(":firstName", $firstname);
-            // $stmt->bindParam(":lastName", $lastname);
-            // $stmt->bindParam(":city", $city);
-            // $stmt->bindParam(":state", $state);
-            // $stmt->bindParam(":country", $country);
-            // $stmt->execute();
             header('Location: /welcomeinfo.php');
         }
     }
