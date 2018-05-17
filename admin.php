@@ -241,6 +241,7 @@ if ($_POST) {
 								<option value="8">Email</option>
 								<option value="9">Score</option>
 							</select>
+							<button onclick="ShowAllStudentRecords()"> Show all records </button>
 						</div>
 
 

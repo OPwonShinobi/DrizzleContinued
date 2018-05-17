@@ -111,6 +111,9 @@ if ($_POST) {
 		case 'getAllStudentScore':
 			getAllStudentScore();
 			break;
+		case 'getAllStudentInfo':
+			getAllStudentInfo();
+			break;
 		case 'getUserState':
 			getUserState();
 			break;
@@ -937,6 +940,29 @@ function getAllStudentScore() {
 		JOIN Action a ON ac.ActionID=a.ID
 		GROUP BY UserID
 		ORDER BY Score DESC
+	");
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo json_encode($result);
+
+}
+
+function getAllStudentInfo() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("
+		SELECT  s.Country,
+				s.StateProvince,
+				s.City,
+				s.SchoolName,
+				u.ID AS UserID,
+				u.FirstName,
+				u.LastName,
+				u.NickName,
+				u.Email
+		FROM School s
+		JOIN User u ON u.SchoolID=s.ID
+		GROUP BY UserID
+		ORDER by userID DESC
 	");
 	$stmt->execute();
 	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
