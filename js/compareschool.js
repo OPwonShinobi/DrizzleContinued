@@ -18,7 +18,7 @@ function getSchoolScore() {
 		data: {QueryData: 'getSchoolScore'},
 		dataType: 'JSON',
 		success: function(data){
-			//console.log(data);
+			console.log(data);
 			school_score = parseInt(data[0]['Score']);
 			//console.log(school_score);
 			display_school_score();
