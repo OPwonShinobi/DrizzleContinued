@@ -1,4 +1,4 @@
-
+var actionCompleted = 0;
 $(document).ready(function(){
   get_myfinishi_table();
   display_myNotification_table();
@@ -18,7 +18,7 @@ function display_score() {
   $(".myScore").append(
     user_score
   );
-    $("#currentS").empty();
+  $("#currentS").empty();
   $("#currentS").append(
       user_score
   );
@@ -32,6 +32,19 @@ function display_school_score() {
   );
 }
 
+function get_action_completed(data) {
+  actionCompleted = 0;
+  for (action of data) {
+    actionCompleted += 1;
+  }
+}
+
+function display_completed() {
+  $(".challengeCompleted").empty();
+  //$(".challengeCompleted").text(actionCompleted);
+  $(".challengeCompleted").append(actionCompleted);
+}
+
 function get_myfinishi_table() {
 	$.ajax({
 		type: "POST",
@@ -41,6 +54,9 @@ function get_myfinishi_table() {
 		success: function(data){
 			//console.log(data);
 			update_my_complishment_table(data);
+      get_action_completed(data);
+      //console.log("Completed: " + actionCompleted);
+      display_completed();
 		},
 		error: function(data){
 			//console.log(data);

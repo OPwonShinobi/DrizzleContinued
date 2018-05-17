@@ -185,7 +185,7 @@ if (!isset($_SESSION['Userid']))
               <h3>Challenges Completed</h3>
             </div>
             <div class="col-lg-2 pointsum newpoints">
-              <h3 class="myActions label label-success">
+              <h3 class="challengeCompleted label label-success">
               </h3>
             </div>
           </div>
