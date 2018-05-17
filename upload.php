@@ -1,5 +1,6 @@
 <?php
 define ('SITE_ROOT', realpath(dirname(__FILE__)));
+/* This file isn't used. It can use POST to upload & save an image to a folder instead of to a mysql db. To future devs feel free to use this if the saveUploadedImage function in querydata fails. */
 
 $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);

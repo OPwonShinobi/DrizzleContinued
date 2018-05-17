@@ -22,25 +22,15 @@ CREATE TABLE IF NOT EXISTS School(
 CREATE TABLE IF NOT EXISTS User(
 	ID            INTEGER(8)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Password      VARCHAR(256) NOT NULL,
-	FirstName     VARCHAR(30)  NOT NULL,
-	LastName      VARCHAR(30)  NOT NULL,
-	NickName      VARCHAR(20)  NOT NULL DEFAULT 'anonymous',
+	FirstName     VARCHAR(25)  NOT NULL,
+	LastName      VARCHAR(25)  NOT NULL,
+	NickName      VARCHAR(60)  NOT NULL DEFAULT 'anonymous',
 	PhotoId       INTEGER(8)   NOT NULL DEFAULT 0,
 	SchoolID      INTEGER(8)   NOT NULL,
 	Email
 	  VARCHAR(64)  NOT NULL UNIQUE,
 	Authorization INTEGER(1)   NOT NULL DEFAULT 0,
 	FOREIGN KEY(SchoolID) REFERENCES School(ID)
-);
-
-CREATE TABLE IF NOT EXISTS OutsideBC (
-	ID            INTEGER(8)   NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	FirstName     VARCHAR(30)  NOT NULL,
-	LastName      VARCHAR(30)  NOT NULL,
-	Country       VARCHAR(40)  NOT NULL,
-	State         VARCHAR(40)  NOT NULL,
-	City          VARCHAR(60)  NOT NULL,
-	Email         VARCHAR(60)  NOT NULL UNIQUE
 );
 
 -- Lists categories of actions user can select

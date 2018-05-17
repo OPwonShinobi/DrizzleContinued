@@ -1,4 +1,6 @@
 <?php
+/* This file isn't used. It can save uploaded images to a mysql db as a longblob using POST, but has an upload limit of ~2MB. Anything bigger will be null when sent over POST. The site currently runs off ajax using the saveUploadedImage function in querydata.php. To future devs feel free to use this if saveUploadedImage fails. */
+
 if(isset($_POST["submit"])){
     $check = false;
     echo "<script>console.log('here is ".filesize($_FILES["image"]["tmp_name"])."')</script>";

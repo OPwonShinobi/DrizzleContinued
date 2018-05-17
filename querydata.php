@@ -1,6 +1,15 @@
 <?php session_start();
+/* This file is used by many .js files to get/set data from the database. 
+Do not call any of the functions here directly, send an ajax call with Querydata set as one of the cases, eg 
+    $.ajax({
+        type: "POST",
+        url: "/querydata.php",
+        data: {
+            QueryData: 'getAllSchoolsByCity'
+        },
+
+*/
 require_once('config.php');
-/*
 if (!isset($_SESSION['Userid']))
 	header('Location: /login.php');
  */
@@ -1232,14 +1241,13 @@ function deleteAdmin() {
 	}
 }
 
-/* This thing was driving me insane. I love you drew010 at https://stackoverflow.com/questions/11511511/how-to-save-a-png-image-server-side-from-a-base64-data-string*/
+/* Only call this when image uploaded via ajax. Inserts new image with current timestamp into images table. Decodes the image from a base64 url(the ajax side will need to encode an image as this to work) into a file/longblob.*/
+/* Special thanks to drew010 at https://stackoverflow.com/questions/11511511/how-to-save-a-png-image-server-side-from-a-base64-data-string*/
 function saveUploadedImage() 
 {
 	$conn = get_db_connection();
 	if ($conn) 
 	{
-		// $img = base64_decode();
-		// $img = base64_decode(preg_replace($_POST["image"], '', $img));
 		$data = $_POST["image"];
 		list($type, $data) = explode(';', $data);
 		list(, $data)      = explode(',', $data);
@@ -1247,13 +1255,11 @@ function saveUploadedImage()
 
 		$stmt = $conn->prepare("INSERT into Images (image, created, userID, description) VALUES (:image, NOW(), :Userid, :description)");
 		$stmt->bindValue("image", $data);
-		// $stmt->bindParam("dateSubmitted", date("Y-m-d H:i:s"));
 		$stmt->bindParam("Userid", $_SESSION['Userid']);
 		$stmt->bindParam("description", $_POST["description"]);
 		$result = $stmt->execute();
 		if ($result) 
 		{
-			// $response = array("ImageUploadResult"=>"Success");
 			echo json_encode($result);
 		} else {
 			$response = array("ImageUploadResult"=>"Fail");
