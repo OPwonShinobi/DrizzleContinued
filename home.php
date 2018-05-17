@@ -169,7 +169,7 @@ if (!isset($_SESSION['Userid']))
 
   <!-- Column 2 my actions -->
 	<div class="col-lg-6">
-		<div class="panel panel-default">
+		<div class="panel panel-default panel-right-mid-bottom">
 			<div class="panel-heading">
 				<h2 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> My Summary</h2>
 			</div>
@@ -219,7 +219,7 @@ if (!isset($_SESSION['Userid']))
               <h3>School Points</h3>
             </div>
             <div class="col-lg-2 pointsum newpoints">
-              <h3 class="label label-success">
+              <h3 class="schoolScore label label-success">
               </h3>
             </div>
           </div>
@@ -248,10 +248,10 @@ if (!isset($_SESSION['Userid']))
         $page = curl_exec($curl);
         curl_close($curl);
         $doc = new \DOMDocument();
-        //libxml_use_internal_errors(true);
-        //$doc->strictErrorChecking = FALSE;
+        libxml_use_internal_errors(true);
+        $doc->strictErrorChecking = FALSE;
         $doc->loadHTML($page);
-        //libxml_clear_errors();
+        libxml_clear_errors();
 
         $xpath = new \DOMXPath($doc);
 
@@ -282,9 +282,6 @@ if (!isset($_SESSION['Userid']))
           echo '</div>';
         }
         ?>
-
-
-
 			</div>
 		</div>
 	</div>

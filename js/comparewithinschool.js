@@ -20,7 +20,7 @@ function getUserScore() {
 		data: {QueryData: 'getUserScore'},
 		dataType: 'JSON',
 		success: function(data){
-			//console.log(data);
+			console.log(data);
 			user_score = parseInt(data[0]['Score']);
 			//console.log(user_score);
 			display_score();

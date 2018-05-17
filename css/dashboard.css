@@ -31,14 +31,17 @@ p.challenge_name{
 }
 
 .slideimg{
-  margin: auto;
-  height: 250px;
+  display: block;
+  margin: 0 auto;
+  min-height: 250px;
+  max-height: 250px;
 }
 
 .prize{
   display: block;
   margin: 0 auto;
-  height: 200px;
+  min-height: 250px;
+  max-height: 250px;
 }
 
 .prizedesc{
@@ -159,7 +162,7 @@ and (max-width: 374px) {
 }
 
 .panel-news{
-  max-height: 250px;
+  max-height: 16em;
   overflow-y: scroll;
 }
 
@@ -191,4 +194,7 @@ and (max-width: 374px) {
 
 .newstitle{
   font-size: 3em;
+}
+.panel-right-mid-bottom{
+  padding-bottom: 3.2em;
 }
