@@ -211,10 +211,6 @@ if ($_POST) {
             <div id = "row_user_allAction" class="row tab-pane fade">
                 <?php include 'dashboard-allactions.php' ?>
             </div>
-            <!-- row_user_compare_city -->
-            <!-- <div id = "row_user_compare_city" class="row tab-pane fade">
-                <?php// include 'dashboard-comparecity.php' ?>
-            </div> -->
             <!-- row_user_compare_within_school-->
             <div id = "row_user_compare_within_school" class="row tab-pane fade">
                 <?php include 'dashboard-comparewithinschool.php' ?>
