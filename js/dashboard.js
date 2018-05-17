@@ -50,10 +50,11 @@ function get_myfinishi_table() {
 
 function update_my_complishment_table(data) {
     var counter = 0;
-  $("finish_history").empty();
+    console.log(data);
+  $("#finish_history").empty();
   for (action of data) {
       if(counter<=15) {
-          $("finish_history").append('<tr>'
+          $("#finish_history").append('<tr>'
               + '<td class="col-xs-5">' + action["Description"] + '</td>'
               + '<td class="col-xs-5">' + action["CompleteTime"] + '</td>'
               + '</tr>'
