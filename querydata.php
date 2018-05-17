@@ -1,4 +1,5 @@
 <?php session_start();
+require_once('config.php');
 /* This file is used by many .js files to get/set data from the database. 
 Do not call any of the functions here directly, send an ajax call with Querydata set as one of the cases, eg 
     $.ajax({
@@ -9,10 +10,6 @@ Do not call any of the functions here directly, send an ajax call with Querydata
         },
 
 */
-require_once('config.php');
-if (!isset($_SESSION['Userid']))
-	header('Location: /login.php');
- */
 if ($_POST) {
 	$query = $_POST['QueryData'];
 
