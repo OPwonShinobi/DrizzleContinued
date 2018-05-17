@@ -87,6 +87,9 @@ if ($_POST) {
 		case 'getUserCity':
 			getUserCity();
 			break;
+		case 'getSchoolScore':
+			getSchoolScore();
+			break;
 		case 'getSchoolRankInCity':
 			getSchoolRankInCity();
 			break;
@@ -609,7 +612,7 @@ function getUserScore() {
 		JOIN Accomplishment ac ON ac.UserID=u.ID
 		JOIN Action a ON ac.ActionID=a.ID
 		WHERE u.ID=:theUserId ");
-	$stmt->bindParam("theUserId", $_SESSION['Userid']);
+	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
 	$stmt->execute();
 	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	echo json_encode($result);
@@ -762,6 +765,30 @@ function getUserCity(){
 	FROM School s
 		JOIN User u ON u.SchoolID=s.ID
 	WHERE u.ID=:theUserId
+	");
+	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
+	$stmt->execute();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo json_encode($result);
+}
+
+function getSchoolScore() {
+	$conn = get_db_connection();
+
+	$stmt = $conn->prepare("
+		SELECT cs.SchoolID, SUM(a.Points) AS Score
+		FROM (
+			SELECT u.ID, u.NickName, u.SchoolID, s.City, s.SchoolName
+			FROM School s
+			JOIN User u ON u.SchoolID=s.ID
+			WHERE SchoolID = (
+			SELECT SchoolID
+			FROM School s
+			JOIN User u ON u.SchoolID=s.ID
+			WHERE u.ID=:theUserId)
+		) AS cs
+		JOIN Accomplishment ac ON ac.UserID=cs.ID
+		JOIN Action a ON ac.ActionID=a.ID
 	");
 	$stmt->bindParam(":theUserId", $_SESSION['Userid']);
 	$stmt->execute();

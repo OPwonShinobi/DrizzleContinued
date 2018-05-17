@@ -24,6 +24,14 @@ function display_score() {
   );
 }
 
+function display_school_score() {
+  $(".schoolScore").empty();
+
+  $(".schoolScore").append(
+    school_score
+  );
+}
+
 function get_myfinishi_table() {
 	$.ajax({
 		type: "POST",
