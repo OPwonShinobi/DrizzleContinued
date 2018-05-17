@@ -219,7 +219,7 @@ if (!isset($_SESSION['Userid']))
               <h3>School Points</h3>
             </div>
             <div class="col-lg-2 pointsum newpoints">
-              <h3 class="label label-success">
+              <h3 class="schoolScore label label-success">
               </h3>
             </div>
           </div>

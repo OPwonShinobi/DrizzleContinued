@@ -231,6 +231,7 @@ function submit_my_finish() {
             finish_my_action(list[i]);
             myAction[list[i]] = 3;
             finishAction(list[i]);
+            getSchoolScore();
             getUserScore();
             get_myfinishi_table();
             shareCounter= shareCounter+1;
