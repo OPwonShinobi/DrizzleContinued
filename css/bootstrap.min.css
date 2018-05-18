@@ -19,3 +19,13 @@
 .panel {
 	margin: 0 5px 20px 10px;
 }
+
+/* for top navbar */
+.navbar-inverse {
+	background-color: #3b3b42; /* change color here */
+}
+
+/* for mobile collapse menu */
+.navbar-inverse .navbar-collapse {
+	background-color: #3b3b42; /* change color here */
+}
