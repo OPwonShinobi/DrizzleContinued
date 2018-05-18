@@ -2,10 +2,6 @@
 if (!isset($_SESSION['Userid']))
     header('Location: login.php');
 ?>
-<script src="js/badwords.js"></script>
-<script src="js/dashboard.js"></script>
-<script src="js/myaction.js"></script>
-
 <div class="row">
 
   

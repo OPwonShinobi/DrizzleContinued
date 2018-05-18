@@ -11,7 +11,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
-        h1, p{
+        h1, p, span{
             color: white;
             text-align: center;
         }
@@ -43,6 +43,9 @@
         <div class="col-md-12">
             <div class="wrap">
                 <h1>Welcome to the Youth Environmental Challenge!</h1>
+                <span>Unfortunately, your region is not currently available.</span>
+                <br>
+                <span>But you can still participate in the YEC challenge.</span>
                 <p>Click the button below to get your YEC Participant Package</p>
                 <br />
                 <a href="https://www.drizzlesociety.org/s/YECParticipantPackage2016.pdf" class="btn btn-default download"><b><big>Download</big></b><br/><small>YEC Participant Package</small></a>
