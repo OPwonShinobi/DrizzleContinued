@@ -15,10 +15,19 @@ function get_num_action() {
 function display_score() {
   $(".myScore").empty();
 
+  if (!user_score)
+  {
+  $(".myScore").append(0);
+  }
+  else
+  {
   $(".myScore").append(
     user_score
   );
+  }
+
   $("#currentS").empty();
+  
   $("#currentS").append(
       user_score
   );
