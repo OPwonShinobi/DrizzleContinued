@@ -19,7 +19,9 @@ function getSchoolScore() {
 		dataType: 'JSON',
 		success: function(data){
 			console.log(data);
-			school_score = parseInt(data[0]['Score']);
+			// only parse if json data defined, previously set school_score to 0
+			if (data[0])
+				school_score = parseInt(data[0]['Score']);
 			//console.log(school_score);
 			display_school_score();
 			//console.log(data);
