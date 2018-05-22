@@ -113,7 +113,7 @@ function update_action_pickup_table(data) {
 			categoryBody = $(
 				'<div style="min-width:120%" id="' + categoryID + '" class="well well-sm col-sm-12">'	
 					+ '<div class="col-sm-2">'
-						+ '<img src="/images/categories/' + action['Category'] + '.png">'
+						+ '<img style="max-width:128px" src="/images/categories/' + action['Category'] + '.png">'
 					+ '</div>' 	
 					+ '<div class="col-sm-8">'
 						+ '<h3 >' + action['Category'] + '</h3><br>'
