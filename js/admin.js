@@ -148,6 +148,13 @@ $(document).ready(function(){
 		request_modify_action();
 	});
 
+	$("#button_delete_action").click(function(){
+		var	actionDescription = $("#input_edit_action_description").val();
+		//popup window with OK = true, Cancel = false
+		if (confirm("Are you sure you want to delete: " + actionDescription))
+			request_delete_action();
+	});
+
 	$(".modify-action-fields").on('input', function(){
 		//console.log("changed");
 		if(validate_edit_action_form()) {
@@ -624,6 +631,28 @@ function request_add_category() {
 
 }
 
+function request_delete_action() {
+	modifyId = $("#edit_action_id").val();
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'deleteAction',
+			ActionId: modifyId,
+		},
+		dataType: 'JSON',
+		success: function(data){
+			console.log(data);
+			if (data != "undefined" && data != null && data.Result=="Success") {
+				refresh_action_table();
+			}
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
 function request_modify_action() {
 	modifyId = $("#edit_action_id").val();
 	modifyDescription = $("#input_edit_action_description").val();
@@ -653,9 +682,6 @@ function request_modify_action() {
 						break;
 					}
 				}
-				// data retrieved from server
-				// Use the data to change the elements here
-
 				update_action_table(actions);
 			}
 		},

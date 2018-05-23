@@ -557,8 +557,15 @@ if ($_POST) {
 									</form>
 								</div>
 								<div class="modal-footer">
-									<button type="submit" id="button_edit_action_confirm" class="btn btn-default" data-dismiss="modal" disabled>Modify</button>
-									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+									<div class="row">
+										<div class="col-sm-2">
+											<button id="button_delete_action" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+										</div>
+										<div class="col-sm-10">
+											<button type="submit" id="button_edit_action_confirm" class="btn btn-default" data-dismiss="modal" disabled>Modify</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>	
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

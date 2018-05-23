@@ -117,6 +117,9 @@ if ($_POST) {
 		case 'modifyAction':
 			modifyAction();
 			break;
+		case 'deleteAction':
+			deleteAction();
+			break;
 		case 'toggleAction':
 			toggleAction();
 			break;
@@ -247,7 +250,7 @@ function getMyActionsWithUserIndication() {
 }
 
 
-function  getAllActionsWithUserIndication() {
+function getAllActionsWithUserIndication() {
 	$conn = get_db_connection();
 	if ($conn) {
 		//like getMyActionsWithUserIndication, refreshes useraction date has passed
@@ -266,7 +269,7 @@ function  getAllActionsWithUserIndication() {
 				SELECT * FROM UserAction WHERE UserID=:theUser
 			) ua ON a.ID=ua.ActionID
 			LEFT JOIN ActionCategory ac on a.Category = ac.CategoryName
-			WHERE a.Active=TRUE;
+			WHERE a.Active=TRUE AND a.Category != 'Default';
 		");
 		$stmt->bindParam(":theUser", $_SESSION['Userid']);
 		$stmt->execute();
@@ -519,6 +522,18 @@ function modifyAction() {
 		echo json_encode($response);
 	}
 }
+
+function deleteAction() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("DELETE FROM Action WHERE ID = :theActionId");
+	$stmt->bindParam(":theActionId", $_POST['ActionId']);
+	$result = $stmt->execute();
+	if ($result) {
+		$response = array("Result"=>"Success");
+		echo json_encode($response);
+	}
+}
+
 
 function toggleAction() {
 	$conn = get_db_connection();
