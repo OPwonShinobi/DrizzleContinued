@@ -6,8 +6,11 @@ function validateregistration() {
     var special_char = false;
     $('form').find('.errormessage').each(function() {
         $(this).css("display", "none");
-
     });
+    if ( !$("#NewSchoolName").val()) {
+        $("#NewSchoolName").val(" ");
+    }
+        
     /*empty field*/
     $('form').find('input[type!="hidden"]' ).each(function() {
         $(this).css("borderColor", "#FFFFFF");

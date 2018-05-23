@@ -137,6 +137,9 @@ CREATE TABLE IF NOT EXISTS RegionLock
 -- I'm assuming the local region lock will always be on 
 INSERT INTO RegionLock VALUES ('Canada', 'British Columbia');
 
+-- Do not change this category
+INSERT INTO ActionCategory VALUES ('Default', 'This is the default category');
+-- Change these category flavour text 
 INSERT INTO ActionCategory VALUES ('Activism', 'You do stuff, usually around the community');
 INSERT INTO ActionCategory VALUES ('Transportation', 'Getting around comes around');
 INSERT INTO ActionCategory VALUES ('Energy', 'Conservation of energy is not only a law but is encouraged');
@@ -165,9 +168,7 @@ INSERT INTO Action VALUES (NULL, 'Practiced \"leave no trace\" when camping', 3,
 INSERT INTO Action VALUES (NULL, 'Donate used items to a charity', 3,CURRENT_TIMESTAMP, TRUE,'Reduce Reuse Recycle');
 INSERT INTO Action VALUES (NULL, 'Retweeted a Drizzle tweet', 1,CURRENT_TIMESTAMP, TRUE,'Social Media');
 INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIMESTAMP, TRUE,'Social Media');
--- INSERT INTO Action VALUES (NULL, 'An obsolete action', 1,CURRENT_TIMESTAMP, FALSE,'Default');
 
 -- Insert the super admin account
--- This account is recommend to be used to add other admins only
-INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
-INSERT INTO ActionCategory VALUES ('Default', 'This is default category');
+-- This account is recommend to be used to add other admins only, pw hash = yec123!Q@W#E
+INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$5ko9DcW7k3JooQneLRmq2uAHbZUDXEk1gN8xGOTybFjIERK26T.tC', 'yec@drizzlesociety.org', 9);

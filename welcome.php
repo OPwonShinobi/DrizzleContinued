@@ -47,7 +47,7 @@ session_start();
                 <h1>Welcome to the <br />Youth Environmental Challenge</h1>
                 <p>Your account has been successfully created! An email will be sent to you to as confirmation of your registration.</p>
                 <br />
-                <p>You will be redirected to the Login page in 5 seconds, or click <a href='/login.php'>here</a> if not redirected.</p>
+                <p>You will be redirected to the Login page in 5 seconds, or click <a href='/index.php'>here</a> if not redirected.</p>
             </div>
 
         </div>

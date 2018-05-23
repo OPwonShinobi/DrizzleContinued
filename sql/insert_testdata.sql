@@ -1,7 +1,5 @@
+-- don't run this on the hosted site
 USE yecdata;
-
--- Insert test admin data
-INSERT INTO Administrator VALUES (NULL, 'admin001', '$2y$12$ZdrjTKpRo0UnQ6wyYBYZmOo5dW5ZZQZJTTfd4M9ulvyWt57J3fLMi', 'admin001@gmail.com', 0);
 
 -- Insert test school data
 INSERT INTO School VALUES(NULL,'British Columbia Institute of Technology','Canada','British Columbia','Burnaby');
@@ -210,11 +208,9 @@ INSERT INTO Accomplishment VALUES(37, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP 
 INSERT INTO Accomplishment VALUES(38, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 365) DAY + INTERVAL FLOOR(RAND() * 30000) SECOND);
 INSERT INTO Accomplishment VALUES(39, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 365) DAY + INTERVAL FLOOR(RAND() * 30000) SECOND);
 INSERT INTO Accomplishment VALUES(40, FLOOR(RAND() * 18) + 1, CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 365) DAY + INTERVAL FLOOR(RAND() * 30000) SECOND);
-
+-- pw hash = 1234567890									
 UPDATE `yecdata`.`Administrator` SET `Password` = '$2y$12$R2hkDmGqPjG/c5VC1Xd9cus0awuokQCszXdnWimtYRiT2gdrBjnQi', `Email` = 'admin@123' WHERE (`ID` = '1');
 -- INSERT INTO ActionCategory VALUES ('Default', 'This is default category');
 
 INSERT INTO User(Password, Email, FirstName, LastName, NickName, SchoolID) VALUES ('$2y$12$5ko9DcW7k3JooQneLRmq2uAHbZUDXEk1gN8xGOTybFjIERK26T.tC', 'xiaalex1998@gmail.com', 'alex', 'xia', 'alex xia',
 1); 
-
-INSERT INTO RegionLock VALUES ('United States', 'ALL');

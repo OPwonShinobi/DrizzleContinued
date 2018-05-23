@@ -229,7 +229,7 @@ require_once('config.php');
                                 }
                             </script>
                         </select>
-                        <input type="text" id="NewSchoolName" class="form-control" name="NewSchoolName" placeholder="Enter your school's full name here" style="display: none" value="&nbsp">
+                        <input type="text" id="NewSchoolName" class="form-control" name="NewSchoolName" placeholder="Enter your school's full name here" style="display: none">
                         <!-- legacy code, this p not needed but will break stuff if left out -->
                         <p id="NewSchoolNameerror"></p>
                     <br/>
