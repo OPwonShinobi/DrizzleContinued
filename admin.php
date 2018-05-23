@@ -212,6 +212,7 @@ if ($_POST) {
 							<label class="h2"> All actions</label>
 							<button id="button_add_action" class="btn btn-danger">Add action</button>
 							<button id="button_add_category" class="btn btn-danger">Add category</button>
+							<button id="button_delete_category" class="btn btn-danger">Delete category</button>
 						</div>
 						<div class="col-xs-12">
 							<table  class="table">
@@ -644,33 +645,57 @@ if ($_POST) {
 					</div>
 
 					<div id="popup_modal_add_category" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+
+							<!--Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4>Add new Category</h4>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label>Category description</label>
+											<textarea id="input_category_description" rows="10" class="form-control"></textarea>
+										</div>
+										<div class="form-group">
+											<label>Category name</label>
+											<input id="input_category_name" class="form-control">
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" id="button_add_category_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				<div id="popup_modal_delete_category" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 
 						<!--Modal content-->
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4>Add new Category</h4>
+								<h4>Remove a category</h4>
 							</div>
 							<div class="modal-body">
 								<form>
 									<div class="form-group">
-										<label>Category description</label>
-										<textarea id="input_category_description" rows="10" class="form-control"></textarea>
-									</div>
-									<div class="form-group">
-										<label>Category name</label>
-										<input id="input_category_name" class="form-control">
+										<select id="delete_category_list"></select>
 									</div>
 								</form>
 							</div>
 							<div class="modal-footer">
-								<button type="submit" id="button_add_category_confirm" class="btn btn-default" data-dismiss="modal">Add</button>
+								<button type="submit" id="button_delete_category_confirm" class="btn btn-default" data-dismiss="modal">Delete</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							</div>
 						</div>
 					</div>
-				</div>
+
 				<!-- /.container-fluid -->
 			</div>
 			<!-- /#page-wrapper -->

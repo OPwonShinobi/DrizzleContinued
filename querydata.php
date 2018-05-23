@@ -108,6 +108,9 @@ if ($_POST) {
 		case 'addCategory':
 			addCategory();
 			break;
+		case 'deleteCategory':
+			deleteCategory();
+			break;	
 		case 'getAllCategory':
 			getAllCategory();
 			break;
@@ -457,7 +460,7 @@ function deleteImageRecord() {
 
 function addAction() {
 	$conn = get_db_connection();
-	$stmt = $conn->prepare("INSERT INTO Action VALUES(NULL, :actionDescription, :points, TRUE)");
+	$stmt = $conn->prepare("INSERT INTO Action VALUES(NULL, :actionDescription, :points, CURRENT_TIMESTAMP, TRUE, 'Default')");
 	$stmt->bindParam(":actionDescription", $_POST['Description']);
 	$stmt->bindParam(":points", $_POST['Points']);
 	$result = $stmt->execute();
@@ -471,6 +474,16 @@ function addCategory() {
 	$stmt = $conn->prepare("INSERT INTO ActionCategory VALUES(:categoryName, :categoryDescription)");
 	$stmt->bindParam(":categoryName", $_POST['Name']);
 	$stmt->bindParam(":categoryDescription", $_POST['Description']);
+	$result = $stmt->execute();
+	if ($result) {
+		getAllActions();
+	}
+}
+
+function deleteCategory() {
+	$conn = get_db_connection();
+	$stmt = $conn->prepare("DELETE FROM ActionCategory WHERE CategoryName = :categoryName");
+	$stmt->bindParam(":categoryName", $_POST['Name']);
 	$result = $stmt->execute();
 	if ($result) {
 		getAllActions();

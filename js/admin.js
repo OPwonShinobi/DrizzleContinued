@@ -51,6 +51,16 @@ $(document).ready(function(){
 		request_add_category();
 	});
 
+	/* Handle "Delete category" button  */
+	$("#button_delete_category").click(function(){
+		$("#popup_modal_delete_category").modal({backdrop: "static"});
+		populate_delete_category_dropdown();
+	});
+
+	$("#button_delete_category_confirm").click(function(){
+		request_delete_category();
+	});
+
 	/* Enable "Add school" button only if a city has been selected. */
 	$("#cityId").change(function(){
 		refresh_school_table();
@@ -1452,6 +1462,62 @@ function request_delete_admin(deleteRn) {
 			console.log(data);
 			admins = data;
 			update_admin_table(admins);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function populate_delete_category_dropdown()
+{
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'getAllCategory',
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null) {
+				$("#delete_category_list").empty();
+				var popupSelect = document.getElementById('delete_category_list');
+				for (category of data) {
+					var newOption = document.createElement('option');
+					newOption.value = category['categoryName'];
+					if (typeof newOption.textContent === 'undefined')
+					{
+					    newOption.innerText = category['categoryName'];
+					}
+					else
+					{
+					    newOption.textContent = category['categoryName'];
+					}
+					popupSelect.appendChild(newOption);
+				}
+			}
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+}
+
+function request_delete_category() {
+	$.ajax({
+		type: "POST",
+		url: "/querydata.php",
+		data: {
+			QueryData: 'deleteCategory',
+			Name: $("#delete_category_list").val()
+		},
+		dataType: 'JSON',
+		success: function(data){
+			if (data != "undefined" && data != null) {
+				console.log("success");
+				actions = data;
+				update_action_table(actions);
+			}
 		},
 		error: function(data){
 			console.log(data);

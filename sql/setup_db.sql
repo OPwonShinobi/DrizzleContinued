@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS User(
 -- Lists categories of actions user can select
 -- Note that any changes here will cascade to actions with that option
 CREATE TABLE IF NOT EXISTS ActionCategory (
-    CategoryName   VARCHAR(128) NOT NULL,
+    CategoryName   VARCHAR(128) NOT NULL DEFAULT '',
     CategoryDescription  VARCHAR(256) NOT NULL,
     PRIMARY KEY(CategoryName)
 );
@@ -170,3 +170,4 @@ INSERT INTO Action VALUES (NULL, 'Shared a Drizzle Facebook post', 1,CURRENT_TIM
 -- Insert the super admin account
 -- This account is recommend to be used to add other admins only
 INSERT INTO Administrator VALUES (NULL, 'yecadmin', '$2y$12$9DVHJ2/TGJ6zzoucPLM5AO3bV2pQcl3sR911sOp/1lk1G1VoYz6aW', 'yecadmin@drizzlesociety.org', 9);
+INSERT INTO ActionCategory VALUES ('Default', 'This is default category');
