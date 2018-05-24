@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link type="text/css" href="css/login.css" rel="stylesheet" media="screen">
+    <title>Email Test</title>
 <?php 
 // visit this page to make sure email client is running
 // see config.php for what these constants mean
@@ -15,51 +14,7 @@ define("INFO_EMAIL", "yecdevnotification@gmail.com");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer-master/vendor/autoload.php';
-echo !extension_loaded('openssl')? "Openssl Not Available":"Openssl Available";
-
-function sendNewsletterEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncity)
-{
-    $mail = new PHPMailer;
-    $mail->isSMTP();
-    $mail->SMTPDebug = 2;
-    $mail->Debugoutput = 'html';
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 587;
-    $mail->SMTPSecure = 'tls';
-    $mail->SMTPAuth = true;
-    $mail->Username = SERVER_EMAIL;
-    $mail->Password = SERVER_EMAIL_PW;
-    $mail->setFrom(SERVER_EMAIL, 'Drizzle Environmental Society');
-    $mail->addAddress(NEWSLETTER_EMAIL);
-    $mail->Subject = '[Yec Automated Newsletter Subscriber Request]';
-    $mail->Body = '<!DOCTYPE html>';
-    $mail->Body .='<html>';
-    $mail->Body .='<head>';
-    $mail->Body .='</head>';
-    $mail->Body .='<body>';
-    $mail->Body .='<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">';
-    $mail->Body .='<div style="width: 100%; text-align:left;">';
-    $mail->Body .='<div style="display:inline-block; text-align: left; font-family: \'Roboto\', sans-serif; width: 100%; color: black;">';
-    $mail->Body .='<h1>Add User To Newsletter</h1>';
-    $mail->Body .="<p>First Name: $nfname</p>";
-    $mail->Body .="<p>Last Name: $nlname</p>";
-    $mail->Body .="<p>Email: $nemail</p>";
-    $mail->Body .="<p>Country: $ncountry</p>";
-    $mail->Body .="<p>State/Province: $nstate</p>";
-    $mail->Body .="<p>City: $ncity</p>";
-    $mail->Body .='<br />';
-    $mail->Body .='</div>';
-    $mail->Body .='</div>';
-    $mail->Body .='</body>';
-    $mail->Body .='</html>';
-    $mail->AltBody = "[Automated message]\nPlease add this person to newsletter mailing list:\n firstname: $nfname\n lastname: $nlname\n email: $nemail\n country: $ncountry\n state: $nstate\n city: $ncity";
-
-    if (!$mail->send()) {
-        echo "<script>console.log('Mailer Error: " . $mail->ErrorInfo ."');</script>";
-    } else {
-        echo "<script>console.log('You\'ve got mail!');</script>";
-    }
-}
+echo !extension_loaded('openssl')? "Openssl Not Available<br>":"Openssl Available<br>";
 
 function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncity, $nnewschoolname, $nwithinregionlock)
 {
@@ -120,7 +75,6 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     $fname = "Test first";
     $lname = "Test last";
     $email = "test@test.test";
-    // sendNewsletterEmail($fname,$lname,$email,$country,$state,$city); 
     sendAddSchoolEmail($fname,$lname,$email,$country,$state,$city,$newschoolname, false);
 ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -129,49 +83,12 @@ function sendAddSchoolEmail($nfname, $nlname, $nemail, $ncountry, $nstate, $ncit
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
-        h1, p{
-            color: white;
-            text-align: center;
-        }
-
-        h1 {
-            font-family: 'Open Sans' , sans-serif;
-            font-size: 50px;
-            font-weight: 600;
-            text-align: center;
-            color: #FFFFFF;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        p {
-            font-size: 16px;}
-
-        .wrap {
-            text-align: center;
-        }
-
-
-
+    	body {
+    		background: url("");
+    	}
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <img class="logo" src="images/logo2.png" draggable="false" width="20%" >
-    </div>
-    <div class="row">
-        <div class="col-xs-offset-1 col-xs-10">
-            <div class="wrap" id="welcome">
-                <h1>Welcome to the <br />Youth Environmental Challenge</h1>
-                <p>Your account has been successfully created! An email will be sent to you to as confirmation of your registration.</p>
-                <br />
-                <p>You will be redirected to the Login page in 5 seconds, or click <a href='/login.php'>here</a> if not redirected.</p>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 </body>
 </html>
