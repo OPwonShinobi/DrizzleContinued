@@ -1,6 +1,5 @@
 <?php
 //require 'PHPMailer-master/PHPMailerAutoload.php';
-require 'PHPMailer-master/vendor/autoload.php';
 
 session_start();
 require_once('config.php');
