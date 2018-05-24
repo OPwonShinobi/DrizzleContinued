@@ -1,5 +1,5 @@
 <?php
-require 'PHPMailer-master/PHPMailerAutoload.php';
+//require 'PHPMailer-master/PHPMailerAutoload.php';
 
 session_start();
 require_once('config.php');
@@ -29,8 +29,10 @@ if ($_POST) {
         $stmt = $conn->prepare("INSERT INTO Forgot (Email, selector,  expires) VALUES (:email, :selector, :expires)
                                 ON DUPLICATE KEY UPDATE selector=:selector, expires=:expires;");
         $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":selector", hash('sha256', $selector));
-        $stmt->bindParam(":expires", $expires->format('Y-m-d\TH:i:s'));
+        $selector = hash('sha256', $selector);
+        $stmt->bindParam(":selector", $selector);
+        $expires = $expires->format('Y-m-d\TH:i:s');
+        $stmt->bindParam(":expires", $expires);
         $stmt->execute();
 
         forgotPass($email, $selector);
